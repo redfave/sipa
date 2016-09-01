@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sipa.model.user &mdash; Sipa 0.4.3-29-g91b9517 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4.3-29-g91b9517',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Sipa 0.4.3-29-g91b9517 documentation" href="../../../index.html" />
+    <link rel="up" title="sipa.model" href="../model.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../model.html" accesskey="U">sipa.model</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sipa.model.user</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1"># noinspection PyMethodMayBeStatic</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+
+<span class="kn">from</span> <span class="nn">sipa.model.fancy_property</span> <span class="k">import</span> <span class="n">active_prop</span>
+
+
+<span class="c1"># noinspection PyMethodMayBeStatic</span>
+<div class="viewcode-block" id="AuthenticatedUserMixin"><a class="viewcode-back" href="../../../model.html#sipa.model.user.AuthenticatedUserMixin">[docs]</a><span class="k">class</span> <span class="nc">AuthenticatedUserMixin</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A mixin object defining a User class to be authenticated and</span>
+<span class="sd">    active.</span>
+
+<span class="sd">    Simliar to flask-login&#39;s</span>
+<span class="sd">    :py:class:`~flask_login.AnonymousUserMixin`, this class defines a</span>
+<span class="sd">    user which is active, authenticated, and not anonymous.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">is_authenticated</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">is_active</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">is_anonymous</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<span class="n">Row</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Row&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;property&#39;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="BaseUser"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUser">[docs]</a><span class="k">class</span> <span class="nc">BaseUser</span><span class="p">(</span><span class="n">AuthenticatedUserMixin</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Abstract base class defining what a user must have in order to</span>
+<span class="sd">    work properly with sipa.</span>
+
+<span class="sd">    Note that initialization shouldn&#39;t be done via :meth:`__init__`</span>
+<span class="sd">    directly, but usign one of the classmethods :meth:`get`,</span>
+<span class="sd">    :meth:`authenticate` or :meth:`from_ip`!</span>
+
+<span class="sd">    Apart from being an ABC, this class provides some logic already.</span>
+
+<span class="sd">    This includes setting :data:`uid` in :meth:`__init__`, defining</span>
+<span class="sd">    equality, and some others.</span>
+
+<span class="sd">    Abstract methods / properties are prepended with ``[Abstract]``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
+        <span class="c1">#: A unique unicode identifier for the User, needed for</span>
+        <span class="c1">#: :meth:`get_id`</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uid</span> <span class="o">=</span> <span class="n">uid</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">uid</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasource</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">datasource</span>
+
+    <span class="n">datasource</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="BaseUser.get_id"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUser.get_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method is Required by flask-login.</span>
+
+<span class="sd">        See the `flask_login manual</span>
+<span class="sd">        &lt;https://flask-login.readthedocs.io/en/latest/#your-user-class&gt;`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="BaseUser.get"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUser.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fetch a user given his username.</span>
+
+<span class="sd">        :param str username: the username</span>
+<span class="sd">        :return: the user object</span>
+<span class="sd">        :rtype: this class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="BaseUser.from_ip"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUser.from_ip">[docs]</a>    <span class="k">def</span> <span class="nf">from_ip</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a user based on an ip.</span>
+
+<span class="sd">        If there is no user associated with this ip, return AnonymousUserMixin.</span>
+<span class="sd">        :param str ip: the ip</span>
+<span class="sd">        :return: the user object</span>
+<span class="sd">        :rtype: this class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="BaseUser.re_authenticate"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUser.re_authenticate">[docs]</a>    <span class="k">def</span> <span class="nf">re_authenticate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="BaseUser.authenticate"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUser.authenticate">[docs]</a>    <span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a User instance or raise PasswordInvalid&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">can_change_password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Whether password change is possible/permitted.</span>
+
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="BaseUser.change_password"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUser.change_password">[docs]</a>    <span class="k">def</span> <span class="nf">change_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Change the user&#39;s password from old to new.</span>
+
+<span class="sd">        Although the password has been checked using</span>
+<span class="sd">        :meth:`re_authenticate()`, some data sources like those which have to</span>
+<span class="sd">        perform an LDAP bind need it anyways.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">traffic_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the current credit and the traffic history as a dict.</span>
+
+<span class="sd">        The history should cover one week. The assumed unit is KiB.</span>
+
+<span class="sd">        The list syntax is as follows::</span>
+
+<span class="sd">            [{</span>
+<span class="sd">                &#39;day&#39;: day.weekday(),</span>
+<span class="sd">                &#39;input&#39;: in,</span>
+<span class="sd">                &#39;output&#39;: out,</span>
+<span class="sd">                &#39;throughput&#39;: in + out,</span>
+<span class="sd">                &#39;credit&#39;: credit,</span>
+<span class="sd">            }, …]</span>
+
+<span class="sd">        The traffic values shall be in KiB, as usual.</span>
+
+<span class="sd">        :return: The history of the used traffic</span>
+<span class="sd">        :rtype: list of dicts</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">credit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** The current credit in KiB</span>
+
+<span class="sd">        :rtype: int/float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="BaseUser.generate_rows"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUser.generate_rows">[docs]</a>    <span class="k">def</span> <span class="nf">generate_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description_dict</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">description_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">Row</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">val</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__getattribute__</span><span class="p">(</span><span class="n">key</span><span class="p">))</span></div>
+
+    <span class="nd">@active_prop</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">realname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** The real-life name</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** The login</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">mac</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** The MAC Address</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">mail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** The mail address.</span>
+
+<span class="sd">        This can either be the forward or the internal adress</span>
+<span class="sd">        (``&quot;{login}@{server}&quot;``)</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** Where the user lives</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** The current membership status in the sense of</span>
+<span class="sd">        the AG DSN constitution.</span>
+
+<span class="sd">        This mostly means active, ex-active or passive.</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** The “user-id”.</span>
+
+<span class="sd">        Some Backends provide a secondary id besides the login.</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">hostname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** The hostname.</span>
+
+<span class="sd">        This usually is an alias consisting of the last digits of the</span>
+<span class="sd">        mac/ip.</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">hostalias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** The hostalias.</span>
+
+<span class="sd">        An optionally configurable alias for the device.</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">userdb_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The status of the user&#39;s db, if available.</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">userdb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** The `BaseUserDB` object, if available.</span>
+
+<span class="sd">        If :data:`userdb_status` is non-empty, it is assumed to exist.</span>
+
+<span class="sd">        :rtype: :class:`BaseUserDB`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">has_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** Whether the user has a connection</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">finance_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** The current finance balance</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.fancy_property.PropertyBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_finance_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The last update of the finance data.</span>
+
+<span class="sd">        Defaulting to None, may be overridden.</span>
+
+<span class="sd">        :rtype: date or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="BaseUserDB"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUserDB">[docs]</a><span class="k">class</span> <span class="nc">BaseUserDB</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An abstract base class defining an interface for a user&#39;s</span>
+<span class="sd">    database</span>
+
+<span class="sd">    Some backends provide a database for each user.  This interface</span>
+<span class="sd">    defines methods that must be made available when enabling support</span>
+<span class="sd">    for this in the corresponding user_class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the `BaseUser` object `user`&quot;&quot;&quot;</span>
+        <span class="c1">#: A backreference to the :class:`User` object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">has_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** Wheter the database is enabled</span>
+
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="BaseUserDB.create"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUserDB.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** Create the database</span>
+
+<span class="sd">        :param str password: The password of the database</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="BaseUserDB.drop"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUserDB.drop">[docs]</a>    <span class="k">def</span> <span class="nf">drop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** Drop the database&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="BaseUserDB.change_password"><a class="viewcode-back" href="../../../model.html#sipa.model.user.BaseUserDB.change_password">[docs]</a>    <span class="k">def</span> <span class="nf">change_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;**[Abstract]** Change the password of the database</span>
+
+<span class="sd">        :param str password: the new password of the database</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../model.html" >sipa.model</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

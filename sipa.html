@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Model &mdash; Sipa 0.4.3-29-g91b9517 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.3-29-g91b9517',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Sipa 0.4.3-29-g91b9517 documentation" href="index.html" />
+    <link rel="prev" title="Model" href="model.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="model.html" title="Model"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="model">
+<h1>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h1>
+<p>The <cite>sipa</cite> package contains everything necessary for the frontend.</p>
+<div class="section" id="module-sipa.mail">
+<span id="mail"></span><h2>Mail<a class="headerlink" href="#module-sipa.mail" title="Permalink to this headline">¶</a></h2>
+<p>Functions concerned with mail composition and transmission</p>
+<p>This module ultimately provides functions to be used by a blueprint in
+order to compose and send a mail, for instance
+<a class="reference internal" href="#sipa.mail.send_contact_mail" title="sipa.mail.send_contact_mail"><code class="xref py py-func docutils literal"><span class="pre">send_contact_mail()</span></code></a>.</p>
+<p>On the layer below, some intermediate functions are introduced which
+are needed to compose and send the mails.  The core is
+<a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal"><span class="pre">send_complex_mail()</span></code></a>, which calls <a class="reference internal" href="#sipa.mail.send_mail" title="sipa.mail.send_mail"><code class="xref py py-func docutils literal"><span class="pre">send_mail()</span></code></a>
+prepending optional information to the title and body</p>
+<dl class="function">
+<dt id="sipa.mail.compose_body">
+<code class="descclassname">sipa.mail.</code><code class="descname">compose_body</code><span class="sig-paren">(</span><em>message</em>, <em>header=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sipa/mail.html#compose_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.compose_body" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepend additional information to a message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; </li>
+<li><strong>header</strong> (<em>dict</em>) &#8211; Dict of the additional &#8220;key: value&#8221;
+entries to be prepended to the mail.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The composed body</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.compose_subject">
+<code class="descclassname">sipa.mail.</code><code class="descname">compose_subject</code><span class="sig-paren">(</span><em>raw_subject</em>, <em>tag=''</em>, <em>category=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sipa/mail.html#compose_subject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.compose_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compose a subject containing a tag and a category.</p>
+<p>If any of tag or category is missing, don&#8217;t print the
+corresponding part (without whitespace issues).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>raw_subject</strong> (<em>str</em>) &#8211; The original subject</li>
+<li><strong>tag</strong> (<em>str</em>) &#8211; </li>
+<li><strong>category</strong> (<em>str</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The subject.  Form: &#8220;[{tag}] {category}: {raw_subject}&#8221;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.send_complex_mail">
+<code class="descclassname">sipa.mail.</code><code class="descname">send_complex_mail</code><span class="sig-paren">(</span><em>subject</em>, <em>message</em>, <em>tag=''</em>, <em>category=''</em>, <em>header=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sipa/mail.html#send_complex_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.send_complex_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a mail with context information in subject and body.</p>
+<p>This function is just a modified call of <a class="reference internal" href="#sipa.mail.send_mail" title="sipa.mail.send_mail"><code class="xref py py-func docutils literal"><span class="pre">send_mail()</span></code></a>, to
+which all the other arguments are passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subject</strong> (<em>str</em>) &#8211; </li>
+<li><strong>message</strong> (<em>str</em>) &#8211; </li>
+<li><strong>tag</strong> (<em>str</em>) &#8211; See <a class="reference internal" href="#sipa.mail.compose_subject" title="sipa.mail.compose_subject"><code class="xref py py-func docutils literal"><span class="pre">compose_subject()</span></code></a></li>
+<li><strong>category</strong> (<em>str</em>) &#8211; See <a class="reference internal" href="#sipa.mail.compose_subject" title="sipa.mail.compose_subject"><code class="xref py py-func docutils literal"><span class="pre">compose_subject()</span></code></a></li>
+<li><strong>header</strong> (<em>dict</em>) &#8211; See <a class="reference internal" href="#sipa.mail.compose_body" title="sipa.mail.compose_body"><code class="xref py py-func docutils literal"><span class="pre">compose_body()</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">see <a class="reference internal" href="#sipa.mail.send_mail" title="sipa.mail.send_mail"><code class="xref py py-func docutils literal"><span class="pre">send_mail()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.send_contact_mail">
+<code class="descclassname">sipa.mail.</code><code class="descname">send_contact_mail</code><span class="sig-paren">(</span><em>sender</em>, <em>subject</em>, <em>message</em>, <em>name</em>, <em>dormitory_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sipa/mail.html#send_contact_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.send_contact_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compose a mail for anonymous contacting.</p>
+<p>Call <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal"><span class="pre">send_complex_mail()</span></code></a> setting a tag plus name and
+dormitory in the header.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sender</strong> (<em>str</em>) &#8211; The e-mail of the sender</li>
+<li><strong>subject</strong> (<em>str</em>) &#8211; </li>
+<li><strong>message</strong> (<em>str</em>) &#8211; </li>
+<li><strong>name</strong> (<em>str</em>) &#8211; The sender&#8217;s real-life name</li>
+<li><strong>dormitory_name</strong> (<em>str</em>) &#8211; The string identifier of the chosen
+dormitory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">see <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal"><span class="pre">send_complex_mail()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.send_mail">
+<code class="descclassname">sipa.mail.</code><code class="descname">send_mail</code><span class="sig-paren">(</span><em>sender</em>, <em>recipient</em>, <em>subject</em>, <em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sipa/mail.html#send_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.send_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a MIME text mail</p>
+<p>Send a mail from <code class="docutils literal"><span class="pre">sender</span></code> to <code class="docutils literal"><span class="pre">receipient</span></code> with <code class="docutils literal"><span class="pre">subject</span></code> and
+<code class="docutils literal"><span class="pre">message</span></code>.  The message will be wrapped to 80 characters and
+encoded to UTF8.</p>
+<p>Returns False, if sending from localhost:25 fails.  Else returns
+True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sender</strong> (<em>str</em>) &#8211; The mail address of the sender</li>
+<li><strong>recipient</strong> (<em>str</em>) &#8211; The mail address of the recipient</li>
+<li><strong>subject</strong> (<em>str</em>) &#8211; </li>
+<li><strong>message</strong> (<em>str</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Whether the transmission succeeded</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.send_official_contact_mail">
+<code class="descclassname">sipa.mail.</code><code class="descname">send_official_contact_mail</code><span class="sig-paren">(</span><em>sender</em>, <em>subject</em>, <em>message</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sipa/mail.html#send_official_contact_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.send_official_contact_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compose a mail for official contacting.</p>
+<p>Call <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal"><span class="pre">send_complex_mail()</span></code></a> setting a tag.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sender</strong> (<em>str</em>) &#8211; The e-mail address of the sender</li>
+<li><strong>subject</strong> (<em>str</em>) &#8211; </li>
+<li><strong>message</strong> (<em>str</em>) &#8211; </li>
+<li><strong>name</strong> (<em>str</em>) &#8211; The sender&#8217;s real-life name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">see <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal"><span class="pre">send_complex_mail()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.send_usersuite_contact_mail">
+<code class="descclassname">sipa.mail.</code><code class="descname">send_usersuite_contact_mail</code><span class="sig-paren">(</span><em>subject</em>, <em>message</em>, <em>category</em>, <em>user=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sipa/mail.html#send_usersuite_contact_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.send_usersuite_contact_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compose a mail for contacting from the usersuite</p>
+<p>Call <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal"><span class="pre">send_complex_mail()</span></code></a> setting a tag and the category
+plus the user&#8217;s login in the header.</p>
+<p>The sender is chosen to be the user&#8217;s mailaccount on the
+datasource&#8217;s mail server.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subject</strong> (<em>str</em>) &#8211; </li>
+<li><strong>message</strong> (<em>str</em>) &#8211; </li>
+<li><strong>category</strong> (<em>str</em>) &#8211; The Category as to be included in the title</li>
+<li><strong>user</strong> (<a class="reference internal" href="model.html#sipa.model.user.BaseUser" title="sipa.model.user.BaseUser"><em>BaseUser</em></a>) &#8211; The user object</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">see <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal"><span class="pre">send_complex_mail()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.wrap_message">
+<code class="descclassname">sipa.mail.</code><code class="descname">wrap_message</code><span class="sig-paren">(</span><em>message</em>, <em>chars_in_line=80</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sipa/mail.html#wrap_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.wrap_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap a block of text to a certain amount of characters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; The message</li>
+<li><strong>chars_in_line</strong> (<em>int</em>) &#8211; The width to wrap against</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the wrapped message</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Model</a><ul>
+<li><a class="reference internal" href="#module-sipa.mail">Mail</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="model.html"
+                        title="previous chapter">Model</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sipa.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="model.html" title="Model"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

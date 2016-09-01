@@ -1,0 +1,459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sipa.model &mdash; Sipa 0.4.3-29-g91b9517 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.4.3-29-g91b9517',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Sipa 0.4.3-29-g91b9517 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sipa.model</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">ipaddress</span> <span class="k">import</span> <span class="n">IPv4Address</span><span class="p">,</span> <span class="n">AddressValueError</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">request</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">current_app</span>
+<span class="kn">from</span> <span class="nn">flask_login</span> <span class="k">import</span> <span class="n">current_user</span><span class="p">,</span> <span class="n">AnonymousUserMixin</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.exc</span> <span class="k">import</span> <span class="n">OperationalError</span>
+<span class="kn">from</span> <span class="nn">werkzeug.local</span> <span class="k">import</span> <span class="n">LocalProxy</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">sample</span><span class="p">,</span> <span class="n">wu</span><span class="p">,</span> <span class="n">gerok</span><span class="p">,</span> <span class="n">hss</span>
+<span class="kn">from</span> <span class="nn">.sqlalchemy</span> <span class="k">import</span> <span class="n">db</span>
+<span class="kn">from</span> <span class="nn">sipa.utils.exceptions</span> <span class="k">import</span> <span class="n">InvalidConfiguration</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="c1">#: The implemented datasources available by default</span>
+<span class="n">AVAILABLE_DATASOURCES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">datasource</span><span class="p">,</span>
+    <span class="n">wu</span><span class="o">.</span><span class="n">datasource</span><span class="p">,</span>
+    <span class="n">gerok</span><span class="o">.</span><span class="n">datasource</span><span class="p">,</span>
+    <span class="n">hss</span><span class="o">.</span><span class="n">datasource</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="evaluates_uniquely"><a class="viewcode-back" href="../../model.html#sipa.model.evaluates_uniquely">[docs]</a><span class="k">def</span> <span class="nf">evaluates_uniquely</span><span class="p">(</span><span class="n">objects</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return true if the return value of ``func`` is unique among</span>
+<span class="sd">    ``objects``.</span>
+
+<span class="sd">    This can be used to check whether some attribute `obj.attr` is</span>
+<span class="sd">    unique among a set of such objects, and can thus be used as a key.</span>
+
+<span class="sd">    **Usage:**</span>
+
+<span class="sd">    &gt;&gt;&gt; from operator import itemgetter</span>
+<span class="sd">    &gt;&gt;&gt; objs = [{&#39;name&#39;: &quot;foo&quot;}, {&#39;name&#39;: &quot;bar&quot;}]</span>
+<span class="sd">    &gt;&gt;&gt; evaluates_uniquely(objs, func=itemgetter(&#39;name&#39;))</span>
+<span class="sd">    True</span>
+
+<span class="sd">    &gt;&gt;&gt; from operator import itemgetter</span>
+<span class="sd">    &gt;&gt;&gt; objs = [{&#39;name&#39;: &quot;foo&quot;}, {&#39;name&#39;: &quot;foo&quot;}]</span>
+<span class="sd">    &gt;&gt;&gt; evaluates_uniquely(objs, func=itemgetter(&#39;name&#39;))</span>
+<span class="sd">    False</span>
+
+<span class="sd">    :param objects: the object on which to apply func to</span>
+<span class="sd">    :param func: the function to be evaluated, given each object as a</span>
+<span class="sd">        parameter.  Must return something hashable.</span>
+
+<span class="sd">    :return: whether the uniqueness holds</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">values</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Backends"><a class="viewcode-back" href="../../model.html#sipa.model.Backends">[docs]</a><span class="k">class</span> <span class="nc">Backends</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;The `Backends` flask extension</span>
+
+<span class="sd">    This extension lets you initialize some of the available</span>
+<span class="sd">    datasources and provides some central methods to look things up,</span>
+<span class="sd">    like for example the user object from some ip.</span>
+
+<span class="sd">    `Backends` builds upon the following concept:</span>
+
+<span class="sd">    A user is enabled to log in using different backends, called</span>
+<span class="sd">    *datasources*.  A :py:class:`DataSource` provides information such</span>
+<span class="sd">    as its name, the email suffix, the user class, the initialization</span>
+<span class="sd">    method, and so on.</span>
+
+<span class="sd">    Originating from the needs of the [AG DSN](github.com/agdsn), the</span>
+<span class="sd">    user should not select the backend, but the location where he</span>
+<span class="sd">    lives.  Thus, he selects a :py:class:`Dormitory`, which has not</span>
+<span class="sd">    only a name, but also a `display_name` and ip subnets.  The latter</span>
+<span class="sd">    are needed to semi-authenticate a user based on his ip.</span>
+
+<span class="sd">    **Usage:**</span>
+
+<span class="sd">    &gt;&gt;&gt; app = Flask(&#39;appname&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; backends = Backends()</span>
+<span class="sd">    &gt;&gt;&gt; backends.init_app(app)</span>
+<span class="sd">    &gt;&gt;&gt; app.config[&#39;BACKENDS&#39;] = [&#39;name1&#39;, &#39;name2&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; # further initialization…</span>
+<span class="sd">    &gt;&gt;&gt; backends.init_backends()  # call each backend&#39;s init method</span>
+<span class="sd">    &gt;&gt;&gt; app.run()</span>
+
+<span class="sd">    This class provides methods concerning:</span>
+
+<span class="sd">    * *initialization* of the extension and backends</span>
+<span class="sd">    * *lists* of the currently (un)supported dormitories and</span>
+<span class="sd">       datasources</span>
+<span class="sd">    * *lookup properties* to access the datasources/dormitories/users</span>
+<span class="sd">      given certain information (ip, name, …)</span>
+<span class="sd">    * *proxy methods* to access the current datasource/dormitory</span>
+<span class="sd">      (similiar to current_user)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">available_datasources</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">available_datasources</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">available_datasources</span> <span class="o">=</span> <span class="n">AVAILABLE_DATASOURCES</span>
+
+        <span class="c1">#: A list of datasources that can be activated. Defaults to</span>
+        <span class="c1">#: :py:data:`AVAILABLE_DATASOURCES`</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">available_datasources</span> <span class="o">=</span> <span class="n">available_datasources</span>
+
+        <span class="c1">#: The datasources dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datasources</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1">#: The dormitory dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dormitories</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1">#: The premature_dormitories dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_premature_dormitories</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="Backends.init_app"><a class="viewcode-back" href="../../model.html#sipa.model.Backends.init_app">[docs]</a>    <span class="k">def</span> <span class="nf">init_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Register self to app and initialize datasources</span>
+
+<span class="sd">        The datasources will be registered according to the app&#39;s</span>
+<span class="sd">        config.</span>
+
+<span class="sd">        :param app: The flask app object to register against</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">extensions</span><span class="p">[</span><span class="s1">&#39;backends&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
+
+        <span class="n">backends</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;BACKENDS&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">backends</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;No backends configured&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">backend_name</span> <span class="ow">in</span> <span class="n">backends</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_register_backend</span><span class="p">(</span><span class="n">backend_name</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_register_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Register a datasource by name.</span>
+
+<span class="sd">        First, find the name in the available datasources&#39; names, warn</span>
+<span class="sd">        on inconsistencies.  If found, add the `name: datasource` pair</span>
+<span class="sd">        to the private dict.</span>
+
+<span class="sd">        :param datasource: the datasource to register</span>
+<span class="sd">        :raises: `ValueError` if a backend with this name is already</span>
+<span class="sd">            registered</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datasources</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidConfiguration</span><span class="p">(</span><span class="s1">&#39;Datasource </span><span class="si">{}</span><span class="s1"> already registered&#39;</span>
+                                       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">evaluates_uniquely</span><span class="p">(</span><span class="n">AVAILABLE_DATASOURCES</span><span class="p">,</span>
+                                  <span class="n">func</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Implememented datasources have non-unique names&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">dsrc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_datasources</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dsrc</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="n">new_datasource</span> <span class="o">=</span> <span class="n">dsrc</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidConfiguration</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not an available datasource&quot;</span>
+                                       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datasources</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_datasource</span>
+
+        <span class="c1"># check for name collisions in the updated dormitories</span>
+        <span class="n">new_dormitories</span> <span class="o">=</span> <span class="n">new_datasource</span><span class="o">.</span><span class="n">dormitories</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">dorm</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dormitories</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+               <span class="k">for</span> <span class="n">dorm</span> <span class="ow">in</span> <span class="n">new_dormitories</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Some dormitories of datasource Dormitory &quot;</span>
+                             <span class="s2">&quot;have a name already registered&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">dormitory</span> <span class="ow">in</span> <span class="n">new_datasource</span><span class="o">.</span><span class="n">dormitories</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_register_dormitory</span><span class="p">(</span><span class="n">dormitory</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_register_dormitory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dormitory</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Register a dormitory by putting it to the dict</span>
+
+<span class="sd">        :param dormitory: The dormitory to register</span>
+<span class="sd">        :raises: `ValueError` if a dormitory with this name is already</span>
+<span class="sd">            registered.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">dormitory</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dormitories</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Dormitory with name </span><span class="si">{}</span><span class="s2"> already exists&quot;</span>
+                             <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dormitories</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dormitory</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Backends.backends_preinit"><a class="viewcode-back" href="../../model.html#sipa.model.Backends.backends_preinit">[docs]</a>    <span class="k">def</span> <span class="nf">backends_preinit</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;SQLALCHEMY_BINDS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Backends.init_backends"><a class="viewcode-back" href="../../model.html#sipa.model.Backends.init_backends">[docs]</a>    <span class="k">def</span> <span class="nf">init_backends</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the activated backends</span>
+
+<span class="sd">        This is the method that does the actual initialization.  It</span>
+<span class="sd">        calls each :py:class:`DataSource`s `init_context` function.</span>
+
+<span class="sd">        In there, things like setting up a pg session or registering</span>
+<span class="sd">        an ldap object to the app might be done.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backends_preinit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">datasource</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasources</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">datasource</span><span class="o">.</span><span class="n">init_context</span><span class="p">:</span>
+                <span class="n">datasource</span><span class="o">.</span><span class="n">init_context</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="p">)</span></div>
+
+    <span class="c1"># CENTRAL PROPERTIES</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">datasources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A list of the currently registered datasources&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datasources</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dormitories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A list of the currently registered dormitories&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dormitories</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">premature_dormitories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A list of the currently registered premature dormitories&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_premature_dormitories</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">all_dormitories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A list of the currently registered dormitories including</span>
+<span class="sd">        premature dormitories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dormitories</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_premature_dormitories</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="c1"># CONVENIENCE PROPERTIES</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dormitories_short</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a list of dormitories as tuples instead of objects</span>
+
+<span class="sd">        :return: a list of ``(name, display_name)`` tuples</span>
+<span class="sd">        :rtype: list of :py:data:`_dorm_summary` namedtuples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span>
+            <span class="n">_dorm_summary</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">dormitory</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                          <span class="n">display_name</span><span class="o">=</span><span class="n">dormitory</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dormitory</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dormitories</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">premature_dormitories</span>
+        <span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">supported_dormitories_short</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a list of supported dormitories as tuples instead of</span>
+<span class="sd">        objects</span>
+
+<span class="sd">        :return: a list of ``(name, display_name)`` tuples</span>
+<span class="sd">        :rtype: list of :py:data:`_dorm_summary` namedtuples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span>
+            <span class="n">_dorm_summary</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">dormitory</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                          <span class="n">display_name</span><span class="o">=</span><span class="n">dormitory</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dormitory</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dormitories</span>
+        <span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="c1"># LOOKUP METHODS</span>
+
+<div class="viewcode-block" id="Backends.get_dormitory"><a class="viewcode-back" href="../../model.html#sipa.model.Backends.get_dormitory">[docs]</a>    <span class="k">def</span> <span class="nf">get_dormitory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Lookup the dormitory with name ``name``.</span>
+
+<span class="sd">        :param str name: The dormitory&#39;s ``name``</span>
+
+<span class="sd">        :return: The dormitory object</span>
+<span class="sd">        :rtype: :py:class:`~sipa.model.datasource.Dormitory`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">dormitory</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_dormitories</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dormitory</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">dormitory</span></div>
+
+<div class="viewcode-block" id="Backends.get_datasource"><a class="viewcode-back" href="../../model.html#sipa.model.Backends.get_datasource">[docs]</a>    <span class="k">def</span> <span class="nf">get_datasource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Lookup the datasource with name ``name``.</span>
+
+<span class="sd">        :param str name: The datasource&#39;s ``name``</span>
+
+<span class="sd">        :return: The datasource object</span>
+<span class="sd">        :rtype: :py:class:`~sipa.model.datasource.Datasource`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">datasource</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasources</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">datasource</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">datasource</span></div>
+
+<div class="viewcode-block" id="Backends.dormitory_from_ip"><a class="viewcode-back" href="../../model.html#sipa.model.Backends.dormitory_from_ip">[docs]</a>    <span class="k">def</span> <span class="nf">dormitory_from_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the dormitory whose subnets contain ``ip``</span>
+
+<span class="sd">        :param str ip: The ip</span>
+
+<span class="sd">        :return: The dormitory containing ``ip``</span>
+<span class="sd">        :rtype: :py:class:`~sipa.model.datasource.Dormitory`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">address</span> <span class="o">=</span> <span class="n">IPv4Address</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ip</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">AddressValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">dormitory</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dormitories</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">address</span> <span class="ow">in</span> <span class="n">dormitory</span><span class="o">.</span><span class="n">subnets</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">dormitory</span></div>
+
+<div class="viewcode-block" id="Backends.preferred_dormitory_name"><a class="viewcode-back" href="../../model.html#sipa.model.Backends.preferred_dormitory_name">[docs]</a>    <span class="k">def</span> <span class="nf">preferred_dormitory_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the name of the preferred dormitory based on the</span>
+<span class="sd">        request&#39;s ip</span>
+
+<span class="sd">        :return: name of the dormitory</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dormitory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dormitory_from_ip</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">remote_addr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dormitory</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dormitory</span><span class="o">.</span><span class="n">name</span></div>
+
+<div class="viewcode-block" id="Backends.user_from_ip"><a class="viewcode-back" href="../../model.html#sipa.model.Backends.user_from_ip">[docs]</a>    <span class="k">def</span> <span class="nf">user_from_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the User that corresponds to ``ip`` according to the</span>
+<span class="sd">        datasource.</span>
+
+<span class="sd">        :param str ip: The ip</span>
+
+<span class="sd">        :return: The corresponding User in the sense of the</span>
+<span class="sd">                 datasource.</span>
+<span class="sd">        :rtype: The corresponding datasources ``user_class``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dormitory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dormitory_from_ip</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dormitory</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AnonymousUserMixin</span><span class="p">()</span>
+
+        <span class="n">datasource</span> <span class="o">=</span> <span class="n">dormitory</span><span class="o">.</span><span class="n">datasource</span>
+        <span class="k">if</span> <span class="n">datasource</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AnonymousUserMixin</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">datasource</span><span class="o">.</span><span class="n">user_class</span><span class="o">.</span><span class="n">from_ip</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span></div>
+
+    <span class="c1"># PROXIES</span>
+
+<div class="viewcode-block" id="Backends.current_dormitory"><a class="viewcode-back" href="../../model.html#sipa.model.Backends.current_dormitory">[docs]</a>    <span class="k">def</span> <span class="nf">current_dormitory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read the current dormitory from the session</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.datasource.Dormitory`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dormitory</span><span class="p">(</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;dormitory&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Backends.current_datasource"><a class="viewcode-back" href="../../model.html#sipa.model.Backends.current_datasource">[docs]</a>    <span class="k">def</span> <span class="nf">current_datasource</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read the current datasource from the session</span>
+
+<span class="sd">        :rtype: :py:class:`~sipa.model.datasource.Datasource`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dormitory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_dormitory</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dormitory</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dormitory</span><span class="o">.</span><span class="n">datasource</span></div></div>
+
+
+<span class="n">backends</span> <span class="o">=</span> <span class="n">LocalProxy</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">current_app</span><span class="o">.</span><span class="n">extensions</span><span class="p">[</span><span class="s1">&#39;backends&#39;</span><span class="p">])</span>
+
+
+<span class="c1">#: A namedtuple to improve readability of some return values</span>
+<span class="n">_dorm_summary</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;_dorm_summary&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;display_name&#39;</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">query_gauge_data</span><span class="p">():</span>
+    <span class="n">credit</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;foreign_user&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_authenticated</span> <span class="ow">and</span> <span class="n">current_user</span><span class="o">.</span><span class="n">has_connection</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">current_user</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">backends</span><span class="o">.</span><span class="n">user_from_ip</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">remote_addr</span><span class="p">)</span>
+        <span class="n">credit</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">credit</span>
+    <span class="k">except</span> <span class="n">OperationalError</span><span class="p">:</span>
+        <span class="n">credit</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">credit</span><span class="p">[</span><span class="s1">&#39;foreign_user&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">credit</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>
