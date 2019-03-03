@@ -1,54 +1,40 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>sipa.model.fancy_property &mdash; Sipa 0.4.3-29-g91b9517 documentation</title>
-    
-    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <title>sipa.model.fancy_property &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../../',
-        VERSION:     '0.4.3-29-g91b9517',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="Sipa 0.4.3-29-g91b9517 documentation" href="../../../index.html" />
-    <link rel="up" title="sipa.model" href="../model.html" /> 
-  </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../model.html" accesskey="U">sipa.model</a> &raquo;</li> 
-      </ul>
-    </div>  
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for sipa.model.fancy_property</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+<span></span><span class="c1"># -*- coding: utf-8; -*-</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
 
 <span class="kn">from</span> <span class="nn">flask_babel</span> <span class="k">import</span> <span class="n">gettext</span>
@@ -60,7 +46,7 @@
 <span class="n">NO_CAPABILITIES</span> <span class="o">=</span> <span class="n">Capabilities</span><span class="p">(</span><span class="n">edit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="PropertyBase"><a class="viewcode-back" href="../../../model.html#sipa.model.user.PropertyBase">[docs]</a><span class="k">class</span> <span class="nc">PropertyBase</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+<div class="viewcode-block" id="PropertyBase"><a class="viewcode-back" href="../../../ref/sipa.model.html#sipa.model.fancy_property.PropertyBase">[docs]</a><span class="k">class</span> <span class="nc">PropertyBase</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">raw_value</span><span class="p">,</span> <span class="n">capabilities</span><span class="o">=</span><span class="n">NO_CAPABILITIES</span><span class="p">,</span>
                  <span class="n">style</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">empty</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
@@ -71,7 +57,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">empty</span> <span class="o">=</span> <span class="n">empty</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
             <span class="n">raw_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_value</span><span class="p">,</span>
@@ -101,18 +87,18 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_value</span> <span class="o">==</span> <span class="n">other</span>
 
     <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_value</span><span class="o">.</span><span class="n">__contains__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_value</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The boolean value represents whether the property is not empty&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty</span></div>
 
 
-<div class="viewcode-block" id="UnsupportedProperty"><a class="viewcode-back" href="../../../model.html#sipa.model.user.UnsupportedProperty">[docs]</a><span class="k">class</span> <span class="nc">UnsupportedProperty</span><span class="p">(</span><span class="n">PropertyBase</span><span class="p">):</span>
+<div class="viewcode-block" id="UnsupportedProperty"><a class="viewcode-back" href="../../../ref/sipa.model.html#sipa.model.fancy_property.UnsupportedProperty">[docs]</a><span class="k">class</span> <span class="nc">UnsupportedProperty</span><span class="p">(</span><span class="n">PropertyBase</span><span class="p">):</span>
     <span class="n">supported</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
             <span class="n">value</span><span class="o">=</span><span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;Nicht unterstützt&quot;</span><span class="p">),</span>
             <span class="n">raw_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -121,7 +107,7 @@
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span>
         <span class="p">))</span>
 
@@ -132,7 +118,7 @@
             <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="ActiveProperty"><a class="viewcode-back" href="../../../model.html#sipa.model.user.ActiveProperty">[docs]</a><span class="k">class</span> <span class="nc">ActiveProperty</span><span class="p">(</span><span class="n">PropertyBase</span><span class="p">):</span>
+<div class="viewcode-block" id="ActiveProperty"><a class="viewcode-back" href="../../../ref/sipa.model.html#sipa.model.fancy_property.ActiveProperty">[docs]</a><span class="k">class</span> <span class="nc">ActiveProperty</span><span class="p">(</span><span class="n">PropertyBase</span><span class="p">):</span>
     <span class="n">supported</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">raw_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">capabilities</span><span class="o">=</span><span class="n">NO_CAPABILITIES</span><span class="p">,</span>
@@ -142,7 +128,7 @@
                          <span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;warning&#39;</span><span class="p">,</span> <span class="s1">&#39;danger&#39;</span><span class="p">},</span> \
                          <span class="s2">&quot;Style must be a bootstrap class string&quot;</span>
 
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
             <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">value</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;Nicht angegeben&quot;</span><span class="p">)),</span>
             <span class="n">raw_value</span><span class="o">=</span><span class="n">raw_value</span> <span class="k">if</span> <span class="n">raw_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">value</span><span class="p">,</span>
@@ -155,24 +141,45 @@
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">{cls}</span><span class="s2"> </span><span class="si">{name}</span><span class="s2">=&#39;</span><span class="si">{value}</span><span class="s2">&#39; [</span><span class="si">{empty}</span><span class="s2">]&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="n">cls</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+            <span class="bp">cls</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
             <span class="n">empty</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;empty&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty</span> <span class="k">else</span> <span class="s1">&#39;nonempty&#39;</span><span class="p">),</span>
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="unsupported_prop"><a class="viewcode-back" href="../../../model.html#sipa.model.user.unsupported_prop">[docs]</a><span class="k">def</span> <span class="nf">unsupported_prop</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">property</span><span class="p">(</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">UnsupportedProperty</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span></div>
+<div class="viewcode-block" id="unsupported_prop"><a class="viewcode-back" href="../../../ref/sipa.model.html#sipa.model.fancy_property.unsupported_prop">[docs]</a><span class="k">def</span> <span class="nf">unsupported_prop</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">property</span><span class="p">(</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">UnsupportedProperty</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="active_prop"><a class="viewcode-back" href="../../../model.html#sipa.model.user.active_prop">[docs]</a><span class="k">class</span> <span class="nc">active_prop</span><span class="p">(</span><span class="nb">property</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A property-like class wrapping the getter with class:`ActiveProperty`</span>
+<div class="viewcode-block" id="active_prop"><a class="viewcode-back" href="../../../ref/sipa.model.html#sipa.model.fancy_property.active_prop">[docs]</a><span class="k">class</span> <span class="nc">active_prop</span><span class="p">(</span><span class="nb">property</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A property-like class wrapping the getter with</span>
+<span class="sd">    :py:class:`ActiveProperty`</span>
 
-<span class="sd">    class:`active_prop` automatically adds `edit` and `delete`</span>
+<span class="sd">    :py:class:`active_prop` automatically adds `edit` and `delete`</span>
 <span class="sd">    capabilities to the ActiveProperty object if `setter`/`deleter` is</span>
 <span class="sd">    invoked.</span>
 
+<span class="sd">    Example usage:</span>
+
+<span class="sd">    &gt;&gt;&gt; class User:</span>
+<span class="sd">    ...     @active_prop</span>
+<span class="sd">    ...     def foo(self):</span>
+<span class="sd">    ...         return {&#39;value&#39;: &quot;Empty!!&quot;, &#39;empty&#39;: True, &#39;style&#39;: &#39;danger&#39;}</span>
+<span class="sd">    ...</span>
+<span class="sd">    ...     @active_prop</span>
+<span class="sd">    ...     def bar(self):</span>
+<span class="sd">    ...         return 0</span>
+<span class="sd">    ...</span>
+<span class="sd">    ...     @bar.setter</span>
+<span class="sd">    ...     def bar(self):</span>
+<span class="sd">    ...         print(&quot;furiously setting things&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; User().foo</span>
+<span class="sd">    &lt;ActiveProperty foo=&#39;Empty!!&#39; [empty]&gt;</span>
+<span class="sd">    &gt;&gt;&gt; User().bar</span>
+<span class="sd">    &lt;ActiveProperty bar=&#39;Nicht angegeben&#39; [empty]&gt;</span>
+<span class="sd">    &gt;&gt;&gt; User().bar.capabilities</span>
+<span class="sd">    capabilities(edit=True, delete=False)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fget</span><span class="p">,</span> <span class="n">fset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fdel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -205,14 +212,14 @@
                 <span class="c1"># `KeyError` should not happen, since that means a</span>
                 <span class="c1"># dict would have been returned not including `value`,</span>
                 <span class="c1"># which would make no sense and likely is a mistake.</span>
-                <span class="n">name</span> <span class="o">=</span> <span class="n">fget</span><span class="o">.</span><span class="n">__name__</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">fget</span><span class="o">.</span><span class="vm">__name__</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">result</span>
                 <span class="n">raw_value</span> <span class="o">=</span> <span class="n">value</span>
                 <span class="n">style</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="n">empty</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="n">tmp_readonly</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">name</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">fget</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">fget</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
                 <span class="n">raw_value</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;raw_value&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
                 <span class="n">style</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;style&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="n">empty</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;empty&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -231,40 +238,40 @@
             <span class="p">)</span>
 
         <span class="c1"># Let `property` handle the initialization of `__get__`, `__set__` etc.</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">wrapped_getter</span><span class="p">,</span> <span class="n">fset</span><span class="p">,</span> <span class="n">fdel</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">wrapped_getter</span><span class="p">,</span> <span class="n">fset</span><span class="p">,</span> <span class="n">fdel</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
             <span class="n">fget</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__raw_getter</span><span class="p">,</span>
             <span class="n">fset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">,</span>
             <span class="n">fdel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fdel</span><span class="p">,</span>
-            <span class="n">doc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span><span class="p">,</span>
+            <span class="n">doc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span>
             <span class="n">fake_setter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__fake_setter</span><span class="p">,</span>
         <span class="p">))</span>
 
-<div class="viewcode-block" id="active_prop.getter"><a class="viewcode-back" href="../../../model.html#sipa.model.user.active_prop.getter">[docs]</a>    <span class="k">def</span> <span class="nf">getter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fdel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span><span class="p">)</span></div>
+<div class="viewcode-block" id="active_prop.getter"><a class="viewcode-back" href="../../../ref/sipa.model.html#sipa.model.fancy_property.active_prop.getter">[docs]</a>    <span class="k">def</span> <span class="nf">getter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fdel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="active_prop.setter"><a class="viewcode-back" href="../../../model.html#sipa.model.user.active_prop.setter">[docs]</a>    <span class="k">def</span> <span class="nf">setter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">__raw_getter</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fdel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span><span class="p">)</span></div>
+<div class="viewcode-block" id="active_prop.setter"><a class="viewcode-back" href="../../../ref/sipa.model.html#sipa.model.fancy_property.active_prop.setter">[docs]</a>    <span class="k">def</span> <span class="nf">setter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">__raw_getter</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fdel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="active_prop.deleter"><a class="viewcode-back" href="../../../model.html#sipa.model.user.active_prop.deleter">[docs]</a>    <span class="k">def</span> <span class="nf">deleter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">__raw_getter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span><span class="p">)</span></div>
+<div class="viewcode-block" id="active_prop.deleter"><a class="viewcode-back" href="../../../ref/sipa.model.html#sipa.model.fancy_property.active_prop.deleter">[docs]</a>    <span class="k">def</span> <span class="nf">deleter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">__raw_getter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="active_prop.fake_setter"><a class="viewcode-back" href="../../../model.html#sipa.model.user.active_prop.fake_setter">[docs]</a>    <span class="k">def</span> <span class="nf">fake_setter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="active_prop.fake_setter"><a class="viewcode-back" href="../../../ref/sipa.model.html#sipa.model.fancy_property.active_prop.fake_setter">[docs]</a>    <span class="k">def</span> <span class="nf">fake_setter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">__raw_getter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fdel</span><span class="p">,</span>
-                          <span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span><span class="p">,</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span>
                           <span class="n">fake_setter</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="connection_dependent"><a class="viewcode-back" href="../../../model.html#sipa.model.user.connection_dependent">[docs]</a><span class="k">def</span> <span class="nf">connection_dependent</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+<div class="viewcode-block" id="connection_dependent"><a class="viewcode-back" href="../../../ref/sipa.model.html#sipa.model.fancy_property.connection_dependent">[docs]</a><span class="k">def</span> <span class="nf">connection_dependent</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A decorator to “deactivate” the property if the user&#39;s not active.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">_connection_dependent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_connection</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">{</span>
-                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                 <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;Nicht verfügbar&quot;</span><span class="p">),</span>
                 <span class="s1">&#39;empty&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
                 <span class="s1">&#39;tmp_readonly&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
@@ -272,9 +279,9 @@
 
         <span class="n">ret</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">ret</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">})</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">})</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">ret</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">}</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">ret</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">}</span>
 
         <span class="k">return</span> <span class="n">ret</span>
 
@@ -282,41 +289,76 @@
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/modules.html">Complete Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../sipa.html">sipa</a><ul>
+  <li><a href="../model.html">sipa.model</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../model.html" >sipa.model</a> &raquo;</li> 
-      </ul>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
     </div>
-    <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
-    </div>
+
+    
+
+    
   </body>
 </html>

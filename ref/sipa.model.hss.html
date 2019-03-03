@@ -1,0 +1,790 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.model.hss package &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sipa.model.pycroft package" href="sipa.model.pycroft.html" />
+    <link rel="prev" title="sipa.model package" href="sipa.model.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="sipa-model-hss-package">
+<h1>sipa.model.hss package<a class="headerlink" href="#sipa-model-hss-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sipa.model.hss.ldap">
+<span id="sipa-model-hss-ldap-module"></span><h2>sipa.model.hss.ldap module<a class="headerlink" href="#module-sipa.model.hss.ldap" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.model.hss.ldap.BaseLdapConnector">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.ldap.</code><code class="descname">BaseLdapConnector</code><span class="sig-paren">(</span><em>username=None</em>, <em>password=None</em>, <em>server_args={}</em>, <em>connect_args={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#BaseLdapConnector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.BaseLdapConnector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ldap3.core.connection.Connection</span></code></p>
+<p>This class is a wrapper for an ldap3 Connection.</p>
+<dl class="attribute">
+<dt id="sipa.model.hss.ldap.BaseLdapConnector.DEFAULT_CONNECT_ARGS">
+<code class="descname">DEFAULT_CONNECT_ARGS</code><em class="property"> = {}</em><a class="headerlink" href="#sipa.model.hss.ldap.BaseLdapConnector.DEFAULT_CONNECT_ARGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.ldap.BaseLdapConnector.DEFAULT_SERVER_ARGS">
+<code class="descname">DEFAULT_SERVER_ARGS</code><em class="property"> = {}</em><a class="headerlink" href="#sipa.model.hss.ldap.BaseLdapConnector.DEFAULT_SERVER_ARGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.ldap.BaseLdapConnector.config">
+<code class="descname">config</code><a class="headerlink" href="#sipa.model.hss.ldap.BaseLdapConnector.config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.ldap.BaseLdapConnector.dn">
+<code class="descname">dn</code><a class="headerlink" href="#sipa.model.hss.ldap.BaseLdapConnector.dn" title="Permalink to this definition">¶</a></dt>
+<dd><p>who_am_i returns a string of the form ‘dn:&lt;full dn&gt;’,
+but we are only interested in the &lt;full dn&gt; part.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.hss.ldap.BaseLdapConnector.fetch_user">
+<em class="property">classmethod </em><code class="descname">fetch_user</code><span class="sig-paren">(</span><em>username</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#BaseLdapConnector.fetch_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.BaseLdapConnector.fetch_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch <cite>username</cite> from LDAP, return a dict.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">username the username to be used in cls.__init__()</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a dict {‘uid’: ‘’, ‘name’: ‘’} containing the user data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.hss.ldap.BaseLdapConnector.get_bind_credentials">
+<em class="property">classmethod </em><code class="descname">get_bind_credentials</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#BaseLdapConnector.get_bind_credentials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.BaseLdapConnector.get_bind_credentials" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.hss.ldap.BaseLdapConnector.get_system_bind_credentials">
+<em class="property">classmethod </em><code class="descname">get_system_bind_credentials</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#BaseLdapConnector.get_system_bind_credentials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.BaseLdapConnector.get_system_bind_credentials" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.hss.ldap.BaseLdapConnector.system_bind">
+<em class="property">classmethod </em><code class="descname">system_bind</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#BaseLdapConnector.system_bind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.BaseLdapConnector.system_bind" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.ldap.HssConfigProxy">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.ldap.</code><code class="descname">HssConfigProxy</code><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#HssConfigProxy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.HssConfigProxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.ldap.HssLdapConnector">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.ldap.</code><code class="descname">HssLdapConnector</code><span class="sig-paren">(</span><em>username=None</em>, <em>password=None</em>, <em>server_args={}</em>, <em>connect_args={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#HssLdapConnector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.HssLdapConnector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sipa.model.hss.ldap.BaseLdapConnector" title="sipa.model.hss.ldap.BaseLdapConnector"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.model.hss.ldap.BaseLdapConnector</span></code></a></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.ldap.HssLdapConnector.DEFAULT_CONNECT_ARGS">
+<code class="descname">DEFAULT_CONNECT_ARGS</code><em class="property"> = {'authentication': 'SIMPLE', 'auto_bind': True, 'client_strategy': 'SYNC'}</em><a class="headerlink" href="#sipa.model.hss.ldap.HssLdapConnector.DEFAULT_CONNECT_ARGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.ldap.HssLdapConnector.DEFAULT_SERVER_ARGS">
+<code class="descname">DEFAULT_SERVER_ARGS</code><em class="property"> = {'get_info': 'ALL'}</em><a class="headerlink" href="#sipa.model.hss.ldap.HssLdapConnector.DEFAULT_SERVER_ARGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.ldap.HssLdapConnector.config">
+<code class="descname">config</code><em class="property"> = {}</em><a class="headerlink" href="#sipa.model.hss.ldap.HssLdapConnector.config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.hss.ldap.HssLdapConnector.get_bind_credentials">
+<em class="property">classmethod </em><code class="descname">get_bind_credentials</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#HssLdapConnector.get_bind_credentials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.HssLdapConnector.get_bind_credentials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the according userdn of <cite>username</cite> and the given password</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.hss.ldap.HssLdapConnector.get_system_bind_credentials">
+<em class="property">classmethod </em><code class="descname">get_system_bind_credentials</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#HssLdapConnector.get_system_bind_credentials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.HssLdapConnector.get_system_bind_credentials" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.hss.ldap.change_email">
+<code class="descclassname">sipa.model.hss.ldap.</code><code class="descname">change_email</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#change_email"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.change_email" title="Permalink to this definition">¶</a></dt>
+<dd><p>(with Conn(username, pw) as l:)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.hss.ldap.change_password">
+<code class="descclassname">sipa.model.hss.ldap.</code><code class="descname">change_password</code><span class="sig-paren">(</span><em>username</em>, <em>old</em>, <em>new</em>, <em>Connector=&lt;class 'sipa.model.hss.ldap.HssLdapConnector'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#change_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.change_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.hss.ldap.get_ldap_connection">
+<code class="descclassname">sipa.model.hss.ldap.</code><code class="descname">get_ldap_connection</code><span class="sig-paren">(</span><em>user</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#get_ldap_connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.get_ldap_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test method to establish an ldap connection</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.hss.ldap.might_be_ldap_dn">
+<code class="descclassname">sipa.model.hss.ldap.</code><code class="descname">might_be_ldap_dn</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#might_be_ldap_dn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.might_be_ldap_dn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Very rudimentary tester whether something looks like an LDAP dn.</p>
+<p>Basically, this assumes that the string is of the form “a=b,c=d,…”</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.hss.ldap.search_in_group">
+<code class="descclassname">sipa.model.hss.ldap.</code><code class="descname">search_in_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/ldap.html#search_in_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.ldap.search_in_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>(with Conn(username) as l:)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.model.hss.schema">
+<span id="sipa-model-hss-schema-module"></span><h2>sipa.model.hss.schema module<a class="headerlink" href="#module-sipa.model.hss.schema" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.model.hss.schema.Access">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.schema.</code><code class="descname">Access</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/schema.html#Access"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.schema.Access" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Access.building">
+<code class="descname">building</code><a class="headerlink" href="#sipa.model.hss.schema.Access.building" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Access.flat">
+<code class="descname">flat</code><a class="headerlink" href="#sipa.model.hss.schema.Access.flat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Access.floor">
+<code class="descname">floor</code><a class="headerlink" href="#sipa.model.hss.schema.Access.floor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Access.id">
+<code class="descname">id</code><a class="headerlink" href="#sipa.model.hss.schema.Access.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Access.room">
+<code class="descname">room</code><a class="headerlink" href="#sipa.model.hss.schema.Access.room" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Access.users">
+<code class="descname">users</code><a class="headerlink" href="#sipa.model.hss.schema.Access.users" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.schema.Account">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.schema.</code><code class="descname">Account</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/schema.html#Account"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.schema.Account" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.access">
+<code class="descname">access</code><a class="headerlink" href="#sipa.model.hss.schema.Account.access" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.access_id">
+<code class="descname">access_id</code><a class="headerlink" href="#sipa.model.hss.schema.Account.access_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.account">
+<code class="descname">account</code><a class="headerlink" href="#sipa.model.hss.schema.Account.account" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.combined_transactions">
+<code class="descname">combined_transactions</code><a class="headerlink" href="#sipa.model.hss.schema.Account.combined_transactions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.fees">
+<code class="descname">fees</code><a class="headerlink" href="#sipa.model.hss.schema.Account.fees" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.finance_balance">
+<code class="descname">finance_balance</code><a class="headerlink" href="#sipa.model.hss.schema.Account.finance_balance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.ips">
+<code class="descname">ips</code><a class="headerlink" href="#sipa.model.hss.schema.Account.ips" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.macs">
+<code class="descname">macs</code><a class="headerlink" href="#sipa.model.hss.schema.Account.macs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.name">
+<code class="descname">name</code><a class="headerlink" href="#sipa.model.hss.schema.Account.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.properties">
+<code class="descname">properties</code><a class="headerlink" href="#sipa.model.hss.schema.Account.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.traffic_balance">
+<code class="descname">traffic_balance</code><a class="headerlink" href="#sipa.model.hss.schema.Account.traffic_balance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.traffic_log">
+<code class="descname">traffic_log</code><a class="headerlink" href="#sipa.model.hss.schema.Account.traffic_log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.traffic_quota">
+<code class="descname">traffic_quota</code><a class="headerlink" href="#sipa.model.hss.schema.Account.traffic_quota" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.traffic_quota_id">
+<code class="descname">traffic_quota_id</code><a class="headerlink" href="#sipa.model.hss.schema.Account.traffic_quota_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.transactions">
+<code class="descname">transactions</code><a class="headerlink" href="#sipa.model.hss.schema.Account.transactions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Account.use_cache">
+<code class="descname">use_cache</code><a class="headerlink" href="#sipa.model.hss.schema.Account.use_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.schema.AccountFeeRelation">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.schema.</code><code class="descname">AccountFeeRelation</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/schema.html#AccountFeeRelation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.schema.AccountFeeRelation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.AccountFeeRelation.account">
+<code class="descname">account</code><a class="headerlink" href="#sipa.model.hss.schema.AccountFeeRelation.account" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.AccountFeeRelation.fee">
+<code class="descname">fee</code><a class="headerlink" href="#sipa.model.hss.schema.AccountFeeRelation.fee" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.AccountFeeRelation.fee_object">
+<code class="descname">fee_object</code><a class="headerlink" href="#sipa.model.hss.schema.AccountFeeRelation.fee_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.schema.AccountProperty">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.schema.</code><code class="descname">AccountProperty</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/schema.html#AccountProperty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.schema.AccountProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.AccountProperty.account">
+<code class="descname">account</code><a class="headerlink" href="#sipa.model.hss.schema.AccountProperty.account" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.AccountProperty.active">
+<code class="descname">active</code><a class="headerlink" href="#sipa.model.hss.schema.AccountProperty.active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.schema.AccountStatementLog">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.schema.</code><code class="descname">AccountStatementLog</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/schema.html#AccountStatementLog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.schema.AccountStatementLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.AccountStatementLog.account">
+<code class="descname">account</code><a class="headerlink" href="#sipa.model.hss.schema.AccountStatementLog.account" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.AccountStatementLog.amount">
+<code class="descname">amount</code><a class="headerlink" href="#sipa.model.hss.schema.AccountStatementLog.amount" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.AccountStatementLog.id">
+<code class="descname">id</code><a class="headerlink" href="#sipa.model.hss.schema.AccountStatementLog.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.AccountStatementLog.purpose">
+<code class="descname">purpose</code><a class="headerlink" href="#sipa.model.hss.schema.AccountStatementLog.purpose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.AccountStatementLog.timestamp">
+<code class="descname">timestamp</code><a class="headerlink" href="#sipa.model.hss.schema.AccountStatementLog.timestamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.schema.FeeInfo">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.schema.</code><code class="descname">FeeInfo</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/schema.html#FeeInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.schema.FeeInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.FeeInfo.amount">
+<code class="descname">amount</code><a class="headerlink" href="#sipa.model.hss.schema.FeeInfo.amount" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.FeeInfo.description">
+<code class="descname">description</code><a class="headerlink" href="#sipa.model.hss.schema.FeeInfo.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.FeeInfo.id">
+<code class="descname">id</code><a class="headerlink" href="#sipa.model.hss.schema.FeeInfo.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.FeeInfo.timestamp">
+<code class="descname">timestamp</code><a class="headerlink" href="#sipa.model.hss.schema.FeeInfo.timestamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.schema.IP">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.schema.</code><code class="descname">IP</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/schema.html#IP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.schema.IP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.IP.account">
+<code class="descname">account</code><a class="headerlink" href="#sipa.model.hss.schema.IP.account" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.IP.ip">
+<code class="descname">ip</code><a class="headerlink" href="#sipa.model.hss.schema.IP.ip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.schema.Mac">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.schema.</code><code class="descname">Mac</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/schema.html#Mac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.schema.Mac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Mac.account">
+<code class="descname">account</code><a class="headerlink" href="#sipa.model.hss.schema.Mac.account" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Mac.id">
+<code class="descname">id</code><a class="headerlink" href="#sipa.model.hss.schema.Mac.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.Mac.mac">
+<code class="descname">mac</code><a class="headerlink" href="#sipa.model.hss.schema.Mac.mac" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.schema.TrafficLog">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.schema.</code><code class="descname">TrafficLog</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/schema.html#TrafficLog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.schema.TrafficLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.TrafficLog.account">
+<code class="descname">account</code><a class="headerlink" href="#sipa.model.hss.schema.TrafficLog.account" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.TrafficLog.bytes_in">
+<code class="descname">bytes_in</code><a class="headerlink" href="#sipa.model.hss.schema.TrafficLog.bytes_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.TrafficLog.bytes_out">
+<code class="descname">bytes_out</code><a class="headerlink" href="#sipa.model.hss.schema.TrafficLog.bytes_out" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.TrafficLog.date">
+<code class="descname">date</code><a class="headerlink" href="#sipa.model.hss.schema.TrafficLog.date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.TrafficLog.id">
+<code class="descname">id</code><a class="headerlink" href="#sipa.model.hss.schema.TrafficLog.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.schema.TrafficQuota">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.schema.</code><code class="descname">TrafficQuota</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/schema.html#TrafficQuota"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.schema.TrafficQuota" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.TrafficQuota.accounts">
+<code class="descname">accounts</code><a class="headerlink" href="#sipa.model.hss.schema.TrafficQuota.accounts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.TrafficQuota.description">
+<code class="descname">description</code><a class="headerlink" href="#sipa.model.hss.schema.TrafficQuota.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.schema.TrafficQuota.id">
+<code class="descname">id</code><a class="headerlink" href="#sipa.model.hss.schema.TrafficQuota.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.model.hss.user">
+<span id="sipa-model-hss-user-module"></span><h2>sipa.model.hss.user module<a class="headerlink" href="#module-sipa.model.hss.user" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.model.hss.user.FinanceInformation">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.user.</code><code class="descname">FinanceInformation</code><span class="sig-paren">(</span><em>balance</em>, <em>history</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/user.html#FinanceInformation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.user.FinanceInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sipa.model.html#sipa.model.finance.BaseFinanceInformation" title="sipa.model.finance.BaseFinanceInformation"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.model.finance.BaseFinanceInformation</span></code></a></p>
+<dl class="classmethod">
+<dt id="sipa.model.hss.user.FinanceInformation.from_pg_account">
+<em class="property">classmethod </em><code class="descname">from_pg_account</code><span class="sig-paren">(</span><em>pg_account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/user.html#FinanceInformation.from_pg_account"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.user.FinanceInformation.from_pg_account" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.FinanceInformation.has_to_pay">
+<code class="descname">has_to_pay</code><em class="property"> = True</em><a class="headerlink" href="#sipa.model.hss.user.FinanceInformation.has_to_pay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.FinanceInformation.history">
+<code class="descname">history</code><a class="headerlink" href="#sipa.model.hss.user.FinanceInformation.history" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> History of payments</p>
+<p>This method should return an iterable of a (datetime, int)
+tuple.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.FinanceInformation.last_update">
+<code class="descname">last_update</code><a class="headerlink" href="#sipa.model.hss.user.FinanceInformation.last_update" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The time of the last update.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.FinanceInformation.raw_balance">
+<code class="descname">raw_balance</code><a class="headerlink" href="#sipa.model.hss.user.FinanceInformation.raw_balance" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The current balance</p>
+<p>If <a class="reference internal" href="#sipa.model.hss.user.FinanceInformation.has_to_pay" title="sipa.model.hss.user.FinanceInformation.has_to_pay"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_to_pay()</span></code></a> is False, this method will not be
+used implicitly.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.hss.user.User">
+<em class="property">class </em><code class="descclassname">sipa.model.hss.user.</code><code class="descname">User</code><span class="sig-paren">(</span><em>uid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/user.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.user.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sipa.model.html#sipa.model.user.BaseUser" title="sipa.model.user.BaseUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.model.user.BaseUser</span></code></a></p>
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.LdapConnector">
+<code class="descname">LdapConnector</code><a class="headerlink" href="#sipa.model.hss.user.User.LdapConnector" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sipa.model.hss.ldap.HssLdapConnector" title="sipa.model.hss.ldap.HssLdapConnector"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.model.hss.ldap.HssLdapConnector</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.hss.user.User.activate_network_access">
+<code class="descname">activate_network_access</code><span class="sig-paren">(</span><em>password</em>, <em>mac</em>, <em>birthdate</em>, <em>host_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/user.html#User.activate_network_access"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.user.User.activate_network_access" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.address">
+<code class="descname">address</code><a class="headerlink" href="#sipa.model.hss.user.User.address" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Where the user lives</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.hss.user.User.authenticate">
+<em class="property">classmethod </em><code class="descname">authenticate</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/user.html#User.authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.user.User.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a User instance or raise PasswordInvalid</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.can_change_password">
+<code class="descname">can_change_password</code><em class="property"> = True</em><a class="headerlink" href="#sipa.model.hss.user.User.can_change_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.hss.user.User.change_mac_address">
+<code class="descname">change_mac_address</code><span class="sig-paren">(</span><em>new_mac</em>, <em>host_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/user.html#User.change_mac_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.user.User.change_mac_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.hss.user.User.change_password">
+<code class="descname">change_password</code><span class="sig-paren">(</span><em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/user.html#User.change_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.user.User.change_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the user’s password from old to new.</p>
+<p>Although the password has been checked using
+re_authenticate(), some data sources like those which have to
+perform an LDAP bind need it anyways.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.finance_information">
+<code class="descname">finance_information</code><a class="headerlink" href="#sipa.model.hss.user.User.finance_information" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Finance information about the User.</p>
+<p>If not supported, set to None.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.hss.user.User.from_ip">
+<em class="property">classmethod </em><code class="descname">from_ip</code><span class="sig-paren">(</span><em>ip</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/user.html#User.from_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.user.User.from_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a user based on an ip.</p>
+<p>If there is no user associated with this ip, return AnonymousUserMixin.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.hss.user.User.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/user.html#User.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.user.User.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by user_loader. Return a User Instance.</p>
+<p>Returns a valid User instance if a psql user with the given
+username exists, else AnonymousUserMixin().</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.has_connection">
+<code class="descname">has_connection</code><a class="headerlink" href="#sipa.model.hss.user.User.has_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Whether the user has a connection</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.hostalias">
+<code class="descname">hostalias</code><a class="headerlink" href="#sipa.model.hss.user.User.hostalias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.hostname">
+<code class="descname">hostname</code><a class="headerlink" href="#sipa.model.hss.user.User.hostname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.id">
+<code class="descname">id</code><a class="headerlink" href="#sipa.model.hss.user.User.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.ips">
+<code class="descname">ips</code><a class="headerlink" href="#sipa.model.hss.user.User.ips" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.login">
+<code class="descname">login</code><a class="headerlink" href="#sipa.model.hss.user.User.login" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The login</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.mac">
+<code class="descname">mac</code><a class="headerlink" href="#sipa.model.hss.user.User.mac" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The MAC Address</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.mail">
+<code class="descname">mail</code><a class="headerlink" href="#sipa.model.hss.user.User.mail" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The mail address.</p>
+<p>This can either be the forward or the internal adress
+(<code class="docutils literal notranslate"><span class="pre">&quot;{login}&#64;{server}&quot;</span></code>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.name">
+<code class="descname">name</code><a class="headerlink" href="#sipa.model.hss.user.User.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.network_access_active">
+<code class="descname">network_access_active</code><a class="headerlink" href="#sipa.model.hss.user.User.network_access_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.hss.user.User.payment_details">
+<code class="descname">payment_details</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/user.html#User.payment_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.user.User.payment_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Payment details for the User.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.hss.user.User.re_authenticate">
+<code class="descname">re_authenticate</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/hss/user.html#User.re_authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.hss.user.User.re_authenticate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.realname">
+<code class="descname">realname</code><a class="headerlink" href="#sipa.model.hss.user.User.realname" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The real-life name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.status">
+<code class="descname">status</code><a class="headerlink" href="#sipa.model.hss.user.User.status" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The current membership status in the sense of
+the AG DSN constitution.</p>
+<p>This mostly means active, ex-active or passive.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.traffic_history">
+<code class="descname">traffic_history</code><a class="headerlink" href="#sipa.model.hss.user.User.traffic_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <cite>model.User.traffic_history</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.use_cache">
+<code class="descname">use_cache</code><a class="headerlink" href="#sipa.model.hss.user.User.use_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Flag indicating cache usage.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.userdb">
+<code class="descname">userdb</code><a class="headerlink" href="#sipa.model.hss.user.User.userdb" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseUserDB</span></code> object, if available.</p>
+<p>If <a class="reference internal" href="#sipa.model.hss.user.User.userdb_status" title="sipa.model.hss.user.User.userdb_status"><code class="xref py py-data docutils literal notranslate"><span class="pre">userdb_status</span></code></a> is non-empty, it is assumed to exist.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.hss.user.User.userdb_status">
+<code class="descname">userdb_status</code><a class="headerlink" href="#sipa.model.hss.user.User.userdb_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.model.hss">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sipa.model.hss" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="sipa.model.hss.datasource">
+<code class="descclassname">sipa.model.hss.</code><code class="descname">datasource</code><em class="property"> = &lt;DataSource 'hss'&gt;</em><a class="headerlink" href="#sipa.model.hss.datasource" title="Permalink to this definition">¶</a></dt>
+<dd><p>The HSS datasource</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model.html">Model</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Complete Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sipa.html">sipa package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">sipa</a><ul>
+  <li><a href="sipa.html">sipa package</a><ul>
+  <li><a href="sipa.model.html">sipa.model package</a><ul>
+      <li>Previous: <a href="sipa.model.html" title="previous chapter">sipa.model package</a></li>
+      <li>Next: <a href="sipa.model.pycroft.html" title="next chapter">sipa.model.pycroft package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/ref/sipa.model.hss.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

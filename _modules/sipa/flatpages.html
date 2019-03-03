@@ -1,0 +1,452 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.flatpages &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for sipa.flatpages</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">attrgetter</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">splitext</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">from</span> <span class="nn">babel.core</span> <span class="k">import</span> <span class="n">Locale</span><span class="p">,</span> <span class="n">UnknownLocaleError</span><span class="p">,</span> <span class="n">negotiate_locale</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">abort</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">flask_flatpages</span> <span class="k">import</span> <span class="n">FlatPages</span><span class="p">,</span> <span class="n">Page</span>
+<span class="kn">from</span> <span class="nn">yaml.scanner</span> <span class="k">import</span> <span class="n">ScannerError</span>
+
+<span class="kn">from</span> <span class="nn">sipa.babel</span> <span class="k">import</span> <span class="n">get_user_locale_setting</span><span class="p">,</span> <span class="n">possible_locales</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Node"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.Node">[docs]</a><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;An abstract object with a parent and an id&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">node_id</span><span class="p">):</span>
+        <span class="c1">#: The CategorizedFlatPages extension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extension</span> <span class="o">=</span> <span class="n">extension</span>
+        <span class="c1">#: The parent object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="c1">#: This object&#39;s id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">node_id</span></div>
+
+
+<div class="viewcode-block" id="Article"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.Article">[docs]</a><span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The Article class</span>
+
+<span class="sd">    An article provides the possibility to access multiple versions of</span>
+<span class="sd">    a Page.  In this case, :py:attr:`localized_pages` is a dict where</span>
+<span class="sd">    a locale string points to a :py:obj:`Page`.  The latter represents</span>
+<span class="sd">    the actual markdown file located in the repository.</span>
+
+<span class="sd">    After the initialization, which consists of adding pages with</span>
+<span class="sd">    :py:meth:`add_page`, internal methods access only the page with</span>
+<span class="sd">    the correct locale, which is proxied by :py:attr:`localized_page`.</span>
+
+<span class="sd">    Besides that, :py:meth:`__getattr__` comfortably passes queries to</span>
+<span class="sd">    the :py:obj:`localized_page.meta` dict.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">article_id</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">article_id</span><span class="p">)</span>
+        <span class="c1">#: The dict containing the localized pages of this article</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">localized_pages</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Page</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1">#: The default page</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_page</span><span class="p">:</span> <span class="n">Page</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Article.add_page"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.Article.add_page">[docs]</a>    <span class="k">def</span> <span class="nf">add_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="n">Page</span><span class="p">,</span> <span class="n">locale</span><span class="p">:</span> <span class="n">Locale</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a page to the pages list.</span>
+
+<span class="sd">        If the name is not ``index`` and the validation via</span>
+<span class="sd">        :py:meth:`validate_page_meta` fails, skip this.</span>
+
+<span class="sd">        If no :py:attr:`default_page` is set or the locale equals</span>
+<span class="sd">        :py:obj:`babel.default_locale`, set :py:attr:`default_page` to</span>
+<span class="sd">        the given page.</span>
+
+<span class="sd">        Update the :py:attr:`localized_pages` dict at the</span>
+<span class="sd">        ``str(locale)`` key to ``page``.</span>
+
+<span class="sd">        :param page: The page to add</span>
+<span class="sd">        :param locale: The locale of this page</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s1">&#39;index&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_page_meta</span><span class="p">(</span><span class="n">page</span><span class="p">)):</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">localized_pages</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">locale</span><span class="p">)]</span> <span class="o">=</span> <span class="n">page</span>
+        <span class="n">default_locale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">babel_instance</span><span class="o">.</span><span class="n">default_locale</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_page</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">locale</span> <span class="o">==</span> <span class="n">default_locale</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default_page</span> <span class="o">=</span> <span class="n">page</span></div>
+
+<div class="viewcode-block" id="Article.validate_page_meta"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.Article.validate_page_meta">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">validate_page_meta</span><span class="p">(</span><span class="n">page</span><span class="p">:</span> <span class="n">Page</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Validate that the pages meta-section.</span>
+
+<span class="sd">        This function is necessary because a page with incorrect</span>
+<span class="sd">        metadata will raise some Errors when trying to access them.</span>
+<span class="sd">        Note that this is done rather early as pages are cached.</span>
+
+<span class="sd">        :param page: The page to validate</span>
+
+<span class="sd">        :returns: Whether the page is valid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;title&#39;</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">meta</span>
+        <span class="k">except</span> <span class="n">ScannerError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rank</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The rank of the :py:attr:`localized_page`</span>
+
+<span class="sd">        This is what is given in the page&#39;s ``rank`` meta-attribute if</span>
+<span class="sd">        available else ``100``.</span>
+
+<span class="sd">        :returns: The :py:attr:`localized_page` s rank</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">localized_page</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rank&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">html</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The :py:attr:`localized_page` as html</span>
+
+<span class="sd">        :returns: The :py:attr:`localized_page` converted to html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">localized_page</span><span class="o">.</span><span class="n">html</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">link</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;A valid link to this article</span>
+
+<span class="sd">        :returns: The URL or ``None`` if the link starts with ``&quot;/&quot;``</span>
+
+<span class="sd">        :raises: :py:obj:`AttributeError` if :py:attr:`localized_page`</span>
+<span class="sd">                 doesn&#39;t have a link in the meta section.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">raw_link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="s1">&#39;link&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">raw_link</span> <span class="ow">and</span> <span class="n">raw_link</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dirname</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">url_root</span><span class="p">)</span> <span class="o">+</span> <span class="n">raw_link</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Return the meta attribute of the localized page</span>
+
+<span class="sd">        :param attr: The meta attribute to access</span>
+
+<span class="sd">        :returns: The meta attribute of :py:attr:`localized_page`</span>
+
+<span class="sd">        :raises: :py:obj:`AttributeError` if :py:obj:`attr` doesn&#39;t</span>
+<span class="sd">                 exist in the page&#39;s meta</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">localized_page</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{!r}</span><span class="s2"> object has no attribute </span><span class="si">{!r}</span><span class="s2">&quot;</span>
+                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span> <span class="kn">from</span> <span class="nn">e</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">localized_page</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Page</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The current localized page</span>
+
+<span class="sd">        This is the flatpage of the first available locale from</span>
+<span class="sd">        :py:func:`~sipa.babel.locale_preferences`, or</span>
+<span class="sd">        :py:attr:`default_page`.</span>
+
+<span class="sd">        :returns: The localized page</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">available_locales</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">localized_pages</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="n">user_locale</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">get_user_locale_setting</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">user_locale</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">preferred_locales</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">preferred_locales</span> <span class="o">=</span> <span class="p">[</span><span class="n">user_locale</span><span class="p">]</span>
+        <span class="n">preferred_locales</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">accept_languages</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="n">negotiated_locale</span> <span class="o">=</span> <span class="n">negotiate_locale</span><span class="p">(</span>
+            <span class="n">preferred_locales</span><span class="p">,</span> <span class="n">available_locales</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">negotiated_locale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">localized_pages</span><span class="p">[</span><span class="n">negotiated_locale</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_page</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">file_basename</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The basename of the localized page without extension.</span>
+
+<span class="sd">        Example: `categ/article.en.md` → `article.en`</span>
+
+<span class="sd">        :returns: The basename of the :py:attr:`localized_page`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">localized_page</span><span class="o">.</span><span class="n">path</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Category"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.Category">[docs]</a><span class="k">class</span> <span class="nc">Category</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The Category class</span>
+
+<span class="sd">    * What&#39;s it used for?</span>
+
+<span class="sd">    - Containing articles → should be iterable!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">category_id</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">category_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_articles</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">articles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return an iterator over the articles sorted by rank</span>
+
+<span class="sd">        Only used for building the navigation bar</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_articles</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;rank&#39;</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;An attribute interface.</span>
+
+<span class="sd">        - Used for: [&#39;rank&#39;, &#39;index&#39;, &#39;id&#39;, &#39;name&#39;]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_articles</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{!r}</span><span class="s2"> object has no attribute </span><span class="si">{!r}</span><span class="s2">&quot;</span>
+                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Category.add_child_category"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.Category.add_child_category">[docs]</a>    <span class="k">def</span> <span class="nf">add_child_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new Category from an id, keep it and return it.</span>
+
+<span class="sd">        If the category already exists, return it instead and do nothing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">category</span>
+
+        <span class="n">category</span> <span class="o">=</span> <span class="n">Category</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">extension</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">category</span>
+        <span class="k">return</span> <span class="n">category</span></div>
+
+    <span class="k">def</span> <span class="nf">_parse_page_basename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">basename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Split the page basename into the article id and locale.</span>
+
+<span class="sd">        `basename` is (supposed to be) of the form</span>
+<span class="sd">        `&lt;article_id&gt;.&lt;locale&gt;`, e.g. `news.en`.</span>
+
+<span class="sd">        If either there is no dot or the locale is unknown,</span>
+<span class="sd">        the `default_locale` of babel is used.</span>
+
+<span class="sd">        :return: The tuple `(article_id, locale)`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">default_locale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">babel_instance</span><span class="o">.</span><span class="n">default_locale</span>
+        <span class="n">article_id</span><span class="p">,</span> <span class="n">sep</span><span class="p">,</span> <span class="n">locale_identifier</span> <span class="o">=</span> <span class="n">basename</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sep</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">basename</span><span class="p">,</span> <span class="n">default_locale</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">locale</span> <span class="o">=</span> <span class="n">Locale</span><span class="p">(</span><span class="n">locale_identifier</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">UnknownLocaleError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unknown locale </span><span class="si">%s</span><span class="s2"> of arcticle </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                         <span class="n">locale_identifier</span><span class="p">,</span> <span class="n">basename</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">basename</span><span class="p">,</span> <span class="n">default_locale</span>
+        <span class="k">if</span> <span class="n">locale</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">possible_locales</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Locale </span><span class="si">%s</span><span class="s2"> of article is not a possible locale&quot;</span><span class="p">,</span>
+                           <span class="n">locale_identifier</span><span class="p">,</span> <span class="n">basename</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">basename</span><span class="p">,</span> <span class="n">default_locale</span>
+        <span class="k">return</span> <span class="n">article_id</span><span class="p">,</span> <span class="n">locale</span>
+
+<div class="viewcode-block" id="Category.add_article"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.Category.add_article">[docs]</a>    <span class="k">def</span> <span class="nf">add_article</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a page to an article and create the latter if nonexistent.</span>
+
+<span class="sd">        Firstly, the article_id is being extracted according to</span>
+<span class="sd">        above scheme.  If an `Article` of this id already exists, it</span>
+<span class="sd">        is asked to add the page accordingly.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">article_id</span><span class="p">,</span> <span class="n">locale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_page_basename</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+
+        <span class="n">article</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_articles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">article_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">article</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">article</span> <span class="o">=</span> <span class="n">Article</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">extension</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">article_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_articles</span><span class="p">[</span><span class="n">article_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">article</span>
+
+        <span class="n">article</span><span class="o">.</span><span class="n">add_page</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">locale</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="CategorizedFlatPages"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.CategorizedFlatPages">[docs]</a><span class="k">class</span> <span class="nc">CategorizedFlatPages</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;The main interface to gather pages and categories</span>
+
+<span class="sd">    * What is it used for?</span>
+
+<span class="sd">    - Looping: E.g. In the navbar</span>
+<span class="sd">    - get news → get_articles_of_category(&#39;news&#39;)</span>
+<span class="sd">    - get static page → get_or_404()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flat_pages</span> <span class="o">=</span> <span class="n">FlatPages</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_category</span> <span class="o">=</span> <span class="n">Category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;&lt;root&gt;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="CategorizedFlatPages.init_app"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.CategorizedFlatPages.init_app">[docs]</a>    <span class="k">def</span> <span class="nf">init_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Already initialized with an app&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">cf_pages</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flat_pages</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_categories</span><span class="p">()</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Yield all categories as an iterable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_category</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+                      <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;rank&#39;</span><span class="p">))</span>
+
+<div class="viewcode-block" id="CategorizedFlatPages.get"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.CategorizedFlatPages.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_id</span><span class="p">,</span> <span class="n">article_id</span><span class="p">):</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_category</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">category_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">category</span><span class="o">.</span><span class="n">_articles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">article_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CategorizedFlatPages.get_category"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.CategorizedFlatPages.get_category">[docs]</a>    <span class="k">def</span> <span class="nf">get_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the `Category` object from a given name (id)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_category</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">category_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CategorizedFlatPages.get_articles_of_category"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.CategorizedFlatPages.get_articles_of_category">[docs]</a>    <span class="k">def</span> <span class="nf">get_articles_of_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the articles of a category</span>
+
+<span class="sd">        - ONLY used for fetching news</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_category</span><span class="p">(</span><span class="n">category_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">article</span> <span class="k">for</span> <span class="n">article</span> <span class="ow">in</span> <span class="n">category</span><span class="o">.</span><span class="n">_articles</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">article</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="s1">&#39;index&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CategorizedFlatPages.get_or_404"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.CategorizedFlatPages.get_or_404">[docs]</a>    <span class="k">def</span> <span class="nf">get_or_404</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_id</span><span class="p">,</span> <span class="n">article_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fetch a static page&quot;&quot;&quot;</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">category_id</span><span class="p">,</span> <span class="n">article_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">page</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">abort</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">page</span></div>
+
+    <span class="k">def</span> <span class="nf">_init_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TODO: Store categories, not articles</span>
+        <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">flat_pages</span><span class="p">:</span>
+            <span class="c1"># get category + page name</span>
+            <span class="c1"># plus, assert that there is nothing more to that.</span>
+            <span class="n">components</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_category</span>
+            <span class="k">for</span> <span class="n">category_id</span> <span class="ow">in</span> <span class="n">components</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">add_child_category</span><span class="p">(</span><span class="n">category_id</span><span class="p">)</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="n">components</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">add_article</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">page</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CategorizedFlatPages.reload"><a class="viewcode-back" href="../../ref/sipa.html#sipa.flatpages.CategorizedFlatPages.reload">[docs]</a>    <span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flat_pages</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_categories</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ref/modules.html">Complete Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../sipa.html">sipa</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

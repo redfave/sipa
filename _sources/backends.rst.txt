@@ -1,25 +1,16 @@
-=====
-Model
-=====
+.. py:module:: sipa.backends
 
-The `model` package contains
+==========================
+Backends (Flask extension)
+==========================
 
-* The :py:class:`Backends` extension providing the infrastructure to
-  use multiple backends
-* The implementations of such backends in the sub-packages.
-
-Backends
---------
-
-This is automatically generated documentation from  the `sipa.model` package.
-
-.. automodule:: sipa.model
-   :members:
-   :exclude-members: Backends
+sipa.backends
+-------------
 
 .. autoclass:: Backends
    :members:
    :undoc-members:
+   :noindex:
 
 .. data:: backends
 
@@ -38,24 +29,8 @@ Sipa distinguishes between two concepts:
   `display_name` and the datasource it belongs to.  Also, it holds information about the IP
   subnets, since these are bound to a location, and not the technical backend.
 
-.. automodule:: sipa.model.datasource
+.. automodule:: sipa.backends.datasource
    :member-order: bysource
    :members:
    :undoc-members:
-
-
-User
-----
-
-.. automodule:: sipa.model.user
-   :member-order: groupwise
-   :members:
-   :undoc-members:
-
-
-Property
---------
-
-.. automodule:: sipa.model.fancy_property
-   :members:
-   :undoc-members:
+   :noindex:

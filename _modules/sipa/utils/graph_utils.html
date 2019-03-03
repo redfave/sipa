@@ -1,0 +1,209 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.utils.graph_utils &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for sipa.utils.graph_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">pygal</span>
+<span class="kn">from</span> <span class="nn">flask_babel</span> <span class="k">import</span> <span class="n">gettext</span>
+<span class="kn">from</span> <span class="nn">pygal</span> <span class="k">import</span> <span class="n">Graph</span>
+<span class="kn">from</span> <span class="nn">pygal.colors</span> <span class="k">import</span> <span class="n">hsl_to_rgb</span>
+<span class="kn">from</span> <span class="nn">pygal.style</span> <span class="k">import</span> <span class="n">Style</span>
+
+<span class="kn">from</span> <span class="nn">sipa.units</span> <span class="k">import</span> <span class="p">(</span><span class="n">format_as_traffic</span><span class="p">,</span> <span class="n">max_divisions</span><span class="p">,</span>
+                        <span class="n">reduce_by_base</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sipa.utils.babel_utils</span> <span class="k">import</span> <span class="n">get_weekday</span>
+
+
+<div class="viewcode-block" id="rgb_string"><a class="viewcode-back" href="../../../ref/sipa.utils.html#sipa.utils.graph_utils.rgb_string">[docs]</a><span class="k">def</span> <span class="nf">rgb_string</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;#</span><span class="si">{:02X}{:02X}{:02X}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">g</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="hsl"><a class="viewcode-back" href="../../../ref/sipa.utils.html#sipa.utils.graph_utils.hsl">[docs]</a><span class="k">def</span> <span class="nf">hsl</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">rgb_string</span><span class="p">(</span><span class="o">*</span><span class="n">hsl_to_rgb</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">l</span><span class="p">))</span></div>
+
+
+<span class="n">traffic_style</span> <span class="o">=</span> <span class="n">Style</span><span class="p">(</span>
+    <span class="n">background</span><span class="o">=</span><span class="s1">&#39;transparent&#39;</span><span class="p">,</span>
+    <span class="n">opacity</span><span class="o">=</span><span class="s1">&#39;.6&#39;</span><span class="p">,</span>
+    <span class="n">opacity_hover</span><span class="o">=</span><span class="s1">&#39;.9&#39;</span><span class="p">,</span>
+    <span class="n">transition</span><span class="o">=</span><span class="s1">&#39;200ms ease-in&#39;</span><span class="p">,</span>
+    <span class="n">colors</span><span class="o">=</span><span class="p">(</span><span class="n">hsl</span><span class="p">(</span><span class="mi">130</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span> <span class="n">hsl</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span> <span class="n">hsl</span><span class="p">(</span><span class="mi">190</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">60</span><span class="p">)),</span>
+    <span class="n">font_family</span><span class="o">=</span><span class="s1">&#39;default&#39;</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="default_chart"><a class="viewcode-back" href="../../../ref/sipa.utils.html#sipa.utils.graph_utils.default_chart">[docs]</a><span class="k">def</span> <span class="nf">default_chart</span><span class="p">(</span><span class="n">chart_type</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">chart_type</span><span class="p">(</span>
+        <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="mi">350</span><span class="p">,</span>
+        <span class="n">show_y_guides</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">human_readable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">major_label_font_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+        <span class="n">label_font_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="n">traffic_style</span><span class="p">,</span>
+        <span class="n">disable_xml_declaration</span><span class="o">=</span><span class="n">inline</span><span class="p">,</span>   <span class="c1"># for direct html import</span>
+        <span class="n">js</span><span class="o">=</span><span class="p">[],</span>  <span class="c1"># prevent automatically fetching scripts from github</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_traffic_chart"><a class="viewcode-back" href="../../../ref/sipa.utils.html#sipa.utils.graph_utils.generate_traffic_chart">[docs]</a><span class="k">def</span> <span class="nf">generate_traffic_chart</span><span class="p">(</span><span class="n">traffic_data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">inline</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Graph</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Create a graph object from the input traffic data with pygal.</span>
+<span class="sd">     If inline is set, the chart is being passed the option to not add an xml</span>
+<span class="sd">     declaration header to the beginning of the `render()` output, so it can</span>
+<span class="sd">      be directly included in HTML code (wrapped by a `&lt;figure&gt;`)</span>
+
+<span class="sd">    :param traffic_data: The traffic data as given by `user.traffic_history`</span>
+<span class="sd">    :param inline: Determines the option `disable_xml_declaration`</span>
+
+<span class="sd">    :return: The graph object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># choose unit according to maximum of `throughput`</span>
+    <span class="n">divisions</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_divisions</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">day</span><span class="p">[</span><span class="s1">&#39;throughput&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">traffic_data</span><span class="p">))</span>
+                 <span class="k">if</span> <span class="n">traffic_data</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">traffic_data</span> <span class="o">=</span> <span class="p">[{</span><span class="n">key</span><span class="p">:</span> <span class="p">(</span><span class="n">reduce_by_base</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">divisions</span><span class="o">=</span><span class="n">divisions</span><span class="p">)</span>
+                           <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="s1">&#39;throughput&#39;</span><span class="p">]</span>
+                           <span class="k">else</span> <span class="n">val</span><span class="p">)</span>
+                     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                     <span class="p">}</span>
+                    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">traffic_data</span><span class="p">]</span>
+
+    <span class="n">traffic_chart</span> <span class="o">=</span> <span class="n">default_chart</span><span class="p">(</span>
+        <span class="n">pygal</span><span class="o">.</span><span class="n">Bar</span><span class="p">,</span>
+        <span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;Traffic (MiB)&quot;</span><span class="p">),</span>
+        <span class="n">inline</span><span class="p">,</span>
+        <span class="c1"># don&#39;t divide, since the raw values already have been prepared.</span>
+        <span class="c1"># `divide=False` effectively just appends the according unit.</span>
+        <span class="n">value_formatter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="n">format_as_traffic</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">divisions</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">traffic_chart</span><span class="o">.</span><span class="n">x_labels</span> <span class="o">=</span> <span class="p">(</span><span class="n">get_weekday</span><span class="p">(</span><span class="n">day</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">traffic_data</span><span class="p">)</span>
+    <span class="n">traffic_chart</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;Eingehend&quot;</span><span class="p">),</span>
+                      <span class="p">[</span><span class="n">day</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">traffic_data</span><span class="p">],</span>
+                      <span class="n">stroke_style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;dasharray&#39;</span><span class="p">:</span> <span class="s1">&#39;5&#39;</span><span class="p">})</span>
+    <span class="n">traffic_chart</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;Ausgehend&quot;</span><span class="p">),</span>
+                      <span class="p">[</span><span class="n">day</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">traffic_data</span><span class="p">],</span>
+                      <span class="n">stroke_style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;dasharray&#39;</span><span class="p">:</span> <span class="s1">&#39;5&#39;</span><span class="p">})</span>
+    <span class="n">traffic_chart</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;Gesamt&quot;</span><span class="p">),</span>
+                      <span class="p">[</span><span class="n">day</span><span class="p">[</span><span class="s1">&#39;throughput&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">traffic_data</span><span class="p">],</span>
+                      <span class="n">stroke_style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">traffic_chart</span></div>
+
+
+<div class="viewcode-block" id="provide_render_function"><a class="viewcode-back" href="../../../ref/sipa.utils.html#sipa.utils.graph_utils.provide_render_function">[docs]</a><span class="k">def</span> <span class="nf">provide_render_function</span><span class="p">(</span><span class="n">generator</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">generator</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">renderer</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/modules.html">Complete Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../sipa.html">sipa</a><ul>
+  <li><a href="../utils.html">sipa.utils</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

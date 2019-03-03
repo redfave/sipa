@@ -1,0 +1,54 @@
+sipa.model.pycroft package
+==========================
+
+Submodules
+----------
+
+sipa.model.pycroft.api module
+-----------------------------
+
+.. automodule:: sipa.model.pycroft.api
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.model.pycroft.exc module
+-----------------------------
+
+.. automodule:: sipa.model.pycroft.exc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.model.pycroft.schema module
+--------------------------------
+
+.. automodule:: sipa.model.pycroft.schema
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.model.pycroft.unserialize module
+-------------------------------------
+
+.. automodule:: sipa.model.pycroft.unserialize
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.model.pycroft.user module
+------------------------------
+
+.. automodule:: sipa.model.pycroft.user
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: sipa.model.pycroft
+    :members:
+    :undoc-members:
+    :show-inheritance:

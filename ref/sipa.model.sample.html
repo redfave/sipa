@@ -1,0 +1,359 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.model.sample package &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sipa.utils package" href="sipa.utils.html" />
+    <link rel="prev" title="sipa.model.pycroft package" href="sipa.model.pycroft.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="sipa-model-sample-package">
+<h1>sipa.model.sample package<a class="headerlink" href="#sipa-model-sample-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sipa.model.sample.user">
+<span id="sipa-model-sample-user-module"></span><h2>sipa.model.sample.user module<a class="headerlink" href="#module-sipa.model.sample.user" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.model.sample.user.SampleFinanceInformation">
+<em class="property">class </em><code class="descclassname">sipa.model.sample.user.</code><code class="descname">SampleFinanceInformation</code><a class="reference internal" href="../_modules/sipa/model/sample/user.html#SampleFinanceInformation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.sample.user.SampleFinanceInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sipa.model.html#sipa.model.finance.BaseFinanceInformation" title="sipa.model.finance.BaseFinanceInformation"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.model.finance.BaseFinanceInformation</span></code></a></p>
+<dl class="attribute">
+<dt id="sipa.model.sample.user.SampleFinanceInformation.has_to_pay">
+<code class="descname">has_to_pay</code><em class="property"> = True</em><a class="headerlink" href="#sipa.model.sample.user.SampleFinanceInformation.has_to_pay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.SampleFinanceInformation.history">
+<code class="descname">history</code><a class="headerlink" href="#sipa.model.sample.user.SampleFinanceInformation.history" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> History of payments</p>
+<p>This method should return an iterable of a (datetime, int)
+tuple.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.SampleFinanceInformation.last_update">
+<code class="descname">last_update</code><a class="headerlink" href="#sipa.model.sample.user.SampleFinanceInformation.last_update" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The time of the last update.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.SampleFinanceInformation.raw_balance">
+<code class="descname">raw_balance</code><a class="headerlink" href="#sipa.model.sample.user.SampleFinanceInformation.raw_balance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some random balance</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.sample.user.User">
+<em class="property">class </em><code class="descclassname">sipa.model.sample.user.</code><code class="descname">User</code><span class="sig-paren">(</span><em>uid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/sample/user.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.sample.user.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sipa.model.html#sipa.model.user.BaseUser" title="sipa.model.user.BaseUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.model.user.BaseUser</span></code></a></p>
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.address">
+<code class="descname">address</code><a class="headerlink" href="#sipa.model.sample.user.User.address" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Where the user lives</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.sample.user.User.authenticate">
+<em class="property">classmethod </em><code class="descname">authenticate</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/sample/user.html#User.authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.sample.user.User.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a User instance or raise PasswordInvalid</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.can_change_password">
+<code class="descname">can_change_password</code><em class="property"> = True</em><a class="headerlink" href="#sipa.model.sample.user.User.can_change_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.sample.user.User.change_password">
+<code class="descname">change_password</code><span class="sig-paren">(</span><em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/sample/user.html#User.change_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.sample.user.User.change_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the user’s password from old to new.</p>
+<p>Although the password has been checked using
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">re_authenticate()</span></code>, some data sources like those which have to
+perform an LDAP bind need it anyways.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.finance_information">
+<code class="descname">finance_information</code><em class="property"> = &lt;sipa.model.sample.user.SampleFinanceInformation object&gt;</em><a class="headerlink" href="#sipa.model.sample.user.User.finance_information" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.sample.user.User.from_ip">
+<em class="property">classmethod </em><code class="descname">from_ip</code><span class="sig-paren">(</span><em>ip</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/sample/user.html#User.from_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.sample.user.User.from_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a user based on an ip.</p>
+<p>If there is no user associated with this ip, return
+<a class="reference external" href="https://flask-login.readthedocs.io/en/latest/index.html#flask_login.AnonymousUserMixin" title="(in Flask-Login v0.4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnonymousUserMixin</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ip</strong> – the ip</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the user object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.sample.user.User.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/sample/user.html#User.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.sample.user.User.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for flask-login user_loader,
+used before _every_ request.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.has_connection">
+<code class="descname">has_connection</code><em class="property"> = True</em><a class="headerlink" href="#sipa.model.sample.user.User.has_connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.hostalias">
+<code class="descname">hostalias</code><a class="headerlink" href="#sipa.model.sample.user.User.hostalias" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The hostalias.</p>
+<p>An optionally configurable alias for the device.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.hostname">
+<code class="descname">hostname</code><a class="headerlink" href="#sipa.model.sample.user.User.hostname" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The hostname.</p>
+<p>This usually is an alias consisting of the last digits of the
+mac/ip.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.id">
+<code class="descname">id</code><a class="headerlink" href="#sipa.model.sample.user.User.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The “user-id”.</p>
+<p>Some Backends provide a secondary id besides the login.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.ips">
+<code class="descname">ips</code><a class="headerlink" href="#sipa.model.sample.user.User.ips" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.login">
+<code class="descname">login</code><a class="headerlink" href="#sipa.model.sample.user.User.login" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The login</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.login_list">
+<code class="descname">login_list</code><em class="property"> = {'test': ('test', 'Test Nutzer', 'test&#64;agdsn.de')}</em><a class="headerlink" href="#sipa.model.sample.user.User.login_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.mac">
+<code class="descname">mac</code><a class="headerlink" href="#sipa.model.sample.user.User.mac" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The MAC Address</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.mail">
+<code class="descname">mail</code><a class="headerlink" href="#sipa.model.sample.user.User.mail" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The mail address.</p>
+<p>This can either be the forward or the internal adress
+(<code class="docutils literal notranslate"><span class="pre">&quot;{login}&#64;{server}&quot;</span></code>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.sample.user.User.payment_details">
+<code class="descname">payment_details</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/sample/user.html#User.payment_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.sample.user.User.payment_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Payment details for the User.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.realname">
+<code class="descname">realname</code><a class="headerlink" href="#sipa.model.sample.user.User.realname" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The real-life name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.status">
+<code class="descname">status</code><a class="headerlink" href="#sipa.model.sample.user.User.status" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The current membership status in the sense of
+the AG DSN constitution.</p>
+<p>This mostly means active, ex-active or passive.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.traffic_history">
+<code class="descname">traffic_history</code><a class="headerlink" href="#sipa.model.sample.user.User.traffic_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current traffic history as a dict.</p>
+<p>The history should cover one week. The assumed unit is KiB.</p>
+<p>The list syntax is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[{
+    &#39;day&#39;: day.weekday(),
+    &#39;input&#39;: in,
+    &#39;output&#39;: out,
+    &#39;throughput&#39;: in + out,
+}, …]
+</pre></div>
+</div>
+<p>The traffic values shall be in KiB, as usual.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The history of the used traffic</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.use_cache">
+<code class="descname">use_cache</code><a class="headerlink" href="#sipa.model.sample.user.User.use_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Flag indicating cache usage.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.userdb">
+<code class="descname">userdb</code><em class="property"> = None</em><a class="headerlink" href="#sipa.model.sample.user.User.userdb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.sample.user.User.userdb_status">
+<code class="descname">userdb_status</code><a class="headerlink" href="#sipa.model.sample.user.User.userdb_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.sample.user.init_context">
+<code class="descclassname">sipa.model.sample.user.</code><code class="descname">init_context</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/sample/user.html#init_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.sample.user.init_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.sample.user.random">
+<code class="descclassname">sipa.model.sample.user.</code><code class="descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; x in the interval [0, 1).<a class="headerlink" href="#sipa.model.sample.user.random" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sipa.model.sample">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sipa.model.sample" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="sipa.model.sample.datasource">
+<code class="descclassname">sipa.model.sample.</code><code class="descname">datasource</code><em class="property"> = &lt;DataSource 'sample'&gt;</em><a class="headerlink" href="#sipa.model.sample.datasource" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sample datasource, used for frontend debugging.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model.html">Model</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Complete Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sipa.html">sipa package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">sipa</a><ul>
+  <li><a href="sipa.html">sipa package</a><ul>
+  <li><a href="sipa.model.html">sipa.model package</a><ul>
+      <li>Previous: <a href="sipa.model.pycroft.html" title="previous chapter">sipa.model.pycroft package</a></li>
+      <li>Next: <a href="sipa.utils.html" title="next chapter">sipa.utils package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/ref/sipa.model.sample.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

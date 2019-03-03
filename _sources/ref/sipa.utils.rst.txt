@@ -1,0 +1,54 @@
+sipa.utils package
+==================
+
+Submodules
+----------
+
+sipa.utils.babel\_utils module
+------------------------------
+
+.. automodule:: sipa.utils.babel_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.utils.bootstraped\_tables module
+-------------------------------------
+
+.. automodule:: sipa.utils.bootstraped_tables
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.utils.git\_utils module
+----------------------------
+
+.. automodule:: sipa.utils.git_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.utils.graph\_utils module
+------------------------------
+
+.. automodule:: sipa.utils.graph_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.utils.link\_patch module
+-----------------------------
+
+.. automodule:: sipa.utils.link_patch
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: sipa.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:

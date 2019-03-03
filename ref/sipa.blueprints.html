@@ -1,0 +1,381 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.blueprints package &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sipa.config package" href="sipa.config.html" />
+    <link rel="prev" title="sipa.backends package" href="sipa.backends.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="sipa-blueprints-package">
+<h1>sipa.blueprints package<a class="headerlink" href="#sipa-blueprints-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sipa.blueprints.documents">
+<span id="sipa-blueprints-documents-module"></span><h2>sipa.blueprints.documents module<a class="headerlink" href="#module-sipa.blueprints.documents" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.blueprints.documents.StaticFiles">
+<em class="property">class </em><code class="descclassname">sipa.blueprints.documents.</code><code class="descname">StaticFiles</code><span class="sig-paren">(</span><em>directory</em>, <em>login_required=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/documents.html#StaticFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.documents.StaticFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://flask.pocoo.org/docs/1.0/api/#flask.views.View" title="(in Flask v1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">flask.views.View</span></code></a></p>
+<dl class="method">
+<dt id="sipa.blueprints.documents.StaticFiles.dispatch_request">
+<code class="descname">dispatch_request</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/documents.html#StaticFiles.dispatch_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.documents.StaticFiles.dispatch_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclasses have to override this method to implement the
+actual view function code.  This method is called with all
+the arguments from the URL rule.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.blueprints.features">
+<span id="sipa-blueprints-features-module"></span><h2>sipa.blueprints.features module<a class="headerlink" href="#module-sipa.blueprints.features" title="Permalink to this headline">¶</a></h2>
+<p>Blueprint for feature components such as bustimes etc.
+Basically, this is everything that is to specific to appear in the generic.py
+and does not fit into any other blueprint such as “documents”.</p>
+<dl class="function">
+<dt id="sipa.blueprints.features.bustimes">
+<code class="descclassname">sipa.blueprints.features.</code><code class="descname">bustimes</code><span class="sig-paren">(</span><em>stopname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/features.html#bustimes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.features.bustimes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries the VVO-Online widget for the given stop.
+If no specific stop is given in the URL, it will query all
+stops set up in the config.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.blueprints.generic">
+<span id="sipa-blueprints-generic-module"></span><h2>sipa.blueprints.generic module<a class="headerlink" href="#module-sipa.blueprints.generic" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sipa.blueprints.generic.contact">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">contact</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#contact"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.contact" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.contact_official">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">contact_official</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#contact_official"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.contact_official" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.error_handler_redirection">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">error_handler_redirection</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#error_handler_redirection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.error_handler_redirection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles errors by flashing an according message
+:param e: The error
+:return: A flask response with the according HTTP error code</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.exceptionhandler_backend">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">exceptionhandler_backend</code><span class="sig-paren">(</span><em>ex: sipa.backends.exceptions.BackendError</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#exceptionhandler_backend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.exceptionhandler_backend" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.exceptionhandler_ldap">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">exceptionhandler_ldap</code><span class="sig-paren">(</span><em>ex</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#exceptionhandler_ldap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.exceptionhandler_ldap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles global LDAPCommunicationError exceptions.</p>
+<p>The session must be reset, because if the user is logged in and
+the server fails during his session, it would cause a redirect
+loop.  This also resets the language choice, btw.</p>
+<p>The alternative would be a try-except catch block in load_user,
+but login also needs a handler.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.exceptionhandler_sql">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">exceptionhandler_sql</code><span class="sig-paren">(</span><em>ex</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#exceptionhandler_sql"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.exceptionhandler_sql" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles global Database errors like:</p>
+<p>Server down, Lock wait timeout exceeded, …</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.index">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.jinja_format_date">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">jinja_format_date</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#jinja_format_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.jinja_format_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.log_request">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">log_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#log_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.log_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.login">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Login page for users</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.logout">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">logout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#logout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.logout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.to_gigabytes">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">to_gigabytes</code><span class="sig-paren">(</span><em>number</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#to_gigabytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.to_gigabytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a number from KiB to GiB</p>
+<p>This is used mainly for the gauge, everything else uses the dynamic
+<cite>unit</cite> function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.traffic_api">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">traffic_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#traffic_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.traffic_api" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.usertraffic">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">usertraffic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#usertraffic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.usertraffic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a user’s traffic on a static site just as in the usersuite.</p>
+<p>If a user is logged but the ip corresponds to another user, a hint
+is flashed and the traffic of the <cite>ip_user</cite> is displayed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.generic.version">
+<code class="descclassname">sipa.blueprints.generic.</code><code class="descname">version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/generic.html#version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.generic.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display version information from local repo</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.blueprints.hooks">
+<span id="sipa-blueprints-hooks-module"></span><h2>sipa.blueprints.hooks module<a class="headerlink" href="#module-sipa.blueprints.hooks" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sipa.blueprints.hooks.content_hook">
+<code class="descclassname">sipa.blueprints.hooks.</code><code class="descname">content_hook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/hooks.html#content_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.hooks.content_hook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sipa.blueprints.news">
+<span id="sipa-blueprints-news-module"></span><h2>sipa.blueprints.news module<a class="headerlink" href="#module-sipa.blueprints.news" title="Permalink to this headline">¶</a></h2>
+<p>Blueprint providing features regarding the news entries.</p>
+<dl class="function">
+<dt id="sipa.blueprints.news.show">
+<code class="descclassname">sipa.blueprints.news.</code><code class="descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/news.html#show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.news.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all markdown files from ‘content/news/’, parse them and put
+them in a list for the template.
+The formatting of these files is described in the readme.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.news.show_news">
+<code class="descclassname">sipa.blueprints.news.</code><code class="descname">show_news</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/news.html#show_news"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.news.show_news" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sipa.blueprints.pages">
+<span id="sipa-blueprints-pages-module"></span><h2>sipa.blueprints.pages module<a class="headerlink" href="#module-sipa.blueprints.pages" title="Permalink to this headline">¶</a></h2>
+<p>Blueprint for the flatpages</p>
+<dl class="function">
+<dt id="sipa.blueprints.pages.load_dynamic_json">
+<code class="descclassname">sipa.blueprints.pages.</code><code class="descname">load_dynamic_json</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/pages.html#load_dynamic_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.pages.load_dynamic_json" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.pages.show">
+<code class="descclassname">sipa.blueprints.pages.</code><code class="descname">show</code><span class="sig-paren">(</span><em>category_id</em>, <em>article_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/pages.html#show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.pages.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a flatpage and parse dynamic content if available</p>
+<p>If available, a <cite>&lt;name&gt;.&lt;locale&gt;.json</cite> json_file is parsed and used to
+display A section on the webpage where users can select their
+dormitory and see _specific_ information like financial data.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.blueprints.usersuite">
+<span id="sipa-blueprints-usersuite-module"></span><h2>sipa.blueprints.usersuite module<a class="headerlink" href="#module-sipa.blueprints.usersuite" title="Permalink to this headline">¶</a></h2>
+<p>Blueprint for Usersuite components</p>
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.activate_network_access">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">activate_network_access</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#activate_network_access"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.activate_network_access" title="Permalink to this definition">¶</a></dt>
+<dd><p>As user, activate your network access</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.change_mac">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">change_mac</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#change_mac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.change_mac" title="Permalink to this definition">¶</a></dt>
+<dd><p>As user, change the MAC address of your device.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.change_mail">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">change_mail</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#change_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.change_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frontend page to change the user’s mail address</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.change_password">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">change_password</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#change_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.change_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frontend page to change the user’s password</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.change_use_cache">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">change_use_cache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#change_use_cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.change_use_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>As user, change your usage of the cache.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.contact">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">contact</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#contact"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.contact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contact form for logged in users.
+Currently sends an e-mail to the support mailing list as
+‘[Usersuite] Category: Subject’ with userid and message.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.delete_mail">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">delete_mail</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#delete_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.delete_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the users forwarding mail attribute
+in his LDAP entry.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.finance_logs">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">finance_logs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#finance_logs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.finance_logs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.generate_epc_qr_code">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">generate_epc_qr_code</code><span class="sig-paren">(</span><em>details: sipa.model.misc.PaymentDetails</em>, <em>months</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#generate_epc_qr_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.generate_epc_qr_code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.get_attribute_endpoint">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">get_attribute_endpoint</code><span class="sig-paren">(</span><em>attribute</em>, <em>capability='edit'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#get_attribute_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.get_attribute_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to determine the flask endpoint for the according property.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.hosting">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">hosting</code><span class="sig-paren">(</span><em>action=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#hosting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.hosting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change various settings for Helios.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.index">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Usersuite landing page with user account information
+and traffic overview.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.blueprints.usersuite.render_payment_details">
+<code class="descclassname">sipa.blueprints.usersuite.</code><code class="descname">render_payment_details</code><span class="sig-paren">(</span><em>details: sipa.model.misc.PaymentDetails</em>, <em>months</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/blueprints/usersuite.html#render_payment_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.blueprints.usersuite.render_payment_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sipa.blueprints">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sipa.blueprints" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model.html">Model</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Complete Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sipa.html">sipa package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">sipa</a><ul>
+  <li><a href="sipa.html">sipa package</a><ul>
+      <li>Previous: <a href="sipa.backends.html" title="previous chapter">sipa.backends package</a></li>
+      <li>Next: <a href="sipa.config.html" title="next chapter">sipa.config package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/ref/sipa.blueprints.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

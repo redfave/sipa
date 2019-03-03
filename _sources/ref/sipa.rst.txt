@@ -1,0 +1,105 @@
+sipa package
+============
+
+Subpackages
+-----------
+
+.. toctree::
+
+    sipa.backends
+    sipa.blueprints
+    sipa.config
+    sipa.model
+    sipa.utils
+
+Submodules
+----------
+
+sipa.babel module
+-----------------
+
+.. automodule:: sipa.babel
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.base module
+----------------
+
+.. automodule:: sipa.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.defaults module
+--------------------
+
+.. automodule:: sipa.defaults
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.flatpages module
+---------------------
+
+.. automodule:: sipa.flatpages
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.forms module
+-----------------
+
+.. automodule:: sipa.forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.initialization module
+--------------------------
+
+.. automodule:: sipa.initialization
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.login\_manager module
+--------------------------
+
+.. automodule:: sipa.login_manager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.mail module
+----------------
+
+.. automodule:: sipa.mail
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.session module
+-------------------
+
+.. automodule:: sipa.session
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.units module
+-----------------
+
+.. automodule:: sipa.units
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: sipa
+    :members:
+    :undoc-members:
+    :show-inheritance:

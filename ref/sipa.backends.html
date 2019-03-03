@@ -1,0 +1,515 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.backends package &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sipa.blueprints package" href="sipa.blueprints.html" />
+    <link rel="prev" title="sipa package" href="sipa.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="sipa-backends-package">
+<h1>sipa.backends package<a class="headerlink" href="#sipa-backends-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sipa.backends.datasource">
+<span id="sipa-backends-datasource-module"></span><h2>sipa.backends.datasource module<a class="headerlink" href="#module-sipa.backends.datasource" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.backends.datasource.DataSource">
+<em class="property">class </em><code class="descclassname">sipa.backends.datasource.</code><code class="descname">DataSource</code><span class="sig-paren">(</span><em>name: str, user_class: Type[sipa.backends.types.UserLike], mail_server: str, webmailer_url: Optional[str] = None, support_mail: Optional[str] = None, init_context: Optional[Callable[[flask.app.Flask], None]] = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/backends/datasource.html#DataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.datasource.DataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A class providing a certain Backend.</p>
+<p>This class provides information about the backend you defined, for
+instance the user class.</p>
+<dl class="attribute">
+<dt id="sipa.backends.datasource.DataSource.dormitories">
+<code class="descname">dormitories</code><a class="headerlink" href="#sipa.backends.datasource.DataSource.dormitories" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of all registered dormitories.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.datasource.DataSource.init_context">
+<code class="descname">init_context</code><span class="sig-paren">(</span><em>app: flask.app.Flask</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/backends/datasource.html#DataSource.init_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.datasource.DataSource.init_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize this backend</p>
+<blockquote>
+<div><ul class="simple">
+<li>Apply the custom configuration of
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">app.config['BACKENDS_CONFIG'][self.name]</span></code></li>
+<li>Call <code class="xref py py-meth docutils literal notranslate"><span class="pre">_init_context(app)()</span></code> as given in the
+config</li>
+</ul>
+</div></blockquote>
+<p>The custom config supports the following keys:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">support_mail</span></code>: Set <code class="docutils literal notranslate"><span class="pre">self.support_mail</span></code></li>
+</ul>
+</div></blockquote>
+<p>If an unknown key is given, a warning will be logged.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>app</strong> (<em>Flask</em>) – the app to initialize against</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.datasource.DataSource.mail_server">
+<code class="descname">mail_server</code><em class="property"> = None</em><a class="headerlink" href="#sipa.backends.datasource.DataSource.mail_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mail server to be appended to a user’s login in order
+to construct the mail address.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.datasource.DataSource.name">
+<code class="descname">name</code><em class="property"> = None</em><a class="headerlink" href="#sipa.backends.datasource.DataSource.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds the name of this datasource.  Must be unique among
+what you register onto your <cite>Backends</cite> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.datasource.DataSource.register_dormitory">
+<code class="descname">register_dormitory</code><span class="sig-paren">(</span><em>dormitory: sipa.backends.datasource.Dormitory</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/backends/datasource.html#DataSource.register_dormitory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.datasource.DataSource.register_dormitory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.datasource.DataSource.user_class">
+<code class="descname">user_class</code><em class="property"> = None</em><a class="headerlink" href="#sipa.backends.datasource.DataSource.user_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>the user_class used in the sense of <code class="docutils literal notranslate"><span class="pre">flask_login</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.backends.datasource.Dormitory">
+<em class="property">class </em><code class="descclassname">sipa.backends.datasource.</code><code class="descname">Dormitory</code><span class="sig-paren">(</span><em>name: str</em>, <em>display_name: str</em>, <em>datasource: sipa.backends.datasource.DataSource</em>, <em>subnets=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/backends/datasource.html#Dormitory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.datasource.Dormitory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A dormitory as selectable on the login page.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.backends.datasource.SubnetCollection">
+<em class="property">class </em><code class="descclassname">sipa.backends.datasource.</code><code class="descname">SubnetCollection</code><span class="sig-paren">(</span><em>subnets: List[ipaddress.IPv4Network]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/backends/datasource.html#SubnetCollection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.datasource.SubnetCollection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A simple class for combining multiple IPv4Networks.</p>
+<p>Provides __contains__ functionality for IPv4Addresses.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.backends.exceptions">
+<span id="sipa-backends-exceptions-module"></span><h2>sipa.backends.exceptions module<a class="headerlink" href="#module-sipa.backends.exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="sipa.backends.exceptions.BackendError">
+<em class="property">exception </em><code class="descclassname">sipa.backends.exceptions.</code><code class="descname">BackendError</code><span class="sig-paren">(</span><em>backend_name: str</em>, <em>*a</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/backends/exceptions.html#BackendError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.exceptions.BackendError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeError</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="sipa.backends.exceptions.InvalidConfiguration">
+<em class="property">exception </em><code class="descclassname">sipa.backends.exceptions.</code><code class="descname">InvalidConfiguration</code><a class="reference internal" href="../_modules/sipa/backends/exceptions.html#InvalidConfiguration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.exceptions.InvalidConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#IndexError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IndexError</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.backends.extension">
+<span id="sipa-backends-extension-module"></span><h2>sipa.backends.extension module<a class="headerlink" href="#module-sipa.backends.extension" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.backends.extension.Backends">
+<em class="property">class </em><code class="descclassname">sipa.backends.extension.</code><code class="descname">Backends</code><a class="reference internal" href="../_modules/sipa/backends/extension.html#Backends"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.Backends" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The <cite>Backends</cite> flask extension</p>
+<p>This extension lets you initialize some of the available
+datasources and provides some central methods to look things up,
+like for example the user object from some ip.</p>
+<p><cite>Backends</cite> builds upon the following concept:</p>
+<p>A user is enabled to log in using different backends, called
+<em>datasources</em>.  A <code class="xref py py-class docutils literal notranslate"><span class="pre">DataSource</span></code> provides information such
+as its name, the email suffix, the user class, the initialization
+method, and so on.</p>
+<p>Originating from the needs of the <a class="reference external" href="https://github.com/agdsn">AG DSN</a>, the
+user should not select the backend, but the location where he
+lives.  Thus, he selects a <code class="xref py py-class docutils literal notranslate"><span class="pre">Dormitory</span></code>, which has not
+only a name, but also a <cite>display_name</cite> and ip subnets.  The latter
+are needed to semi-authenticate a user based on his ip.</p>
+<p><strong>Usage:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="s1">&#39;appname&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datasource</span> <span class="o">=</span> <span class="n">DataSource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;name1&#39;</span><span class="p">,</span> <span class="n">user_class</span><span class="o">=</span><span class="nb">object</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                        <span class="n">mail_server</span><span class="o">=</span><span class="s1">&#39;srv&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">backends</span> <span class="o">=</span> <span class="n">Backends</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">backends</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">datasource</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">backends</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;BACKENDS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name1&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># further initialization…</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">backends</span><span class="o">.</span><span class="n">init_backends</span><span class="p">()</span>  <span class="c1"># call each backend&#39;s init method</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This class provides methods concerning:</p>
+<ul class="simple">
+<li><em>initialization</em> of the extension and backends</li>
+<li><dl class="first docutils">
+<dt><em>lists</em> of the currently (un)supported dormitories and</dt>
+<dd>datasources</dd>
+</dl>
+</li>
+<li><em>lookup properties</em> to access the datasources/dormitories/users
+given certain information (ip, name, …)</li>
+<li><em>proxy methods</em> to access the current datasource/dormitory
+(similiar to current_user)</li>
+</ul>
+<dl class="attribute">
+<dt id="sipa.backends.extension.Backends.all_dormitories">
+<code class="descname">all_dormitories</code><a class="headerlink" href="#sipa.backends.extension.Backends.all_dormitories" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the currently registered dormitories including
+premature dormitories.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.extension.Backends.available_datasources">
+<code class="descname">available_datasources</code><em class="property"> = None</em><a class="headerlink" href="#sipa.backends.extension.Backends.available_datasources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Which datasources are available</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.extension.Backends.current_datasource">
+<code class="descname">current_datasource</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Optional[sipa.backends.datasource.DataSource]<a class="reference internal" href="../_modules/sipa/backends/extension.html#Backends.current_datasource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.Backends.current_datasource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the current datasource from the session</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.extension.Backends.current_dormitory">
+<code class="descname">current_dormitory</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Optional[sipa.backends.datasource.Dormitory]<a class="reference internal" href="../_modules/sipa/backends/extension.html#Backends.current_dormitory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.Backends.current_dormitory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the current dormitory from the session</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.extension.Backends.datasources">
+<code class="descname">datasources</code><a class="headerlink" href="#sipa.backends.extension.Backends.datasources" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the currently registered datasources</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.extension.Backends.dormitories">
+<code class="descname">dormitories</code><a class="headerlink" href="#sipa.backends.extension.Backends.dormitories" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the currently registered dormitories</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.extension.Backends.dormitories_short">
+<code class="descname">dormitories_short</code><a class="headerlink" href="#sipa.backends.extension.Backends.dormitories_short" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of dormitories as tuples instead of objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.extension.Backends.dormitory_from_ip">
+<code class="descname">dormitory_from_ip</code><span class="sig-paren">(</span><em>ip: str</em><span class="sig-paren">)</span> &#x2192; Optional[sipa.backends.datasource.Dormitory]<a class="reference internal" href="../_modules/sipa/backends/extension.html#Backends.dormitory_from_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.Backends.dormitory_from_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the dormitory whose subnets contain <code class="docutils literal notranslate"><span class="pre">ip</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ip</strong> – The ip</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The dormitory containing <code class="docutils literal notranslate"><span class="pre">ip</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.extension.Backends.get_datasource">
+<code class="descname">get_datasource</code><span class="sig-paren">(</span><em>name: str</em><span class="sig-paren">)</span> &#x2192; Optional[sipa.backends.datasource.DataSource]<a class="reference internal" href="../_modules/sipa/backends/extension.html#Backends.get_datasource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.Backends.get_datasource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lookup the datasource with name <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – The datasource’s <code class="docutils literal notranslate"><span class="pre">name</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The datasource object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.extension.Backends.get_dormitory">
+<code class="descname">get_dormitory</code><span class="sig-paren">(</span><em>name: str</em><span class="sig-paren">)</span> &#x2192; Optional[sipa.backends.datasource.Dormitory]<a class="reference internal" href="../_modules/sipa/backends/extension.html#Backends.get_dormitory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.Backends.get_dormitory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lookup the dormitory with name <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – The dormitory’s <code class="docutils literal notranslate"><span class="pre">name</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The dormitory object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.extension.Backends.init_app">
+<code class="descname">init_app</code><span class="sig-paren">(</span><em>app: flask.app.Flask</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/backends/extension.html#Backends.init_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.Backends.init_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register self to app and initialize datasources</p>
+<p>The datasources will be registered according to the app’s
+config.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>app</strong> – The flask app object to register against</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.extension.Backends.init_backends">
+<code class="descname">init_backends</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/backends/extension.html#Backends.init_backends"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.Backends.init_backends" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the activated backends</p>
+<p>This is the method that does the actual initialization.  It
+calls each <code class="xref py py-class docutils literal notranslate"><span class="pre">DataSource`s</span> <span class="pre">`init_context</span></code> function.</p>
+<p>In there, things like setting up a pg session or registering
+an ldap object to the app might be done.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.extension.Backends.pre_init_hook">
+<code class="descname">pre_init_hook</code><a class="headerlink" href="#sipa.backends.extension.Backends.pre_init_hook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.extension.Backends.preferred_dormitory_name">
+<code class="descname">preferred_dormitory_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Optional[str]<a class="reference internal" href="../_modules/sipa/backends/extension.html#Backends.preferred_dormitory_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.Backends.preferred_dormitory_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the name of the preferred dormitory based on the
+request’s ip</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">name of the dormitory</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.extension.Backends.premature_dormitories">
+<code class="descname">premature_dormitories</code><em class="property"> = []</em><a class="headerlink" href="#sipa.backends.extension.Backends.premature_dormitories" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.extension.Backends.register">
+<code class="descname">register</code><span class="sig-paren">(</span><em>datasource: sipa.backends.datasource.DataSource</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/backends/extension.html#Backends.register"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.Backends.register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.extension.Backends.supported_dormitories_short">
+<code class="descname">supported_dormitories_short</code><a class="headerlink" href="#sipa.backends.extension.Backends.supported_dormitories_short" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of supported dormitories as tuples instead of
+objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.backends.extension.Backends.user_from_ip">
+<code class="descname">user_from_ip</code><span class="sig-paren">(</span><em>ip: str</em><span class="sig-paren">)</span> &#x2192; Optional[sipa.backends.types.UserLike]<a class="reference internal" href="../_modules/sipa/backends/extension.html#Backends.user_from_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.Backends.user_from_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the User that corresponds to <code class="docutils literal notranslate"><span class="pre">ip</span></code> according to the
+datasource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ip</strong> – The ip</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding User in the sense of the
+datasource.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.backends.extension.evaluates_uniquely">
+<code class="descclassname">sipa.backends.extension.</code><code class="descname">evaluates_uniquely</code><span class="sig-paren">(</span><em>objects</em>, <em>func</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/sipa/backends/extension.html#evaluates_uniquely"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.extension.evaluates_uniquely" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if the return value of <code class="docutils literal notranslate"><span class="pre">func</span></code> is unique among
+<code class="docutils literal notranslate"><span class="pre">objects</span></code>.</p>
+<p>This can be used to check whether some attribute <cite>obj.attr</cite> is
+unique among a set of such objects, and can thus be used as a key.</p>
+<p><strong>Usage:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">objs</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">evaluates_uniquely</span><span class="p">(</span><span class="n">objs</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">objs</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">evaluates_uniquely</span><span class="p">(</span><span class="n">objs</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>objects</strong> – the object on which to apply func to</li>
+<li><strong>func</strong> – the function to be evaluated, given each object as a
+parameter.  Must return something hashable.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">whether the uniqueness holds</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.backends.logging">
+<span id="sipa-backends-logging-module"></span><h2>sipa.backends.logging module<a class="headerlink" href="#module-sipa.backends.logging" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sipa.backends.types">
+<span id="sipa-backends-types-module"></span><h2>sipa.backends.types module<a class="headerlink" href="#module-sipa.backends.types" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.backends.types.UserLike">
+<em class="property">class </em><code class="descclassname">sipa.backends.types.</code><code class="descname">UserLike</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/backends/types.html#UserLike"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.backends.types.UserLike" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">typing_extensions.Protocol</span></code></p>
+<dl class="attribute">
+<dt id="sipa.backends.types.UserLike.is_active">
+<code class="descname">is_active</code><a class="headerlink" href="#sipa.backends.types.UserLike.is_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.types.UserLike.is_anonymous">
+<code class="descname">is_anonymous</code><a class="headerlink" href="#sipa.backends.types.UserLike.is_anonymous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.backends.types.UserLike.is_authenticated">
+<code class="descname">is_authenticated</code><a class="headerlink" href="#sipa.backends.types.UserLike.is_authenticated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.backends">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sipa.backends" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model.html">Model</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Complete Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sipa.html">sipa package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">sipa</a><ul>
+  <li><a href="sipa.html">sipa package</a><ul>
+      <li>Previous: <a href="sipa.html" title="previous chapter">sipa package</a></li>
+      <li>Next: <a href="sipa.blueprints.html" title="next chapter">sipa.blueprints package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/ref/sipa.backends.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

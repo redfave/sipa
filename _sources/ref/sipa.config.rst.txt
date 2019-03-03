@@ -1,0 +1,30 @@
+sipa.config package
+===================
+
+Submodules
+----------
+
+sipa.config.default module
+--------------------------
+
+.. automodule:: sipa.config.default
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.config.example module
+--------------------------
+
+.. automodule:: sipa.config.example
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: sipa.config
+    :members:
+    :undoc-members:
+    :show-inheritance:

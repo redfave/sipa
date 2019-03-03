@@ -1,0 +1,1326 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa package &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sipa.backends package" href="sipa.backends.html" />
+    <link rel="prev" title="sipa" href="modules.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="sipa-package">
+<h1>sipa package<a class="headerlink" href="#sipa-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sipa.backends.html">sipa.backends package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sipa.backends.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.backends.html#module-sipa.backends.datasource">sipa.backends.datasource module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.backends.html#module-sipa.backends.exceptions">sipa.backends.exceptions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.backends.html#module-sipa.backends.extension">sipa.backends.extension module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.backends.html#module-sipa.backends.logging">sipa.backends.logging module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.backends.html#module-sipa.backends.types">sipa.backends.types module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.backends.html#module-sipa.backends">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sipa.blueprints.html">sipa.blueprints package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sipa.blueprints.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.blueprints.html#module-sipa.blueprints.documents">sipa.blueprints.documents module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.blueprints.html#module-sipa.blueprints.features">sipa.blueprints.features module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.blueprints.html#module-sipa.blueprints.generic">sipa.blueprints.generic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.blueprints.html#module-sipa.blueprints.hooks">sipa.blueprints.hooks module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.blueprints.html#module-sipa.blueprints.news">sipa.blueprints.news module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.blueprints.html#module-sipa.blueprints.pages">sipa.blueprints.pages module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.blueprints.html#module-sipa.blueprints.usersuite">sipa.blueprints.usersuite module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.blueprints.html#module-sipa.blueprints">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sipa.config.html">sipa.config package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sipa.config.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.config.html#module-sipa.config.default">sipa.config.default module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.config.html#module-sipa.config.example">sipa.config.example module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.config.html#module-sipa.config">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sipa.model.html">sipa.model package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sipa.model.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sipa.model.hss.html">sipa.model.hss package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.hss.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.hss.html#module-sipa.model.hss.ldap">sipa.model.hss.ldap module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.hss.html#module-sipa.model.hss.schema">sipa.model.hss.schema module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.hss.html#module-sipa.model.hss.user">sipa.model.hss.user module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.hss.html#module-sipa.model.hss">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sipa.model.pycroft.html">sipa.model.pycroft package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.pycroft.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.pycroft.html#module-sipa.model.pycroft.api">sipa.model.pycroft.api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.pycroft.html#module-sipa.model.pycroft.exc">sipa.model.pycroft.exc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.pycroft.html#module-sipa.model.pycroft.schema">sipa.model.pycroft.schema module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.pycroft.html#module-sipa.model.pycroft.unserialize">sipa.model.pycroft.unserialize module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.pycroft.html#module-sipa.model.pycroft.user">sipa.model.pycroft.user module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.pycroft.html#module-sipa.model.pycroft">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sipa.model.sample.html">sipa.model.sample package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.sample.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.sample.html#module-sipa.model.sample.user">sipa.model.sample.user module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sipa.model.sample.html#module-sipa.model.sample">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.model.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.model.html#module-sipa.model.exceptions">sipa.model.exceptions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.model.html#module-sipa.model.fancy_property">sipa.model.fancy_property module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.model.html#module-sipa.model.finance">sipa.model.finance module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.model.html#module-sipa.model.misc">sipa.model.misc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.model.html#module-sipa.model.sqlalchemy">sipa.model.sqlalchemy module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.model.html#module-sipa.model.user">sipa.model.user module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.model.html#module-sipa.model">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sipa.utils.html">sipa.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sipa.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.utils.html#module-sipa.utils.babel_utils">sipa.utils.babel_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.utils.html#module-sipa.utils.bootstraped_tables">sipa.utils.bootstraped_tables module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sipa.utils.html#tables-extension-for-python-markdown">Tables Extension for Python-Markdown</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.utils.html#module-sipa.utils.git_utils">sipa.utils.git_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.utils.html#module-sipa.utils.graph_utils">sipa.utils.graph_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.utils.html#module-sipa.utils.link_patch">sipa.utils.link_patch module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sipa.utils.html#module-sipa.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sipa.babel">
+<span id="sipa-babel-module"></span><h2>sipa.babel module<a class="headerlink" href="#module-sipa.babel" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sipa.babel.get_user_locale_setting">
+<code class="descclassname">sipa.babel.</code><code class="descname">get_user_locale_setting</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Optional[babel.core.Locale]<a class="reference internal" href="../_modules/sipa/babel.html#get_user_locale_setting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.babel.get_user_locale_setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a user’s explicit locale setting, if available.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.babel.possible_locales">
+<code class="descclassname">sipa.babel.</code><code class="descname">possible_locales</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[babel.core.Locale]<a class="reference internal" href="../_modules/sipa/babel.html#possible_locales"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.babel.possible_locales" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the locales usable for sipa.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.babel.save_user_locale_setting">
+<code class="descclassname">sipa.babel.</code><code class="descname">save_user_locale_setting</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/babel.html#save_user_locale_setting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.babel.save_user_locale_setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Persist the locale request argument in the session state.</p>
+<p>This function should be installed as before_request handler.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.babel.select_locale">
+<code class="descclassname">sipa.babel.</code><code class="descname">select_locale</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/sipa/babel.html#select_locale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.babel.select_locale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a suitable locale</p>
+<p>Try to pick a locale from the following ordered sources:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>The user’s explicit locale setting</li>
+<li>The best match according to the <code class="docutils literal notranslate"><span class="pre">Accept-Language</span></code> request header</li>
+</ol>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The locale string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.base">
+<span id="sipa-base-module"></span><h2>sipa.base module<a class="headerlink" href="#module-sipa.base" title="Permalink to this headline">¶</a></h2>
+<p>Basic utilities for the Flask app</p>
+<p>These are basic utilities necessary for the Flask app which are
+disjoint from any blueprint.</p>
+<dl class="class">
+<dt id="sipa.base.IntegerConverter">
+<em class="property">class </em><code class="descclassname">sipa.base.</code><code class="descname">IntegerConverter</code><span class="sig-paren">(</span><em>map</em>, <em>fixed_digits=0</em>, <em>min=None</em>, <em>max=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/base.html#IntegerConverter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.base.IntegerConverter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.routing.IntegerConverter</span></code></p>
+<p>IntegerConverter supporting negative values</p>
+<p>This is a Modification of the standard IntegerConverter which does
+not support negative values.  See the corresponding <a class="reference external" href="http://werkzeug.pocoo.org/docs/0.10/routing/#werkzeug.routing.IntegerConverter">werkzeug
+documentation</a>.</p>
+<dl class="attribute">
+<dt id="sipa.base.IntegerConverter.regex">
+<code class="descname">regex</code><em class="property"> = '-?\\d+'</em><a class="headerlink" href="#sipa.base.IntegerConverter.regex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.base.load_user">
+<code class="descclassname">sipa.base.</code><code class="descname">load_user</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/base.html#load_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.base.load_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a User object from/into the session at every request</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.defaults">
+<span id="sipa-defaults-module"></span><h2>sipa.defaults module<a class="headerlink" href="#module-sipa.defaults" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sipa.flatpages">
+<span id="sipa-flatpages-module"></span><h2>sipa.flatpages module<a class="headerlink" href="#module-sipa.flatpages" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.flatpages.Article">
+<em class="property">class </em><code class="descclassname">sipa.flatpages.</code><code class="descname">Article</code><span class="sig-paren">(</span><em>extension</em>, <em>parent</em>, <em>article_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#Article"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.Article" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sipa.flatpages.Node" title="sipa.flatpages.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.flatpages.Node</span></code></a></p>
+<p>The Article class</p>
+<p>An article provides the possibility to access multiple versions of
+a Page.  In this case, <a class="reference internal" href="#sipa.flatpages.Article.localized_pages" title="sipa.flatpages.Article.localized_pages"><code class="xref py py-attr docutils literal notranslate"><span class="pre">localized_pages</span></code></a> is a dict where
+a locale string points to a <code class="xref py py-obj docutils literal notranslate"><span class="pre">Page</span></code>.  The latter represents
+the actual markdown file located in the repository.</p>
+<p>After the initialization, which consists of adding pages with
+<a class="reference internal" href="#sipa.flatpages.Article.add_page" title="sipa.flatpages.Article.add_page"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_page()</span></code></a>, internal methods access only the page with
+the correct locale, which is proxied by <a class="reference internal" href="#sipa.flatpages.Article.localized_page" title="sipa.flatpages.Article.localized_page"><code class="xref py py-attr docutils literal notranslate"><span class="pre">localized_page</span></code></a>.</p>
+<p>Besides that, <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattr__()</span></code> comfortably passes queries to
+the <code class="xref py py-obj docutils literal notranslate"><span class="pre">localized_page.meta</span></code> dict.</p>
+<dl class="method">
+<dt id="sipa.flatpages.Article.add_page">
+<code class="descname">add_page</code><span class="sig-paren">(</span><em>page: flask_flatpages.page.Page</em>, <em>locale: babel.core.Locale</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#Article.add_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.Article.add_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a page to the pages list.</p>
+<p>If the name is not <code class="docutils literal notranslate"><span class="pre">index</span></code> and the validation via
+<a class="reference internal" href="#sipa.flatpages.Article.validate_page_meta" title="sipa.flatpages.Article.validate_page_meta"><code class="xref py py-meth docutils literal notranslate"><span class="pre">validate_page_meta()</span></code></a> fails, skip this.</p>
+<p>If no <a class="reference internal" href="#sipa.flatpages.Article.default_page" title="sipa.flatpages.Article.default_page"><code class="xref py py-attr docutils literal notranslate"><span class="pre">default_page</span></code></a> is set or the locale equals
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">babel.default_locale</span></code>, set <a class="reference internal" href="#sipa.flatpages.Article.default_page" title="sipa.flatpages.Article.default_page"><code class="xref py py-attr docutils literal notranslate"><span class="pre">default_page</span></code></a> to
+the given page.</p>
+<p>Update the <a class="reference internal" href="#sipa.flatpages.Article.localized_pages" title="sipa.flatpages.Article.localized_pages"><code class="xref py py-attr docutils literal notranslate"><span class="pre">localized_pages</span></code></a> dict at the
+<code class="docutils literal notranslate"><span class="pre">str(locale)</span></code> key to <code class="docutils literal notranslate"><span class="pre">page</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>page</strong> – The page to add</li>
+<li><strong>locale</strong> – The locale of this page</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.flatpages.Article.default_page">
+<code class="descname">default_page</code><em class="property"> = None</em><a class="headerlink" href="#sipa.flatpages.Article.default_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default page</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.flatpages.Article.file_basename">
+<code class="descname">file_basename</code><a class="headerlink" href="#sipa.flatpages.Article.file_basename" title="Permalink to this definition">¶</a></dt>
+<dd><p>The basename of the localized page without extension.</p>
+<p>Example: <cite>categ/article.en.md</cite> → <cite>article.en</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The basename of the <a class="reference internal" href="#sipa.flatpages.Article.localized_page" title="sipa.flatpages.Article.localized_page"><code class="xref py py-attr docutils literal notranslate"><span class="pre">localized_page</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.flatpages.Article.html">
+<code class="descname">html</code><a class="headerlink" href="#sipa.flatpages.Article.html" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#sipa.flatpages.Article.localized_page" title="sipa.flatpages.Article.localized_page"><code class="xref py py-attr docutils literal notranslate"><span class="pre">localized_page</span></code></a> as html</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The <a class="reference internal" href="#sipa.flatpages.Article.localized_page" title="sipa.flatpages.Article.localized_page"><code class="xref py py-attr docutils literal notranslate"><span class="pre">localized_page</span></code></a> converted to html</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.flatpages.Article.link">
+<code class="descname">link</code><a class="headerlink" href="#sipa.flatpages.Article.link" title="Permalink to this definition">¶</a></dt>
+<dd><p>A valid link to this article</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The URL or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the link starts with <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AttributeError" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AttributeError</span></code></a> if <a class="reference internal" href="#sipa.flatpages.Article.localized_page" title="sipa.flatpages.Article.localized_page"><code class="xref py py-attr docutils literal notranslate"><span class="pre">localized_page</span></code></a>
+doesn’t have a link in the meta section.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.flatpages.Article.localized_page">
+<code class="descname">localized_page</code><a class="headerlink" href="#sipa.flatpages.Article.localized_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current localized page</p>
+<p>This is the flatpage of the first available locale from
+<code class="xref py py-func docutils literal notranslate"><span class="pre">locale_preferences()</span></code>, or
+<a class="reference internal" href="#sipa.flatpages.Article.default_page" title="sipa.flatpages.Article.default_page"><code class="xref py py-attr docutils literal notranslate"><span class="pre">default_page</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The localized page</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.flatpages.Article.localized_pages">
+<code class="descname">localized_pages</code><em class="property"> = None</em><a class="headerlink" href="#sipa.flatpages.Article.localized_pages" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dict containing the localized pages of this article</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.flatpages.Article.rank">
+<code class="descname">rank</code><a class="headerlink" href="#sipa.flatpages.Article.rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>The rank of the <a class="reference internal" href="#sipa.flatpages.Article.localized_page" title="sipa.flatpages.Article.localized_page"><code class="xref py py-attr docutils literal notranslate"><span class="pre">localized_page</span></code></a></p>
+<p>This is what is given in the page’s <code class="docutils literal notranslate"><span class="pre">rank</span></code> meta-attribute if
+available else <code class="docutils literal notranslate"><span class="pre">100</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The <a class="reference internal" href="#sipa.flatpages.Article.localized_page" title="sipa.flatpages.Article.localized_page"><code class="xref py py-attr docutils literal notranslate"><span class="pre">localized_page</span></code></a> s rank</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sipa.flatpages.Article.validate_page_meta">
+<em class="property">static </em><code class="descname">validate_page_meta</code><span class="sig-paren">(</span><em>page: flask_flatpages.page.Page</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/sipa/flatpages.html#Article.validate_page_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.Article.validate_page_meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate that the pages meta-section.</p>
+<p>This function is necessary because a page with incorrect
+metadata will raise some Errors when trying to access them.
+Note that this is done rather early as pages are cached.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>page</strong> – The page to validate</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Whether the page is valid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.flatpages.CategorizedFlatPages">
+<em class="property">class </em><code class="descclassname">sipa.flatpages.</code><code class="descname">CategorizedFlatPages</code><a class="reference internal" href="../_modules/sipa/flatpages.html#CategorizedFlatPages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.CategorizedFlatPages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The main interface to gather pages and categories</p>
+<ul class="simple">
+<li>What is it used for?</li>
+</ul>
+<ul class="simple">
+<li>Looping: E.g. In the navbar</li>
+<li>get news → get_articles_of_category(‘news’)</li>
+<li>get static page → get_or_404()</li>
+</ul>
+<dl class="attribute">
+<dt id="sipa.flatpages.CategorizedFlatPages.categories">
+<code class="descname">categories</code><a class="headerlink" href="#sipa.flatpages.CategorizedFlatPages.categories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield all categories as an iterable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.flatpages.CategorizedFlatPages.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>category_id</em>, <em>article_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#CategorizedFlatPages.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.CategorizedFlatPages.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.flatpages.CategorizedFlatPages.get_articles_of_category">
+<code class="descname">get_articles_of_category</code><span class="sig-paren">(</span><em>category_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#CategorizedFlatPages.get_articles_of_category"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.CategorizedFlatPages.get_articles_of_category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the articles of a category</p>
+<ul class="simple">
+<li>ONLY used for fetching news</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.flatpages.CategorizedFlatPages.get_category">
+<code class="descname">get_category</code><span class="sig-paren">(</span><em>category_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#CategorizedFlatPages.get_category"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.CategorizedFlatPages.get_category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the <cite>Category</cite> object from a given name (id)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.flatpages.CategorizedFlatPages.get_or_404">
+<code class="descname">get_or_404</code><span class="sig-paren">(</span><em>category_id</em>, <em>article_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#CategorizedFlatPages.get_or_404"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.CategorizedFlatPages.get_or_404" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch a static page</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.flatpages.CategorizedFlatPages.init_app">
+<code class="descname">init_app</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#CategorizedFlatPages.init_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.CategorizedFlatPages.init_app" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.flatpages.CategorizedFlatPages.reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#CategorizedFlatPages.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.CategorizedFlatPages.reload" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.flatpages.Category">
+<em class="property">class </em><code class="descclassname">sipa.flatpages.</code><code class="descname">Category</code><span class="sig-paren">(</span><em>extension</em>, <em>parent</em>, <em>category_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#Category"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.Category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sipa.flatpages.Node" title="sipa.flatpages.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.flatpages.Node</span></code></a></p>
+<p>The Category class</p>
+<ul class="simple">
+<li>What’s it used for?</li>
+</ul>
+<ul class="simple">
+<li>Containing articles → should be iterable!</li>
+</ul>
+<dl class="method">
+<dt id="sipa.flatpages.Category.add_article">
+<code class="descname">add_article</code><span class="sig-paren">(</span><em>prefix</em>, <em>page</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#Category.add_article"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.Category.add_article" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a page to an article and create the latter if nonexistent.</p>
+<p>Firstly, the article_id is being extracted according to
+above scheme.  If an <cite>Article</cite> of this id already exists, it
+is asked to add the page accordingly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.flatpages.Category.add_child_category">
+<code class="descname">add_child_category</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#Category.add_child_category"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.Category.add_child_category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Category from an id, keep it and return it.</p>
+<p>If the category already exists, return it instead and do nothing.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.flatpages.Category.articles">
+<code class="descname">articles</code><a class="headerlink" href="#sipa.flatpages.Category.articles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the articles sorted by rank</p>
+<p>Only used for building the navigation bar</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.flatpages.Node">
+<em class="property">class </em><code class="descclassname">sipa.flatpages.</code><code class="descname">Node</code><span class="sig-paren">(</span><em>extension</em>, <em>parent</em>, <em>node_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/flatpages.html#Node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.flatpages.Node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>An abstract object with a parent and an id</p>
+<dl class="attribute">
+<dt id="sipa.flatpages.Node.extension">
+<code class="descname">extension</code><em class="property"> = None</em><a class="headerlink" href="#sipa.flatpages.Node.extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The CategorizedFlatPages extension</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.flatpages.Node.id">
+<code class="descname">id</code><em class="property"> = None</em><a class="headerlink" href="#sipa.flatpages.Node.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>This object’s id</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.flatpages.Node.parent">
+<code class="descname">parent</code><em class="property"> = None</em><a class="headerlink" href="#sipa.flatpages.Node.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The parent object</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.forms">
+<span id="sipa-forms-module"></span><h2>sipa.forms module<a class="headerlink" href="#module-sipa.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.forms.ActivateNetworkAccessForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">ActivateNetworkAccessForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#ActivateNetworkAccessForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.ActivateNetworkAccessForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.ActivateNetworkAccessForm.birthdate">
+<code class="descname">birthdate</code><em class="property"> = &lt;UnboundField(DateField, (), {'label': l'Geburtsdatum', 'validators': [&lt;wtforms.validators.DataRequired object&gt;], 'description': l'YYYY-MM-DD (z.B. 1995-10-23)'})&gt;</em><a class="headerlink" href="#sipa.forms.ActivateNetworkAccessForm.birthdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.ActivateNetworkAccessForm.host_name">
+<code class="descname">host_name</code><em class="property"> = &lt;UnboundField(StringField, (), {'label': l'Gerätename (Optional)', 'validators': [&lt;wtforms.validators.Regexp object&gt;, &lt;wtforms.validators.Optional object&gt;, &lt;wtforms.validators.Length object&gt;], 'description': l'TL-WR841N, MacBook, FritzBox, PC, Laptop, o.Ä.'})&gt;</em><a class="headerlink" href="#sipa.forms.ActivateNetworkAccessForm.host_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.ActivateNetworkAccessForm.mac">
+<code class="descname">mac</code><em class="property"> = &lt;UnboundField(StrippedStringField, (), {'label': l'MAC-Adresse', 'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.MacAddress object&gt;, &lt;function require_unicast_mac&gt;], 'description': 'XX:XX:XX:XX:XX:XX'})&gt;</em><a class="headerlink" href="#sipa.forms.ActivateNetworkAccessForm.mac" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.ActivateNetworkAccessForm.password">
+<code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, (), {'label': l'Passwort', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.ActivateNetworkAccessForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.AnonymousContactForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">AnonymousContactForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#AnonymousContactForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.AnonymousContactForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.AnonymousContactForm.dormitory">
+<code class="descname">dormitory</code><em class="property"> = &lt;UnboundField(SelectField, (), {'label': l'Wohnheim', 'choices': &lt;LocalProxy unbound&gt;, 'default': &lt;LocalProxy unbound&gt;})&gt;</em><a class="headerlink" href="#sipa.forms.AnonymousContactForm.dormitory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.AnonymousContactForm.email">
+<code class="descname">email</code><em class="property"> = &lt;UnboundField(StrippedStringField, (), {'label': l'Deine E-Mail-Adresse', 'validators': [&lt;wtforms.validators.Email object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.AnonymousContactForm.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.AnonymousContactForm.message">
+<code class="descname">message</code><em class="property"> = &lt;UnboundField(TextAreaField, (), {'label': l'Nachricht', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.AnonymousContactForm.message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.AnonymousContactForm.name">
+<code class="descname">name</code><em class="property"> = &lt;UnboundField(StringField, (), {'label': l'Dein Name', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.AnonymousContactForm.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.AnonymousContactForm.subject">
+<code class="descname">subject</code><em class="property"> = &lt;UnboundField(StrippedStringField, (), {'label': l'Betreff', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.AnonymousContactForm.subject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.ChangeMACForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">ChangeMACForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#ChangeMACForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.ChangeMACForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.ChangeMACForm.host_name">
+<code class="descname">host_name</code><em class="property"> = &lt;UnboundField(StringField, (), {'label': l'Neuer Gerätename (Optional)', 'validators': [&lt;wtforms.validators.Regexp object&gt;, &lt;wtforms.validators.Optional object&gt;, &lt;wtforms.validators.Length object&gt;], 'description': l'TL-WR841N, MacBook, FritzBox, PC, Laptop, o.Ä.'})&gt;</em><a class="headerlink" href="#sipa.forms.ChangeMACForm.host_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.ChangeMACForm.mac">
+<code class="descname">mac</code><em class="property"> = &lt;UnboundField(StrippedStringField, (), {'label': l'Neue MAC', 'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.MacAddress object&gt;, &lt;function require_unicast_mac&gt;], 'description': 'XX:XX:XX:XX:XX:XX'})&gt;</em><a class="headerlink" href="#sipa.forms.ChangeMACForm.mac" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.ChangeMACForm.password">
+<code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, (), {'label': l'Passwort', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.ChangeMACForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.ChangeMailForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">ChangeMailForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#ChangeMailForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.ChangeMailForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.ChangeMailForm.email">
+<code class="descname">email</code><em class="property"> = &lt;UnboundField(StrippedStringField, (), {'label': l'Neue Mail', 'validators': [&lt;wtforms.validators.Email object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.ChangeMailForm.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.ChangeMailForm.password">
+<code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, (), {'label': l'Passwort', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.ChangeMailForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.ChangePasswordForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">ChangePasswordForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#ChangePasswordForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.ChangePasswordForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.ChangePasswordForm.confirm">
+<code class="descname">confirm</code><em class="property"> = &lt;UnboundField(PasswordField, (), {'label': l'Bestätigung', 'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.EqualTo object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.ChangePasswordForm.confirm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.ChangePasswordForm.new">
+<code class="descname">new</code><em class="property"> = &lt;UnboundField(PasswordField, (), {'label': l'Neues Passwort', 'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;sipa.forms.PasswordComplexity object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.ChangePasswordForm.new" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.ChangePasswordForm.old">
+<code class="descname">old</code><em class="property"> = &lt;UnboundField(PasswordField, (), {'label': l'Altes Passwort', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.ChangePasswordForm.old" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.ChangeUseCacheForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">ChangeUseCacheForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#ChangeUseCacheForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.ChangeUseCacheForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.ChangeUseCacheForm.use_cache">
+<code class="descname">use_cache</code><em class="property"> = &lt;UnboundField(RadioField, (), {'label': l'Cache-Nutzung', 'coerce': &lt;class 'int'&gt;, 'choices': [(0, l'Deaktiviert'), (1, l'Aktiviert')]})&gt;</em><a class="headerlink" href="#sipa.forms.ChangeUseCacheForm.use_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.ContactForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">ContactForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#ContactForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.ContactForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.ContactForm.email">
+<code class="descname">email</code><em class="property"> = &lt;UnboundField(ReadonlyStringField, (), {'label': l'Deine E-Mail-Adresse', 'validators': [&lt;wtforms.validators.Email object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.ContactForm.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.ContactForm.message">
+<code class="descname">message</code><em class="property"> = &lt;UnboundField(TextAreaField, (), {'label': l'Nachricht', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.ContactForm.message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.ContactForm.subject">
+<code class="descname">subject</code><em class="property"> = &lt;UnboundField(StrippedStringField, (), {'label': l'Betreff', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.ContactForm.subject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.ContactForm.type">
+<code class="descname">type</code><em class="property"> = &lt;UnboundField(SelectField, (), {'label': l'Kategorie', 'choices': [('frage', l'Allgemeine Frage an die Administratoren'), ('stoerung', l'Störungen im Netzwerk Wundtstraße/Zellescher Weg'), ('finanzen', l'Finanzfragen (Beiträge, Gebühren)'), ('eigene-technik', l'Probleme mit privater Technik')]})&gt;</em><a class="headerlink" href="#sipa.forms.ContactForm.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.DeleteMailForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">DeleteMailForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#DeleteMailForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.DeleteMailForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.DeleteMailForm.password">
+<code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, (), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.DeleteMailForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.HostingForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">HostingForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#HostingForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.HostingForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.HostingForm.action">
+<code class="descname">action</code><em class="property"> = &lt;UnboundField(HiddenField, (), {})&gt;</em><a class="headerlink" href="#sipa.forms.HostingForm.action" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.HostingForm.confirm">
+<code class="descname">confirm</code><em class="property"> = &lt;UnboundField(PasswordField, (l'Bestätigung',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.EqualTo object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.HostingForm.confirm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.HostingForm.password">
+<code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, (l'Passwort',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;sipa.forms.PasswordComplexity object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.HostingForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.LoginForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">LoginForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#LoginForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.LoginForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.LoginForm.dormitory">
+<code class="descname">dormitory</code><em class="property"> = &lt;UnboundField(SelectField, (l'Wohnheim',), {'choices': &lt;LocalProxy unbound&gt;, 'default': &lt;LocalProxy unbound&gt;, 'validators': [&lt;LocalProxy unbound&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.LoginForm.dormitory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.LoginForm.password">
+<code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, (), {'label': l'Passwort', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.LoginForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.LoginForm.remember">
+<code class="descname">remember</code><em class="property"> = &lt;UnboundField(BooleanField, (), {'default': l'Anmeldung merken'})&gt;</em><a class="headerlink" href="#sipa.forms.LoginForm.remember" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.LoginForm.username">
+<code class="descname">username</code><em class="property"> = &lt;UnboundField(StrippedStringField, (), {'label': l'Nutzername', 'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Regexp object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.LoginForm.username" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.OfficialContactForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">OfficialContactForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#OfficialContactForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.OfficialContactForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.OfficialContactForm.email">
+<code class="descname">email</code><em class="property"> = &lt;UnboundField(StrippedStringField, (), {'label': l'E-Mail-Adresse', 'validators': [&lt;wtforms.validators.Email object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.OfficialContactForm.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.OfficialContactForm.message">
+<code class="descname">message</code><em class="property"> = &lt;UnboundField(TextAreaField, (), {'label': l'Nachricht', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.OfficialContactForm.message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.OfficialContactForm.name">
+<code class="descname">name</code><em class="property"> = &lt;UnboundField(StringField, (), {'label': l'Name / Organisation', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.OfficialContactForm.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.OfficialContactForm.subject">
+<code class="descname">subject</code><em class="property"> = &lt;UnboundField(StrippedStringField, (), {'label': l'Betreff', 'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.OfficialContactForm.subject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.PasswordComplexity">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">PasswordComplexity</code><span class="sig-paren">(</span><em>min_length=8</em>, <em>min_classes=3</em>, <em>message=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#PasswordComplexity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.PasswordComplexity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="attribute">
+<dt id="sipa.forms.PasswordComplexity.character_classes">
+<code class="descname">character_classes</code><em class="property"> = ((re.compile('[a-z]'), l'Kleinbuchstaben (a-z)'), (re.compile('[A-Z]'), l'Großbuchstaben (A-Z)'), (re.compile('[0-9]'), l'Ziffern (0-9)'), (re.compile('[^a-zA-Z0-9]'), l'andere Zeichen'))</em><a class="headerlink" href="#sipa.forms.PasswordComplexity.character_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.forms.PasswordComplexity.default_message">
+<code class="descname">default_message</code><em class="property"> = l'Dein Passwort muss mindestens {min_length} Zeichen lang sein und mindestens {min_classes} verschiedene Klassen von Zeichen enthalten. Zeichen von Klassen sind: {classes}.'</em><a class="headerlink" href="#sipa.forms.PasswordComplexity.default_message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.forms.PasswordComplexity.raise_error">
+<code class="descname">raise_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#PasswordComplexity.raise_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.PasswordComplexity.raise_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.PaymentForm">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">PaymentForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#PaymentForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.PaymentForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="attribute">
+<dt id="sipa.forms.PaymentForm.months">
+<code class="descname">months</code><em class="property"> = &lt;UnboundField(IntegerField, (l'Monate',), {'default': 1, 'validators': [&lt;wtforms.validators.NumberRange object&gt;]})&gt;</em><a class="headerlink" href="#sipa.forms.PaymentForm.months" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.ReadonlyStringField">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">ReadonlyStringField</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#ReadonlyStringField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.ReadonlyStringField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sipa.forms.StrippedStringField" title="sipa.forms.StrippedStringField"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.forms.StrippedStringField</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.forms.StrippedStringField">
+<em class="property">class </em><code class="descclassname">sipa.forms.</code><code class="descname">StrippedStringField</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#StrippedStringField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.StrippedStringField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">wtforms.fields.core.StringField</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.forms.flash_formerrors">
+<code class="descclassname">sipa.forms.</code><code class="descname">flash_formerrors</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#flash_formerrors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.flash_formerrors" title="Permalink to this definition">¶</a></dt>
+<dd><p>If a form is submitted but could not be validated, the routing passes
+the form and this method returns all form errors (form.errors)
+as flash messages.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.forms.require_unicast_mac">
+<code class="descclassname">sipa.forms.</code><code class="descname">require_unicast_mac</code><span class="sig-paren">(</span><em>form</em>, <em>field</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#require_unicast_mac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.require_unicast_mac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validator for unicast mac adress.
+A MAC-adress is defined to be “broadcast” if the least significant bit
+of the first octet is 1. Therefore, it has to be 0 to be valid.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.forms.strip_filter">
+<code class="descclassname">sipa.forms.</code><code class="descname">strip_filter</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/forms.html#strip_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.forms.strip_filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sipa.initialization">
+<span id="sipa-initialization-module"></span><h2>sipa.initialization module<a class="headerlink" href="#module-sipa.initialization" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sipa.initialization.init_app">
+<code class="descclassname">sipa.initialization.</code><code class="descname">init_app</code><span class="sig-paren">(</span><em>app</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/initialization.html#init_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.initialization.init_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the Flask app located in the module sipa.
+This initializes the Flask app by:</p>
+<ul class="simple">
+<li>calling the internal init_app() procedures of each module</li>
+<li>registering the Blueprints</li>
+<li>registering the Jinja global variables</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.initialization.init_env_and_config">
+<code class="descclassname">sipa.initialization.</code><code class="descname">init_env_and_config</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/initialization.html#init_env_and_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.initialization.init_env_and_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.initialization.init_logging">
+<code class="descclassname">sipa.initialization.</code><code class="descname">init_logging</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/initialization.html#init_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.initialization.init_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the app’s logging mechanisms</p>
+<ul class="simple">
+<li>Configure the sentry client, if a DSN is given</li>
+<li>Apply the default config dict (<cite>defaults.DEFAULT_CONFIG</cite>)</li>
+<li>If given and existent, apply the additional config file</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.initialization.load_config_file">
+<code class="descclassname">sipa.initialization.</code><code class="descname">load_config_file</code><span class="sig-paren">(</span><em>app</em>, <em>config=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/initialization.html#load_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.initialization.load_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Just load the config file, do nothing else</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.initialization.try_register_uwsgi_timer">
+<code class="descclassname">sipa.initialization.</code><code class="descname">try_register_uwsgi_timer</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/initialization.html#try_register_uwsgi_timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.initialization.try_register_uwsgi_timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register the uwsgi timer if uwsgi isavailable</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.login_manager">
+<span id="sipa-login-manager-module"></span><h2>sipa.login_manager module<a class="headerlink" href="#module-sipa.login_manager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.login_manager.SipaLoginManager">
+<em class="property">class </em><code class="descclassname">sipa.login_manager.</code><code class="descname">SipaLoginManager</code><span class="sig-paren">(</span><em>*a</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/login_manager.html#SipaLoginManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.login_manager.SipaLoginManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_login.login_manager.LoginManager</span></code></p>
+<dl class="method">
+<dt id="sipa.login_manager.SipaLoginManager.disable_user_loading">
+<code class="descname">disable_user_loading</code><span class="sig-paren">(</span><em>bp=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/login_manager.html#SipaLoginManager.disable_user_loading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.login_manager.SipaLoginManager.disable_user_loading" title="Permalink to this definition">¶</a></dt>
+<dd><p>The decorator version of <a class="reference internal" href="#sipa.login_manager.SipaLoginManager.ignore_endpoint" title="sipa.login_manager.SipaLoginManager.ignore_endpoint"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ignore_endpoint()</span></code></a></p>
+<p>Use as <cite>&#64;login_manager.disable_user_loading()</cite> or
+<cite>&#64;login_manager.disable_user_loading(bp)</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.login_manager.SipaLoginManager.ignore_endpoint">
+<code class="descname">ignore_endpoint</code><span class="sig-paren">(</span><em>endpoint_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/login_manager.html#SipaLoginManager.ignore_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.login_manager.SipaLoginManager.ignore_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.login_manager.SipaLoginManager.user_callback">
+<code class="descname">user_callback</code><a class="headerlink" href="#sipa.login_manager.SipaLoginManager.user_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.mail">
+<span id="sipa-mail-module"></span><h2>sipa.mail module<a class="headerlink" href="#module-sipa.mail" title="Permalink to this headline">¶</a></h2>
+<p>Functions concerned with mail composition and transmission</p>
+<p>This module ultimately provides functions to be used by a blueprint in
+order to compose and send a mail, for instance
+<a class="reference internal" href="#sipa.mail.send_contact_mail" title="sipa.mail.send_contact_mail"><code class="xref py py-func docutils literal notranslate"><span class="pre">send_contact_mail()</span></code></a>.</p>
+<p>On the layer below, some intermediate functions are introduced which
+are needed to compose and send the mails.  The core is
+<a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal notranslate"><span class="pre">send_complex_mail()</span></code></a>, which calls <a class="reference internal" href="#sipa.mail.send_mail" title="sipa.mail.send_mail"><code class="xref py py-func docutils literal notranslate"><span class="pre">send_mail()</span></code></a>
+prepending optional information to the title and body</p>
+<dl class="function">
+<dt id="sipa.mail.compose_body">
+<code class="descclassname">sipa.mail.</code><code class="descname">compose_body</code><span class="sig-paren">(</span><em>message: str</em>, <em>header: Optional[Dict[str</em>, <em>Any]] = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/mail.html#compose_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.compose_body" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepend additional information to a message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>message</strong> – </li>
+<li><strong>header</strong> – Dict of the additional “key: value”
+entries to be prepended to the mail.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The composed body</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.compose_subject">
+<code class="descclassname">sipa.mail.</code><code class="descname">compose_subject</code><span class="sig-paren">(</span><em>raw_subject: str</em>, <em>tag: str = ''</em>, <em>category: str = ''</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/sipa/mail.html#compose_subject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.compose_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compose a subject containing a tag and a category.</p>
+<p>If any of tag or category is missing, don’t print the
+corresponding part (without whitespace issues).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>raw_subject</strong> – The original subject</li>
+<li><strong>tag</strong> – </li>
+<li><strong>category</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The subject.  Form: “[{tag}] {category}: {raw_subject}”</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.send_complex_mail">
+<code class="descclassname">sipa.mail.</code><code class="descname">send_complex_mail</code><span class="sig-paren">(</span><em>subject: str</em>, <em>message: str</em>, <em>tag: str = ''</em>, <em>category: str = ''</em>, <em>header: Optional[Dict[str</em>, <em>Any]] = None</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/sipa/mail.html#send_complex_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.send_complex_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a mail with context information in subject and body.</p>
+<p>This function is just a modified call of <a class="reference internal" href="#sipa.mail.send_mail" title="sipa.mail.send_mail"><code class="xref py py-func docutils literal notranslate"><span class="pre">send_mail()</span></code></a>, to
+which all the other arguments are passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subject</strong> – </li>
+<li><strong>message</strong> – </li>
+<li><strong>tag</strong> – See <a class="reference internal" href="#sipa.mail.compose_subject" title="sipa.mail.compose_subject"><code class="xref py py-func docutils literal notranslate"><span class="pre">compose_subject()</span></code></a></li>
+<li><strong>category</strong> – See <a class="reference internal" href="#sipa.mail.compose_subject" title="sipa.mail.compose_subject"><code class="xref py py-func docutils literal notranslate"><span class="pre">compose_subject()</span></code></a></li>
+<li><strong>header</strong> – See <a class="reference internal" href="#sipa.mail.compose_body" title="sipa.mail.compose_body"><code class="xref py py-func docutils literal notranslate"><span class="pre">compose_body()</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">see <a class="reference internal" href="#sipa.mail.send_mail" title="sipa.mail.send_mail"><code class="xref py py-func docutils literal notranslate"><span class="pre">send_mail()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.send_contact_mail">
+<code class="descclassname">sipa.mail.</code><code class="descname">send_contact_mail</code><span class="sig-paren">(</span><em>author: str</em>, <em>subject: str</em>, <em>message: str</em>, <em>name: str</em>, <em>dormitory_name: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/sipa/mail.html#send_contact_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.send_contact_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compose a mail for anonymous contacting.</p>
+<p>Call <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal notranslate"><span class="pre">send_complex_mail()</span></code></a> setting a tag plus name and
+dormitory in the header.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>author</strong> – The e-mail of the author</li>
+<li><strong>subject</strong> – </li>
+<li><strong>message</strong> – </li>
+<li><strong>name</strong> – The author’s real-life name</li>
+<li><strong>dormitory_name</strong> – The string identifier of the chosen dormitory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">see <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal notranslate"><span class="pre">send_complex_mail()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.send_mail">
+<code class="descclassname">sipa.mail.</code><code class="descname">send_mail</code><span class="sig-paren">(</span><em>author: str</em>, <em>recipient: str</em>, <em>subject: str</em>, <em>message: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/sipa/mail.html#send_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.send_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a MIME text mail</p>
+<p>Send a mail from <code class="docutils literal notranslate"><span class="pre">author</span></code> to <code class="docutils literal notranslate"><span class="pre">receipient</span></code> with <code class="docutils literal notranslate"><span class="pre">subject</span></code> and
+<code class="docutils literal notranslate"><span class="pre">message</span></code>.  The message will be wrapped to 80 characters and
+encoded to UTF8.</p>
+<p>Returns False, if sending from localhost:25 fails.  Else returns
+True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>author</strong> – The mail address of the author</li>
+<li><strong>recipient</strong> – The mail address of the recipient</li>
+<li><strong>subject</strong> – </li>
+<li><strong>message</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Whether the transmission succeeded</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.send_official_contact_mail">
+<code class="descclassname">sipa.mail.</code><code class="descname">send_official_contact_mail</code><span class="sig-paren">(</span><em>author: str</em>, <em>subject: str</em>, <em>message: str</em>, <em>name: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/sipa/mail.html#send_official_contact_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.send_official_contact_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compose a mail for official contacting.</p>
+<p>Call <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal notranslate"><span class="pre">send_complex_mail()</span></code></a> setting a tag.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>author</strong> – The e-mail address of the author</li>
+<li><strong>subject</strong> – </li>
+<li><strong>message</strong> – </li>
+<li><strong>name</strong> – The author’s real-life name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">see <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal notranslate"><span class="pre">send_complex_mail()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.send_usersuite_contact_mail">
+<code class="descclassname">sipa.mail.</code><code class="descname">send_usersuite_contact_mail</code><span class="sig-paren">(</span><em>subject: str</em>, <em>message: str</em>, <em>category: str</em>, <em>user: sipa.model.user.BaseUser = None</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/sipa/mail.html#send_usersuite_contact_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.send_usersuite_contact_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compose a mail for contacting from the usersuite</p>
+<p>Call <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal notranslate"><span class="pre">send_complex_mail()</span></code></a> setting a tag and the category
+plus the user’s login in the header.</p>
+<p>The author is chosen to be the user’s mailaccount on the
+datasource’s mail server.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subject</strong> – </li>
+<li><strong>message</strong> – </li>
+<li><strong>category</strong> – The Category as to be included in the title</li>
+<li><strong>user</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">see <a class="reference internal" href="#sipa.mail.send_complex_mail" title="sipa.mail.send_complex_mail"><code class="xref py py-func docutils literal notranslate"><span class="pre">send_complex_mail()</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.mail.wrap_message">
+<code class="descclassname">sipa.mail.</code><code class="descname">wrap_message</code><span class="sig-paren">(</span><em>message: str</em>, <em>chars_in_line: int = 80</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/sipa/mail.html#wrap_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.mail.wrap_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap a block of text to a certain amount of characters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>message</strong> – </li>
+<li><strong>chars_in_line</strong> – The width to wrap against</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the wrapped message</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.session">
+<span id="sipa-session-module"></span><h2>sipa.session module<a class="headerlink" href="#module-sipa.session" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.session.SeparateLocaleCookieSessionInterface">
+<em class="property">class </em><code class="descclassname">sipa.session.</code><code class="descname">SeparateLocaleCookieSessionInterface</code><a class="reference internal" href="../_modules/sipa/session.html#SeparateLocaleCookieSessionInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.session.SeparateLocaleCookieSessionInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://flask.pocoo.org/docs/1.0/api/#flask.sessions.SecureCookieSessionInterface" title="(in Flask v1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">flask.sessions.SecureCookieSessionInterface</span></code></a></p>
+<p>Store a user’s locale preference in a separate, unencrypted cookie.</p>
+<dl class="method">
+<dt id="sipa.session.SeparateLocaleCookieSessionInterface.open_session">
+<code class="descname">open_session</code><span class="sig-paren">(</span><em>app</em>, <em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/session.html#SeparateLocaleCookieSessionInterface.open_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.session.SeparateLocaleCookieSessionInterface.open_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method has to be implemented and must either return <code class="docutils literal notranslate"><span class="pre">None</span></code>
+in case the loading failed because of a configuration error or an
+instance of a session object which implements a dictionary like
+interface + the methods and attributes on <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionMixin</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.session.SeparateLocaleCookieSessionInterface.save_session">
+<code class="descname">save_session</code><span class="sig-paren">(</span><em>app</em>, <em>session</em>, <em>response</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/session.html#SeparateLocaleCookieSessionInterface.save_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.session.SeparateLocaleCookieSessionInterface.save_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is called for actual sessions returned by <a class="reference internal" href="#sipa.session.SeparateLocaleCookieSessionInterface.open_session" title="sipa.session.SeparateLocaleCookieSessionInterface.open_session"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_session()</span></code></a>
+at the end of the request.  This is still called during a request
+context so if you absolutely need access to the request you can do
+that.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.units">
+<span id="sipa-units-module"></span><h2>sipa.units module<a class="headerlink" href="#module-sipa.units" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="sipa.units.MONEY_FORMAT_STRING">
+<code class="descclassname">sipa.units.</code><code class="descname">MONEY_FORMAT_STRING</code><em class="property"> = '{:+.2f}\xa0€'</em><a class="headerlink" href="#sipa.units.MONEY_FORMAT_STRING" title="Permalink to this definition">¶</a></dt>
+<dd><p>The format string for monetary values.  Round to two digits with a
+sign and append €.  Mind the no-break space!</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="sipa.units.TRAFFIC_FORMAT_STRING">
+<code class="descclassname">sipa.units.</code><code class="descname">TRAFFIC_FORMAT_STRING</code><em class="property"> = '{0:.2f} {1}'</em><a class="headerlink" href="#sipa.units.TRAFFIC_FORMAT_STRING" title="Permalink to this definition">¶</a></dt>
+<dd><p>The format string for traffic values.  Rounds to two digits and
+appends the unit.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="sipa.units.UNIT_LIST">
+<code class="descclassname">sipa.units.</code><code class="descname">UNIT_LIST</code><em class="property"> = ['KiB', 'MiB', 'GiB']</em><a class="headerlink" href="#sipa.units.UNIT_LIST" title="Permalink to this definition">¶</a></dt>
+<dd><p>0 divisions mean the unit stays being <cite>KiB</cite>.
+<strong>Usage</strong>: unit = UNIT_LIST[divisions]</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.units.dynamic_unit">
+<code class="descclassname">sipa.units.</code><code class="descname">dynamic_unit</code><span class="sig-paren">(</span><em>number: float</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/sipa/units.html#dynamic_unit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.units.dynamic_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format a traffic value with a unit according to its size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>number</strong> – The traffic in units of the first element of
+<a class="reference internal" href="#sipa.units.UNIT_LIST" title="sipa.units.UNIT_LIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNIT_LIST</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The formatted value in a nice unit.  See
+<a class="reference internal" href="#sipa.units.TRAFFIC_FORMAT_STRING" title="sipa.units.TRAFFIC_FORMAT_STRING"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TRAFFIC_FORMAT_STRING</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.units.format_as_traffic">
+<code class="descclassname">sipa.units.</code><code class="descname">format_as_traffic</code><span class="sig-paren">(</span><em>number: float</em>, <em>divisions: int</em>, <em>divide: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/sipa/units.html#format_as_traffic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.units.format_as_traffic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format <code class="docutils literal notranslate"><span class="pre">number</span></code> as traffic value</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">divide</span></code> is True, reduce <code class="docutils literal notranslate"><span class="pre">value</span></code> <code class="docutils literal notranslate"><span class="pre">divisions</span></code> times.
+<code class="docutils literal notranslate"><span class="pre">divide=False</span></code> effectively just appends the according unit.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>number</strong> – The number to format and perhaps divide</li>
+<li><strong>divisions</strong> – Which unit to choose from <a class="reference internal" href="#sipa.units.UNIT_LIST" title="sipa.units.UNIT_LIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNIT_LIST</span></code></a></li>
+<li><strong>divide</strong> – Whether <code class="docutils literal notranslate"><span class="pre">number</span></code> has to be divided.  If
+<code class="docutils literal notranslate"><span class="pre">False</span></code>, leave as is.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The formatted value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.units.format_money">
+<code class="descclassname">sipa.units.</code><code class="descname">format_money</code><span class="sig-paren">(</span><em>amount: float</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/sipa/units.html#format_money"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.units.format_money" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nicely format a monetary value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>amount</strong> – The amount of euros</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The formatted value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.units.max_divisions">
+<code class="descclassname">sipa.units.</code><code class="descname">max_divisions</code><span class="sig-paren">(</span><em>number: float</em>, <em>base: int = 1024</em>, <em>unit_list: list = None</em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="../_modules/sipa/units.html#max_divisions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.units.max_divisions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the maximum number of divisions to get 0 ≤ <code class="docutils literal notranslate"><span class="pre">number</span></code> ≤
+<code class="docutils literal notranslate"><span class="pre">base</span></code></p>
+<p>Return the maximum number of divisions we can make in the context
+of <code class="docutils literal notranslate"><span class="pre">unit_list</span></code>.  If you give three units, no more than three
+divisions will be determined.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>number</strong> – The number to test</li>
+<li><strong>base</strong> – The base to consider</li>
+<li><strong>unit_list</strong> – The list of units available</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The determined number of divisions</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.units.money">
+<code class="descclassname">sipa.units.</code><code class="descname">money</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/units.html#money"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.units.money" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decorator turning a float number into a stylized money string</p>
+<p>The given float is returned as e.g. <code class="docutils literal notranslate"><span class="pre">±98792.09€</span></code>, the style is a
+bootstrap-style context class without the prefix (e.g.
+<code class="docutils literal notranslate"><span class="pre">success</span></code>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>function</em>) – The function to be decorated</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Value as string and style</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">A dict in the form of <code class="docutils literal notranslate"><span class="pre">{'value':</span> <span class="pre">&lt;string&gt;,</span> <span class="pre">'style':</span>
+<span class="pre">&lt;string&gt;}</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.units.money_style">
+<code class="descclassname">sipa.units.</code><code class="descname">money_style</code><span class="sig-paren">(</span><em>amount: float</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/sipa/units.html#money_style"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.units.money_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a corresponding bootstrap style to an amount of money</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>amount</strong> – The amount of money</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The bootstrap style</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.units.reduce_by_base">
+<code class="descclassname">sipa.units.</code><code class="descname">reduce_by_base</code><span class="sig-paren">(</span><em>number: float</em>, <em>divisions: int</em>, <em>base: int = 1024</em><span class="sig-paren">)</span> &#x2192; float<a class="reference internal" href="../_modules/sipa/units.html#reduce_by_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.units.reduce_by_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divide <code class="docutils literal notranslate"><span class="pre">number</span></code> by <code class="docutils literal notranslate"><span class="pre">divisions</span></code> potences of <code class="docutils literal notranslate"><span class="pre">base</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sipa" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sipa.create_app">
+<code class="descclassname">sipa.</code><code class="descname">create_app</code><span class="sig-paren">(</span><em>app=None</em>, <em>prepare_callable=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa.html#create_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.create_app" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model.html">Model</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Complete Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sipa package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">sipa</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">sipa</a></li>
+      <li>Next: <a href="sipa.backends.html" title="next chapter">sipa.backends package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/ref/sipa.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

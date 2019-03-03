@@ -1,83 +1,72 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>sipa.model.datasource &mdash; Sipa 0.4.3-29-g91b9517 documentation</title>
-    
-    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <title>sipa.backends.datasource &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../../',
-        VERSION:     '0.4.3-29-g91b9517',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="Sipa 0.4.3-29-g91b9517 documentation" href="../../../index.html" />
-    <link rel="up" title="sipa.model" href="../model.html" /> 
-  </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../model.html" accesskey="U">sipa.model</a> &raquo;</li> 
-      </ul>
-    </div>  
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
-  <h1>Source code for sipa.model.datasource</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">ipaddress</span> <span class="k">import</span> <span class="n">IPv4Network</span>
+  <h1>Source code for sipa.backends.datasource</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">annotations</span>
+<span class="kn">from</span> <span class="nn">ipaddress</span> <span class="k">import</span> <span class="n">IPv4Network</span><span class="p">,</span> <span class="n">IPv4Address</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span>
 
-<span class="kn">from</span> <span class="nn">sipa.utils</span> <span class="k">import</span> <span class="n">argstr</span>
-<span class="kn">from</span> <span class="nn">.misc</span> <span class="k">import</span> <span class="n">xor_hashes</span><span class="p">,</span> <span class="n">compare_all_attributes</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">Flask</span>
 
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sipa.utils</span> <span class="k">import</span> <span class="n">argstr</span><span class="p">,</span> <span class="n">compare_all_attributes</span><span class="p">,</span> <span class="n">xor_hashes</span>
+<span class="kn">from</span> <span class="nn">.logging</span> <span class="k">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">.types</span> <span class="k">import</span> <span class="n">UserLike</span>
 
 
-<div class="viewcode-block" id="DataSource"><a class="viewcode-back" href="../../../model.html#sipa.model.datasource.DataSource">[docs]</a><span class="k">class</span> <span class="nc">DataSource</span><span class="p">:</span>
+<span class="n">InitContextCallable</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Flask</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="DataSource"><a class="viewcode-back" href="../../../ref/sipa.backends.html#sipa.backends.datasource.DataSource">[docs]</a><span class="k">class</span> <span class="nc">DataSource</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A class providing a certain Backend.</span>
 
 <span class="sd">    This class provides information about the backend you defined, for</span>
 <span class="sd">    instance the user class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">user_class</span><span class="p">,</span> <span class="n">mail_server</span><span class="p">,</span>
-                 <span class="n">webmailer_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">support_mail</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">init_context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">user_class</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">UserLike</span><span class="p">],</span> <span class="n">mail_server</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">webmailer_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">support_mail</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">init_context</span><span class="p">:</span> <span class="n">InitContextCallable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="c1">#: Holds the name of this datasource.  Must be unique among</span>
         <span class="c1">#: what you register onto your `Backends` object.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
 
-        <span class="k">class</span> <span class="nc">_user_class</span><span class="p">(</span><span class="n">user_class</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">_user_class</span><span class="p">(</span><span class="n">user_class</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
             <span class="n">datasource</span> <span class="o">=</span> <span class="bp">self</span>
-        <span class="c1">#: the user_class used in the sense of ``flask_login``.  See</span>
-        <span class="c1">#: :py:class:`~.user.BaseUser`</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">user_class</span> <span class="o">=</span> <span class="n">_user_class</span>
+        <span class="c1">#: the user_class used in the sense of ``flask_login``.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_class</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">UserLike</span><span class="p">]</span> <span class="o">=</span> <span class="n">_user_class</span>
 
         <span class="c1">#: The mail server to be appended to a user&#39;s login in order</span>
         <span class="c1">#: to construct the mail address.</span>
@@ -86,40 +75,36 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">support_mail</span> <span class="o">=</span> <span class="p">(</span><span class="n">support_mail</span> <span class="k">if</span> <span class="n">support_mail</span>
                              <span class="k">else</span> <span class="s2">&quot;support@</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mail_server</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_context</span> <span class="o">=</span> <span class="n">init_context</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dormitories</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dormitories</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dormitory</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="n">compare_all_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">{cls}</span><span class="s2"> </span><span class="si">{name!r}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="n">cls</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+            <span class="bp">cls</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">xor_hashes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_class</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">support_mail</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mail_server</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DataSource.register_dormitory"><a class="viewcode-back" href="../../../model.html#sipa.model.datasource.DataSource.register_dormitory">[docs]</a>    <span class="k">def</span> <span class="nf">register_dormitory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dormitory</span><span class="p">):</span>
+<div class="viewcode-block" id="DataSource.register_dormitory"><a class="viewcode-back" href="../../../ref/sipa.backends.html#sipa.backends.datasource.DataSource.register_dormitory">[docs]</a>    <span class="k">def</span> <span class="nf">register_dormitory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dormitory</span><span class="p">:</span> <span class="n">Dormitory</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">dormitory</span><span class="o">.</span><span class="n">name</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dormitories</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Dormitory </span><span class="si">{}</span><span class="s2"> already registered&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dormitories</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dormitory</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dormitories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;A list of all registered dormitories.</span>
-
-<span class="sd">        :rtype: list of ``Dormitory`` instances</span>
-<span class="sd">        :returns: the registered dormitories</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">dormitories</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dormitory</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;A list of all registered dormitories.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dormitories</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
-<div class="viewcode-block" id="DataSource.init_context"><a class="viewcode-back" href="../../../model.html#sipa.model.datasource.DataSource.init_context">[docs]</a>    <span class="k">def</span> <span class="nf">init_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
+<div class="viewcode-block" id="DataSource.init_context"><a class="viewcode-back" href="../../../ref/sipa.backends.html#sipa.backends.datasource.DataSource.init_context">[docs]</a>    <span class="k">def</span> <span class="nf">init_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">:</span> <span class="n">Flask</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize this backend</span>
 
 <span class="sd">            - Apply the custom configuration of</span>
-<span class="sd">              :py:def:`app.config[&#39;BACKENDS_CONFIG&#39;][self.name]`</span>
+<span class="sd">              :py:obj:`app.config[&#39;BACKENDS_CONFIG&#39;][self.name]`</span>
 
 <span class="sd">            - Call :py:meth:`_init_context(app)` as given in the</span>
 <span class="sd">              config</span>
@@ -148,13 +133,13 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_context</span><span class="p">(</span><span class="n">app</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="SubnetCollection"><a class="viewcode-back" href="../../../model.html#sipa.model.datasource.SubnetCollection">[docs]</a><span class="k">class</span> <span class="nc">SubnetCollection</span><span class="p">:</span>
+<div class="viewcode-block" id="SubnetCollection"><a class="viewcode-back" href="../../../ref/sipa.backends.html#sipa.backends.datasource.SubnetCollection">[docs]</a><span class="k">class</span> <span class="nc">SubnetCollection</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A simple class for combining multiple IPv4Networks.</span>
 
 <span class="sd">    Provides __contains__ functionality for IPv4Addresses.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subnets</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subnets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">IPv4Network</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">subnets</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">subnet</span> <span class="ow">in</span> <span class="n">subnets</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">subnet</span><span class="p">,</span> <span class="n">IPv4Network</span><span class="p">):</span>
@@ -166,35 +151,40 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span> <span class="o">=</span> <span class="n">subnets</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
             <span class="n">subnets</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">,</span>
         <span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+    <span class="c1"># hint should be replaced with typing info from stub</span>
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">IPv4Address</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">subnet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">address</span> <span class="ow">in</span> <span class="n">subnet</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">subnets</span>
+        <span class="k">return</span> <span class="n">compare_all_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;subnets&#39;</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">xor_hashes</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Dormitory"><a class="viewcode-back" href="../../../model.html#sipa.model.datasource.Dormitory">[docs]</a><span class="k">class</span> <span class="nc">Dormitory</span><span class="p">:</span>
+<div class="viewcode-block" id="Dormitory"><a class="viewcode-back" href="../../../ref/sipa.backends.html#sipa.backends.datasource.Dormitory">[docs]</a><span class="k">class</span> <span class="nc">Dormitory</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A dormitory as selectable on the login page.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">display_name</span><span class="p">,</span> <span class="n">datasource</span><span class="p">,</span> <span class="n">subnets</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">datasource</span><span class="p">:</span> <span class="n">DataSource</span><span class="p">,</span>
+                 <span class="n">subnets</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="n">display_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">datasource</span> <span class="o">=</span> <span class="n">datasource</span>
+        <span class="c1"># TODO rework dormitory registration (make it safe)</span>
+        <span class="c1"># Add a `Backends` binding to `Datasource` and check global dorm</span>
+        <span class="c1"># existence when calling `register_dormitory`</span>
         <span class="n">datasource</span><span class="o">.</span><span class="n">register_dormitory</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span> <span class="o">=</span> <span class="n">SubnetCollection</span><span class="p">(</span><span class="n">subnets</span> <span class="k">if</span> <span class="n">subnets</span> <span class="k">else</span> <span class="p">[])</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">display_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">display_name</span><span class="p">,</span>
             <span class="n">datasource</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">datasource</span><span class="p">,</span>
@@ -206,60 +196,77 @@
 
     <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">xor_hashes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasource</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="PrematureDataSource"><a class="viewcode-back" href="../../../model.html#sipa.model.datasource.PrematureDataSource">[docs]</a><span class="k">class</span> <span class="nc">PrematureDataSource</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;A dormitory not yet supported by SIPA&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">website_url</span><span class="p">,</span> <span class="n">support_mail</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">website_url</span> <span class="o">=</span> <span class="n">website_url</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">support_mail</span> <span class="o">=</span> <span class="n">support_mail</span>
-
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="n">website_url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">website_url</span><span class="p">,</span>
-            <span class="n">support_mail</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">support_mail</span><span class="p">,</span>
-        <span class="p">))</span></div>
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ref/modules.html">Complete Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../sipa.html">sipa</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../model.html" >sipa.model</a> &raquo;</li> 
-      </ul>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
     </div>
-    <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
-    </div>
+
+    
+
+    
   </body>
 </html>

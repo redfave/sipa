@@ -1,0 +1,494 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.utils package &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="sipa.model.sample package" href="sipa.model.sample.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="sipa-utils-package">
+<h1>sipa.utils package<a class="headerlink" href="#sipa-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sipa.utils.babel_utils">
+<span id="sipa-utils-babel-utils-module"></span><h2>sipa.utils.babel_utils module<a class="headerlink" href="#module-sipa.utils.babel_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sipa.utils.babel_utils.get_weekday">
+<code class="descclassname">sipa.utils.babel_utils.</code><code class="descname">get_weekday</code><span class="sig-paren">(</span><em>day</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/babel_utils.html#get_weekday"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.babel_utils.get_weekday" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.babel_utils.lang">
+<code class="descclassname">sipa.utils.babel_utils.</code><code class="descname">lang</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/babel_utils.html#lang"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.babel_utils.lang" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sipa.utils.bootstraped_tables">
+<span id="sipa-utils-bootstraped-tables-module"></span><h2>sipa.utils.bootstraped_tables module<a class="headerlink" href="#module-sipa.utils.bootstraped_tables" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tables-extension-for-python-markdown">
+<h3>Tables Extension for Python-Markdown<a class="headerlink" href="#tables-extension-for-python-markdown" title="Permalink to this headline">¶</a></h3>
+<p>Added parsing of tables to Python-Markdown.</p>
+<p>See &lt;<a class="reference external" href="https://pythonhosted.org/Markdown/extensions/tables.html">https://pythonhosted.org/Markdown/extensions/tables.html</a>&gt;
+for documentation.</p>
+<p>Original code Copyright 2009 [Waylan Limberg](<a class="reference external" href="http://achinghead.com">http://achinghead.com</a>)</p>
+<p>All changes Copyright 2008-2014 The Python Markdown Project</p>
+<p>License: [BSD](<a class="reference external" href="http://www.opensource.org/licenses/bsd-license.php">http://www.opensource.org/licenses/bsd-license.php</a>)</p>
+<dl class="class">
+<dt id="sipa.utils.bootstraped_tables.BootstrapedTableExtension">
+<em class="property">class </em><code class="descclassname">sipa.utils.bootstraped_tables.</code><code class="descname">BootstrapedTableExtension</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/bootstraped_tables.html#BootstrapedTableExtension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.bootstraped_tables.BootstrapedTableExtension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">markdown.extensions.Extension</span></code></p>
+<p>Add tables to Markdown.</p>
+<dl class="staticmethod">
+<dt id="sipa.utils.bootstraped_tables.BootstrapedTableExtension.extendMarkdown">
+<em class="property">static </em><code class="descname">extendMarkdown</code><span class="sig-paren">(</span><em>md</em>, <em>md_globals</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/bootstraped_tables.html#BootstrapedTableExtension.extendMarkdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.bootstraped_tables.BootstrapedTableExtension.extendMarkdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an instance of TableProcessor to BlockParser.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.utils.bootstraped_tables.BootstrapedTableProcessor">
+<em class="property">class </em><code class="descclassname">sipa.utils.bootstraped_tables.</code><code class="descname">BootstrapedTableProcessor</code><span class="sig-paren">(</span><em>parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/bootstraped_tables.html#BootstrapedTableProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.bootstraped_tables.BootstrapedTableProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">markdown.blockprocessors.BlockProcessor</span></code></p>
+<p>Process Tables.</p>
+<dl class="method">
+<dt id="sipa.utils.bootstraped_tables.BootstrapedTableProcessor.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>parent</em>, <em>blocks</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/bootstraped_tables.html#BootstrapedTableProcessor.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.bootstraped_tables.BootstrapedTableProcessor.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a table block and build table.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sipa.utils.bootstraped_tables.BootstrapedTableProcessor.test">
+<em class="property">static </em><code class="descname">test</code><span class="sig-paren">(</span><em>parent</em>, <em>block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/bootstraped_tables.html#BootstrapedTableProcessor.test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.bootstraped_tables.BootstrapedTableProcessor.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test for block type. Must be overridden by subclasses.</p>
+<p>As the parser loops through processors, it will call the <code class="docutils literal notranslate"><span class="pre">test</span></code>
+method on each to determine if the given block of text is of that
+type. This method must return a boolean <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>. The
+actual method of testing is left to the needs of that particular
+block type. It could be as simple as <code class="docutils literal notranslate"><span class="pre">block.startswith(some_string)</span></code>
+or a complex regular expression. As the block type may be different
+depending on the parent of the block (i.e. inside a list), the parent
+etree element is also provided and may be used as part of the test.</p>
+<p>Keywords:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">parent</span></code>: A etree element which will be the parent of the block.</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">block</span></code>: A block of text from the source which has been split at</dt>
+<dd>blank lines.</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.bootstraped_tables.makeExtension">
+<code class="descclassname">sipa.utils.bootstraped_tables.</code><code class="descname">makeExtension</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/bootstraped_tables.html#makeExtension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.bootstraped_tables.makeExtension" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-sipa.utils.git_utils">
+<span id="sipa-utils-git-utils-module"></span><h2>sipa.utils.git_utils module<a class="headerlink" href="#module-sipa.utils.git_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sipa.utils.git_utils.get_latest_commits">
+<code class="descclassname">sipa.utils.git_utils.</code><code class="descname">get_latest_commits</code><span class="sig-paren">(</span><em>repo_dir: str</em>, <em>commit_count: int</em><span class="sig-paren">)</span> &#x2192; List[dict]<a class="reference internal" href="../_modules/sipa/utils/git_utils.html#get_latest_commits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.git_utils.get_latest_commits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a given number of latest commits.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>repo_dir</strong> – path of repo</li>
+<li><strong>commit_count</strong> – number of commits to return</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">commit information (hash, message, author, date) about
+commit_count last commits</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.git_utils.get_repo_active_branch">
+<code class="descclassname">sipa.utils.git_utils.</code><code class="descname">get_repo_active_branch</code><span class="sig-paren">(</span><em>repo_dir: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/sipa/utils/git_utils.html#get_repo_active_branch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.git_utils.get_repo_active_branch" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>repo_dir</strong> – path of repo</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">name of currently checked out branch</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.git_utils.init_repo">
+<code class="descclassname">sipa.utils.git_utils.</code><code class="descname">init_repo</code><span class="sig-paren">(</span><em>repo_dir</em>, <em>repo_url</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/git_utils.html#init_repo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.git_utils.init_repo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a new git repository in <cite>git_dir</cite> from <cite>repo_url</cite></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.git_utils.update_repo">
+<code class="descclassname">sipa.utils.git_utils.</code><code class="descname">update_repo</code><span class="sig-paren">(</span><em>repo_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/git_utils.html#update_repo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.git_utils.update_repo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sipa.utils.graph_utils">
+<span id="sipa-utils-graph-utils-module"></span><h2>sipa.utils.graph_utils module<a class="headerlink" href="#module-sipa.utils.graph_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sipa.utils.graph_utils.default_chart">
+<code class="descclassname">sipa.utils.graph_utils.</code><code class="descname">default_chart</code><span class="sig-paren">(</span><em>chart_type</em>, <em>title</em>, <em>inline=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/graph_utils.html#default_chart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.graph_utils.default_chart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.graph_utils.generate_traffic_chart">
+<code class="descclassname">sipa.utils.graph_utils.</code><code class="descname">generate_traffic_chart</code><span class="sig-paren">(</span><em>traffic_data: List[dict], inline: bool = True</em><span class="sig-paren">)</span> &#x2192; pygal.graph.graph.Graph<a class="reference internal" href="../_modules/sipa/utils/graph_utils.html#generate_traffic_chart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.graph_utils.generate_traffic_chart" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Create a graph object from the input traffic data with pygal.</dt>
+<dd><p class="first">If inline is set, the chart is being passed the option to not add an xml
+declaration header to the beginning of the <cite>render()</cite> output, so it can</p>
+<blockquote class="last">
+<div>be directly included in HTML code (wrapped by a <cite>&lt;figure&gt;</cite>)</div></blockquote>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>traffic_data</strong> – The traffic data as given by <cite>user.traffic_history</cite></li>
+<li><strong>inline</strong> – Determines the option <cite>disable_xml_declaration</cite></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The graph object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.graph_utils.hsl">
+<code class="descclassname">sipa.utils.graph_utils.</code><code class="descname">hsl</code><span class="sig-paren">(</span><em>h</em>, <em>s</em>, <em>l</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/graph_utils.html#hsl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.graph_utils.hsl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.graph_utils.provide_render_function">
+<code class="descclassname">sipa.utils.graph_utils.</code><code class="descname">provide_render_function</code><span class="sig-paren">(</span><em>generator</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/graph_utils.html#provide_render_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.graph_utils.provide_render_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.graph_utils.rgb_string">
+<code class="descclassname">sipa.utils.graph_utils.</code><code class="descname">rgb_string</code><span class="sig-paren">(</span><em>r</em>, <em>g</em>, <em>b</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/graph_utils.html#rgb_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.graph_utils.rgb_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sipa.utils.link_patch">
+<span id="sipa-utils-link-patch-module"></span><h2>sipa.utils.link_patch module<a class="headerlink" href="#module-sipa.utils.link_patch" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.utils.link_patch.AbsoluteLinkExtension">
+<em class="property">class </em><code class="descclassname">sipa.utils.link_patch.</code><code class="descname">AbsoluteLinkExtension</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/link_patch.html#AbsoluteLinkExtension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.link_patch.AbsoluteLinkExtension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">markdown.extensions.Extension</span></code></p>
+<p>Add the absolute link patch to Markdown.</p>
+<dl class="staticmethod">
+<dt id="sipa.utils.link_patch.AbsoluteLinkExtension.extendMarkdown">
+<em class="property">static </em><code class="descname">extendMarkdown</code><span class="sig-paren">(</span><em>md</em>, <em>md_globals</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/link_patch.html#AbsoluteLinkExtension.extendMarkdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.link_patch.AbsoluteLinkExtension.extendMarkdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an instance of TableProcessor to BlockParser.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.utils.link_patch.LinkPostprocessor">
+<em class="property">class </em><code class="descclassname">sipa.utils.link_patch.</code><code class="descname">LinkPostprocessor</code><span class="sig-paren">(</span><em>markdown_instance=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/link_patch.html#LinkPostprocessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.link_patch.LinkPostprocessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">markdown.postprocessors.Postprocessor</span></code></p>
+<dl class="staticmethod">
+<dt id="sipa.utils.link_patch.LinkPostprocessor.run">
+<em class="property">static </em><code class="descname">run</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/link_patch.html#LinkPostprocessor.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.link_patch.LinkPostprocessor.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclasses of Postprocessor should implement a <cite>run</cite> method, which
+takes the html document as a single text string and returns a
+(possibly modified) string.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.link_patch.absolute_path_replacer">
+<code class="descclassname">sipa.utils.link_patch.</code><code class="descname">absolute_path_replacer</code><span class="sig-paren">(</span><em>match</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/link_patch.html#absolute_path_replacer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.link_patch.absolute_path_replacer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Correct the url in a regex match prepending the absolute path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.link_patch.makeExtension">
+<code class="descclassname">sipa.utils.link_patch.</code><code class="descname">makeExtension</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils/link_patch.html#makeExtension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.link_patch.makeExtension" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sipa.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sipa.utils" title="Permalink to this headline">¶</a></h2>
+<p>General utilities</p>
+<dl class="function">
+<dt id="sipa.utils.argstr">
+<code class="descclassname">sipa.utils.</code><code class="descname">argstr</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils.html#argstr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.argstr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.compare_all_attributes">
+<code class="descclassname">sipa.utils.</code><code class="descname">compare_all_attributes</code><span class="sig-paren">(</span><em>one: object, other: object, attr_list: Iterable[str]</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/sipa/utils.html#compare_all_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.compare_all_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Safely compare whether two ojbect’s attributes are equal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>one</strong> – The first object</li>
+<li><strong>other</strong> – The second object</li>
+<li><strong>attr_list</strong> – A list of attribute names.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Whether the attributes are equal or false on
+<cite>AttributeError</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.dict_diff">
+<code class="descclassname">sipa.utils.</code><code class="descname">dict_diff</code><span class="sig-paren">(</span><em>d1</em>, <em>d2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils.html#dict_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.dict_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of keys that have changed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.get_bustimes">
+<code class="descclassname">sipa.utils.</code><code class="descname">get_bustimes</code><span class="sig-paren">(</span><em>stopname</em>, <em>count=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils.html#get_bustimes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.get_bustimes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the VVO-Online API return string.
+API returns in format [[“line”, “to”, “minutes”],[__],[__]], where “__” are
+up to nine more Elements.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>stopname</strong> – Requested stop.</li>
+<li><strong>count</strong> – Limit the entries for the stop.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.get_user_name">
+<code class="descclassname">sipa.utils.</code><code class="descname">get_user_name</code><span class="sig-paren">(</span><em>user=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils.html#get_user_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.get_user_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.password_changeable">
+<code class="descclassname">sipa.utils.</code><code class="descname">password_changeable</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils.html#password_changeable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.password_changeable" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decorator used to disable functions (routes) if a certain feature
+is not provided by the User class.</p>
+<p>given_features has to be a callable to ensure runtime distinction
+between datasources.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>needed_feature</strong> – The feature needed</li>
+<li><strong>given_features</strong> – A callable returning the set of supported features</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.redirect_url">
+<code class="descclassname">sipa.utils.</code><code class="descname">redirect_url</code><span class="sig-paren">(</span><em>default='generic.index'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils.html#redirect_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.redirect_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.replace_empty_handler_callables">
+<code class="descclassname">sipa.utils.</code><code class="descname">replace_empty_handler_callables</code><span class="sig-paren">(</span><em>config: dict</em>, <em>func</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/sipa/utils.html#replace_empty_handler_callables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.replace_empty_handler_callables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register func as specific handler’s callable in a dict logging config.</p>
+<p>This method looks at the elements of the ‘handlers’ section of the
+<cite>config</cite>.</p>
+<p>If an element has an unassigned handler callable, which is a dict line
+<cite>‘()’: None</cite>, <cite>None</cite> is replaced by func.</p>
+<p>This function is kind of a hack, but necessary, because else the
+choice of the handler callable is limited to some static,
+predefined method.</p>
+<p>The specific example that lead to this: Because the callable to
+create a SentryHandler can only be defined <em>after</em> the import of
+the default config dict, but <em>before</em> the knowledge whether a
+<cite>SENTRY_DSN</cite> is given, it has to be dynamically created.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> – A dict as used for logging.dictConfig()</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The new, modified dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.timetag_today">
+<code class="descclassname">sipa.utils.</code><code class="descname">timetag_today</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils.html#timetag_today"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.timetag_today" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the timetag for today</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.url_self">
+<code class="descclassname">sipa.utils.</code><code class="descname">url_self</code><span class="sig-paren">(</span><em>**values</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/utils.html#url_self"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.url_self" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a URL to the request’s current endpoint with the same view
+arguments.</p>
+<p>Additional arguments can be specified to override or extend the current view
+arguments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>values</strong> – Additional variable arguments for the endpoint</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A URL to the current endpoint</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.utils.xor_hashes">
+<code class="descclassname">sipa.utils.</code><code class="descname">xor_hashes</code><span class="sig-paren">(</span><em>*elements</em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="../_modules/sipa/utils.html#xor_hashes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.utils.xor_hashes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine all element’s hashes with xor</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model.html">Model</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Complete Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sipa.html">sipa package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">sipa</a><ul>
+  <li><a href="sipa.html">sipa package</a><ul>
+      <li>Previous: <a href="sipa.model.sample.html" title="previous chapter">sipa.model.sample package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/ref/sipa.utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

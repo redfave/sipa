@@ -1,0 +1,70 @@
+sipa.blueprints package
+=======================
+
+Submodules
+----------
+
+sipa.blueprints.documents module
+--------------------------------
+
+.. automodule:: sipa.blueprints.documents
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.blueprints.features module
+-------------------------------
+
+.. automodule:: sipa.blueprints.features
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.blueprints.generic module
+------------------------------
+
+.. automodule:: sipa.blueprints.generic
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.blueprints.hooks module
+----------------------------
+
+.. automodule:: sipa.blueprints.hooks
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.blueprints.news module
+---------------------------
+
+.. automodule:: sipa.blueprints.news
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.blueprints.pages module
+----------------------------
+
+.. automodule:: sipa.blueprints.pages
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.blueprints.usersuite module
+--------------------------------
+
+.. automodule:: sipa.blueprints.usersuite
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: sipa.blueprints
+    :members:
+    :undoc-members:
+    :show-inheritance:

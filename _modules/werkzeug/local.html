@@ -1,49 +1,35 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>werkzeug.local &mdash; Sipa 0.4.3-29-g91b9517 documentation</title>
-    
-    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <title>werkzeug.local &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.4.3-29-g91b9517',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Sipa 0.4.3-29-g91b9517 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" /> 
-  </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
-      </ul>
-    </div>  
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for werkzeug.local</h1><div class="highlight"><pre>
@@ -98,11 +84,11 @@
 
 
 <span class="k">class</span> <span class="nc">Local</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;__storage__&#39;</span><span class="p">,</span> <span class="s1">&#39;__ident_func__&#39;</span><span class="p">)</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;__storage__&#39;</span><span class="p">,</span> <span class="s1">&#39;__ident_func__&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;__storage__&#39;</span><span class="p">,</span> <span class="p">{})</span>
-        <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;__ident_func__&#39;</span><span class="p">,</span> <span class="n">get_ident</span><span class="p">)</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;__storage__&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;__ident_func__&#39;</span><span class="p">,</span> <span class="n">get_ident</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__storage__</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
@@ -173,7 +159,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_local</span><span class="o">.</span><span class="n">__ident_func__</span>
 
     <span class="k">def</span> <span class="nf">_set__ident_func__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_local</span><span class="p">,</span> <span class="s1">&#39;__ident_func__&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_local</span><span class="p">,</span> <span class="s1">&#39;__ident_func__&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
     <span class="n">__ident_func__</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get__ident_func__</span><span class="p">,</span> <span class="n">_set__ident_func__</span><span class="p">)</span>
     <span class="k">del</span> <span class="n">_get__ident_func__</span><span class="p">,</span> <span class="n">_set__ident_func__</span>
 
@@ -221,8 +207,8 @@
 
     <span class="sd">&quot;&quot;&quot;Local objects cannot manage themselves. For that you need a local</span>
 <span class="sd">    manager.  You can pass a local manager multiple locals or add them later</span>
-<span class="sd">    by appending them to `manager.locals`.  Everytime the manager cleans up</span>
-<span class="sd">    it, will clean up all the data left in the locals for this context.</span>
+<span class="sd">    by appending them to `manager.locals`.  Every time the manager cleans up,</span>
+<span class="sd">    it will clean up all the data left in the locals for this context.</span>
 
 <span class="sd">    The `ident_func` parameter can be added to override the default ident</span>
 <span class="sd">    function for the wrapped locals.</span>
@@ -245,7 +231,7 @@
         <span class="k">if</span> <span class="n">ident_func</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ident_func</span> <span class="o">=</span> <span class="n">ident_func</span>
             <span class="k">for</span> <span class="n">local</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">locals</span><span class="p">:</span>
-                <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">local</span><span class="p">,</span> <span class="s1">&#39;__ident_func__&#39;</span><span class="p">,</span> <span class="n">ident_func</span><span class="p">)</span>
+                <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">local</span><span class="p">,</span> <span class="s1">&#39;__ident_func__&#39;</span><span class="p">,</span> <span class="n">ident_func</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ident_func</span> <span class="o">=</span> <span class="n">get_ident</span>
 
@@ -294,7 +280,7 @@
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> storages: </span><span class="si">%d</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
             <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">locals</span><span class="p">)</span>
         <span class="p">)</span>
 
@@ -334,13 +320,17 @@
 <span class="sd">        session = LocalProxy(lambda: get_current_request().session)</span>
 
 <span class="sd">    .. versionchanged:: 0.6.1</span>
-<span class="sd">       The class can be instanciated with a callable as well now.</span>
+<span class="sd">       The class can be instantiated with a callable as well now.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;__local&#39;</span><span class="p">,</span> <span class="s1">&#39;__dict__&#39;</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">)</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;__local&#39;</span><span class="p">,</span> <span class="s1">&#39;__dict__&#39;</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;__wrapped__&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">local</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_LocalProxy__local&#39;</span><span class="p">,</span> <span class="n">local</span><span class="p">)</span>
-        <span class="nb">object</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_LocalProxy__local&#39;</span><span class="p">,</span> <span class="n">local</span><span class="p">)</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">local</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">local</span><span class="p">,</span> <span class="s1">&#39;__release_local__&#39;</span><span class="p">):</span>
+            <span class="c1"># &quot;local&quot; is a callable that is not an instance of Local or</span>
+            <span class="c1"># LocalManager: mark it as a wrapped function.</span>
+            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;__wrapped__&#39;</span><span class="p">,</span> <span class="n">local</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_current_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return the current object.  This is useful if you want the real</span>
@@ -350,14 +340,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__local</span><span class="p">,</span> <span class="s1">&#39;__release_local__&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__local</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__local</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__local</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;no object bound to </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;no object bound to </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">__dict__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="n">__dict__</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="vm">__dict__</span>
         <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;__dict__&#39;</span><span class="p">)</span>
 
@@ -365,7 +355,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> unbound&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+            <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> unbound&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -406,100 +396,132 @@
         <span class="k">def</span> <span class="nf">__delslice__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
 
-    <span class="n">__setattr__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">(),</span> <span class="n">n</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-    <span class="n">__delattr__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">delattr</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">(),</span> <span class="n">n</span><span class="p">)</span>
-    <span class="n">__str__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
-    <span class="n">__lt__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">o</span>
-    <span class="n">__le__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">o</span>
-    <span class="n">__eq__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">==</span> <span class="n">o</span>
-    <span class="n">__ne__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">!=</span> <span class="n">o</span>
-    <span class="n">__gt__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">o</span>
-    <span class="n">__ge__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">o</span>
+    <span class="fm">__setattr__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">(),</span> <span class="n">n</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+    <span class="fm">__delattr__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">delattr</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">(),</span> <span class="n">n</span><span class="p">)</span>
+    <span class="fm">__str__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
+    <span class="fm">__lt__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">o</span>
+    <span class="fm">__le__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">o</span>
+    <span class="fm">__eq__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">==</span> <span class="n">o</span>
+    <span class="fm">__ne__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">!=</span> <span class="n">o</span>
+    <span class="fm">__gt__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">o</span>
+    <span class="fm">__ge__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">o</span>
     <span class="n">__cmp__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">(),</span> <span class="n">o</span><span class="p">)</span>  <span class="c1"># noqa</span>
-    <span class="n">__hash__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">hash</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
-    <span class="n">__call__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
-    <span class="n">__len__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
-    <span class="n">__getitem__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">__iter__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">iter</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
-    <span class="n">__contains__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
-    <span class="n">__add__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">+</span> <span class="n">o</span>
-    <span class="n">__sub__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">-</span> <span class="n">o</span>
-    <span class="n">__mul__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">*</span> <span class="n">o</span>
-    <span class="n">__floordiv__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">//</span> <span class="n">o</span>
-    <span class="n">__mod__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">%</span> <span class="n">o</span>
-    <span class="n">__divmod__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="n">__divmod__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
-    <span class="n">__pow__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">**</span> <span class="n">o</span>
-    <span class="n">__lshift__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">o</span>
-    <span class="n">__rshift__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">o</span>
-    <span class="n">__and__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">o</span>
-    <span class="n">__xor__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">^</span> <span class="n">o</span>
-    <span class="n">__or__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">|</span> <span class="n">o</span>
+    <span class="fm">__hash__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">hash</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
+    <span class="fm">__call__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+    <span class="fm">__len__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
+    <span class="fm">__getitem__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span>
+    <span class="fm">__iter__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">iter</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
+    <span class="fm">__contains__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
+    <span class="fm">__add__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">+</span> <span class="n">o</span>
+    <span class="fm">__sub__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">-</span> <span class="n">o</span>
+    <span class="fm">__mul__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">*</span> <span class="n">o</span>
+    <span class="fm">__floordiv__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">//</span> <span class="n">o</span>
+    <span class="fm">__mod__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">%</span> <span class="n">o</span>
+    <span class="fm">__divmod__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="fm">__divmod__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="fm">__pow__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">**</span> <span class="n">o</span>
+    <span class="fm">__lshift__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">o</span>
+    <span class="fm">__rshift__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">o</span>
+    <span class="fm">__and__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">o</span>
+    <span class="fm">__xor__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">^</span> <span class="n">o</span>
+    <span class="fm">__or__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span> <span class="o">|</span> <span class="n">o</span>
     <span class="n">__div__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="n">__div__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
-    <span class="n">__truediv__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="n">__truediv__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
-    <span class="n">__neg__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
-    <span class="n">__pos__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">+</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
-    <span class="n">__abs__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
-    <span class="n">__invert__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">~</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
-    <span class="n">__complex__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">complex</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
-    <span class="n">__int__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
+    <span class="fm">__truediv__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="fm">__truediv__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="fm">__neg__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
+    <span class="fm">__pos__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">+</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
+    <span class="fm">__abs__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
+    <span class="fm">__invert__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">~</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
+    <span class="fm">__complex__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">complex</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
+    <span class="fm">__int__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
     <span class="n">__long__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">long</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>  <span class="c1"># noqa</span>
-    <span class="n">__float__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
+    <span class="fm">__float__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
     <span class="n">__oct__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">oct</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
     <span class="n">__hex__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">hex</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
-    <span class="n">__index__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="n">__index__</span><span class="p">()</span>
+    <span class="fm">__index__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="fm">__index__</span><span class="p">()</span>
     <span class="n">__coerce__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="n">__coerce__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
-    <span class="n">__enter__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="n">__enter__</span><span class="p">()</span>
-    <span class="n">__exit__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="n">__exit__</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
-    <span class="n">__radd__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
-    <span class="n">__rsub__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
-    <span class="n">__rmul__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
+    <span class="fm">__enter__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span>
+    <span class="fm">__exit__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+    <span class="fm">__radd__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
+    <span class="fm">__rsub__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
+    <span class="fm">__rmul__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
     <span class="n">__rdiv__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
-        <span class="n">__rtruediv__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="n">__rtruediv__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+        <span class="fm">__rtruediv__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="fm">__rtruediv__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">__rtruediv__</span> <span class="o">=</span> <span class="n">__rdiv__</span>
-    <span class="n">__rfloordiv__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span> <span class="o">//</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
-    <span class="n">__rmod__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span> <span class="o">%</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
-    <span class="n">__rdivmod__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="n">__rdivmod__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+        <span class="fm">__rtruediv__</span> <span class="o">=</span> <span class="n">__rdiv__</span>
+    <span class="fm">__rfloordiv__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span> <span class="o">//</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
+    <span class="fm">__rmod__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span> <span class="o">%</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span>
+    <span class="fm">__rdivmod__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">()</span><span class="o">.</span><span class="fm">__rdivmod__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
     <span class="n">__copy__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">())</span>
     <span class="n">__deepcopy__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">memo</span><span class="p">:</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_get_current_object</span><span class="p">(),</span> <span class="n">memo</span><span class="p">)</span>
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ref/modules.html">Complete Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Sipa 0.4.3-29-g91b9517 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
-      </ul>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
     </div>
-    <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
-    </div>
+
+    
+
+    
   </body>
 </html>

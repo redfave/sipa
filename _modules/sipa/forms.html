@@ -1,0 +1,385 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.forms &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for sipa.forms</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
+
+<span class="kn">from</span> <span class="nn">flask_babel</span> <span class="k">import</span> <span class="n">gettext</span><span class="p">,</span> <span class="n">lazy_gettext</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">flash</span>
+<span class="kn">from</span> <span class="nn">flask_wtf</span> <span class="k">import</span> <span class="n">FlaskForm</span>
+<span class="kn">from</span> <span class="nn">werkzeug.local</span> <span class="k">import</span> <span class="n">LocalProxy</span>
+<span class="kn">from</span> <span class="nn">wtforms</span> <span class="k">import</span> <span class="p">(</span><span class="n">BooleanField</span><span class="p">,</span> <span class="n">HiddenField</span><span class="p">,</span> <span class="n">PasswordField</span><span class="p">,</span> <span class="n">SelectField</span><span class="p">,</span>
+                     <span class="n">StringField</span><span class="p">,</span> <span class="n">TextAreaField</span><span class="p">,</span> <span class="n">RadioField</span><span class="p">,</span> <span class="n">IntegerField</span><span class="p">,</span> <span class="n">DateField</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">wtforms.validators</span> <span class="k">import</span> <span class="p">(</span><span class="n">AnyOf</span><span class="p">,</span> <span class="n">DataRequired</span><span class="p">,</span> <span class="n">Email</span><span class="p">,</span> <span class="n">EqualTo</span><span class="p">,</span>
+                                <span class="n">MacAddress</span><span class="p">,</span> <span class="n">Regexp</span><span class="p">,</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">NumberRange</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Length</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">sipa.backends.extension</span> <span class="k">import</span> <span class="n">backends</span>
+
+
+<div class="viewcode-block" id="PasswordComplexity"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.PasswordComplexity">[docs]</a><span class="k">class</span> <span class="nc">PasswordComplexity</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">character_classes</span> <span class="o">=</span> <span class="p">((</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[a-z]&#39;</span><span class="p">),</span> <span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Kleinbuchstaben (a-z)&quot;</span><span class="p">)),</span>
+                         <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[A-Z]&#39;</span><span class="p">),</span> <span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Großbuchstaben (A-Z)&quot;</span><span class="p">)),</span>
+                         <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[0-9]&#39;</span><span class="p">),</span> <span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Ziffern (0-9)&quot;</span><span class="p">)),</span>
+                         <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^a-zA-Z0-9]&#39;</span><span class="p">),</span> <span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;andere Zeichen&quot;</span><span class="p">)))</span>
+    <span class="n">default_message</span> <span class="o">=</span> <span class="n">lazy_gettext</span><span class="p">(</span>
+        <span class="s2">&quot;Dein Passwort muss mindestens </span><span class="si">{min_length}</span><span class="s2"> Zeichen lang sein und &quot;</span>
+        <span class="s2">&quot;mindestens </span><span class="si">{min_classes}</span><span class="s2"> verschiedene Klassen von Zeichen &quot;</span>
+        <span class="s2">&quot;enthalten. Zeichen von Klassen sind: </span><span class="si">{classes}</span><span class="s2">.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">min_classes</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_length</span> <span class="o">=</span> <span class="n">min_length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_classes</span> <span class="o">=</span> <span class="n">min_classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">data</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">password</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_length</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raise_error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">matched_classes</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">character_classes</span>
+                              <span class="k">if</span> <span class="n">pattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">password</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">matched_classes</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_classes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raise_error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PasswordComplexity.raise_error"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.PasswordComplexity.raise_error">[docs]</a>    <span class="k">def</span> <span class="nf">raise_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">message</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_message</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span>
+        <span class="n">classes_descriptions</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">character_classes</span><span class="p">)</span>
+        <span class="n">classes</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">classes_descriptions</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">min_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_length</span><span class="p">,</span>
+                                             <span class="n">min_classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_classes</span><span class="p">,</span>
+                                             <span class="n">classes</span><span class="o">=</span><span class="n">classes</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="strip_filter"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.strip_filter">[docs]</a><span class="k">def</span> <span class="nf">strip_filter</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">string</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="StrippedStringField"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.StrippedStringField">[docs]</a><span class="k">class</span> <span class="nc">StrippedStringField</span><span class="p">(</span><span class="n">StringField</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;filters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;filters&#39;</span><span class="p">,</span> <span class="p">[])</span> <span class="o">+</span> <span class="p">[</span><span class="n">strip_filter</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ReadonlyStringField"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.ReadonlyStringField">[docs]</a><span class="k">class</span> <span class="nc">ReadonlyStringField</span><span class="p">(</span><span class="n">StrippedStringField</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ContactForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.ContactForm">[docs]</a><span class="k">class</span> <span class="nc">ContactForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">ReadonlyStringField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Deine E-Mail-Adresse&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">Email</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;E-Mail ist nicht in gültigem &quot;</span>
+                                       <span class="s2">&quot;Format!&quot;</span><span class="p">))],</span>
+    <span class="p">)</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="n">SelectField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Kategorie&quot;</span><span class="p">),</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;frage&quot;</span><span class="p">,</span> <span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Allgemeine Frage an die Administratoren&quot;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s2">&quot;stoerung&quot;</span><span class="p">,</span>
+         <span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Störungen im Netzwerk Wundtstraße/Zellescher Weg&quot;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s2">&quot;finanzen&quot;</span><span class="p">,</span> <span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Finanzfragen (Beiträge, Gebühren)&quot;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s2">&quot;eigene-technik&quot;</span><span class="p">,</span> <span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Probleme mit privater Technik&quot;</span><span class="p">))</span>
+    <span class="p">])</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">StrippedStringField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Betreff&quot;</span><span class="p">),</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Betreff muss angegeben werden!&quot;</span><span class="p">))])</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">TextAreaField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Nachricht&quot;</span><span class="p">),</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Nachricht fehlt!&quot;</span><span class="p">))</span>
+    <span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="AnonymousContactForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.AnonymousContactForm">[docs]</a><span class="k">class</span> <span class="nc">AnonymousContactForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">StrippedStringField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Deine E-Mail-Adresse&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">Email</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;E-Mail ist nicht &quot;</span>
+                                       <span class="s2">&quot;in gültigem Format!&quot;</span><span class="p">))],</span>
+    <span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Dein Name&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Bitte gib einen Namen an!&quot;</span><span class="p">))],</span>
+    <span class="p">)</span>
+    <span class="n">dormitory</span> <span class="o">=</span> <span class="n">SelectField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Wohnheim&quot;</span><span class="p">),</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">LocalProxy</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">backends</span><span class="o">.</span><span class="n">dormitories_short</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">LocalProxy</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">backends</span><span class="o">.</span><span class="n">preferred_dormitory_name</span><span class="p">()),</span>
+    <span class="p">)</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">StrippedStringField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Betreff&quot;</span><span class="p">),</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Betreff muss angegeben werden!&quot;</span><span class="p">))])</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">TextAreaField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Nachricht&quot;</span><span class="p">),</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Nachricht fehlt!&quot;</span><span class="p">))</span>
+    <span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="OfficialContactForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.OfficialContactForm">[docs]</a><span class="k">class</span> <span class="nc">OfficialContactForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">StrippedStringField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;E-Mail-Adresse&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">Email</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;E-Mail ist nicht &quot;</span>
+                                       <span class="s2">&quot;in gültigem Format!&quot;</span><span class="p">))],</span>
+    <span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Name / Organisation&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Bitte gib einen Namen an!&quot;</span><span class="p">))],</span>
+    <span class="p">)</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">StrippedStringField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Betreff&quot;</span><span class="p">),</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Betreff muss angegeben werden!&quot;</span><span class="p">))])</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">TextAreaField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Nachricht&quot;</span><span class="p">),</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Nachricht fehlt!&quot;</span><span class="p">))</span>
+    <span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="ChangePasswordForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.ChangePasswordForm">[docs]</a><span class="k">class</span> <span class="nc">ChangePasswordForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">old</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Altes Passwort&quot;</span><span class="p">),</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Altes Passwort muss angegeben werden!&quot;</span><span class="p">))])</span>
+    <span class="n">new</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Neues Passwort&quot;</span><span class="p">),</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Neues Passwort fehlt!&quot;</span><span class="p">)),</span>
+        <span class="n">PasswordComplexity</span><span class="p">(),</span>
+    <span class="p">])</span>
+    <span class="n">confirm</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Bestätigung&quot;</span><span class="p">),</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Bestätigung des neuen Passworts fehlt!&quot;</span><span class="p">)),</span>
+        <span class="n">EqualTo</span><span class="p">(</span><span class="s1">&#39;new&#39;</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Neue Passwörter stimmen nicht überein!&quot;</span><span class="p">))</span>
+    <span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="ChangeMailForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.ChangeMailForm">[docs]</a><span class="k">class</span> <span class="nc">ChangeMailForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Passwort&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Passwort nicht angegeben!&quot;</span><span class="p">))])</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">StrippedStringField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Neue Mail&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">Email</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;E-Mail ist nicht in gültigem Format!&quot;</span><span class="p">))])</span></div>
+
+
+<div class="viewcode-block" id="DeleteMailForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.DeleteMailForm">[docs]</a><span class="k">class</span> <span class="nc">DeleteMailForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Passwort nicht angegeben!&quot;</span><span class="p">))])</span></div>
+
+
+<div class="viewcode-block" id="require_unicast_mac"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.require_unicast_mac">[docs]</a><span class="k">def</span> <span class="nf">require_unicast_mac</span><span class="p">(</span><span class="n">form</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validator for unicast mac adress.</span>
+<span class="sd">    A MAC-adress is defined to be “broadcast” if the least significant bit</span>
+<span class="sd">    of the first octet is 1. Therefore, it has to be 0 to be valid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;MAC muss unicast-Adresse sein!&quot;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="ChangeMACForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.ChangeMACForm">[docs]</a><span class="k">class</span> <span class="nc">ChangeMACForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Passwort&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Passwort nicht angegeben!&quot;</span><span class="p">))])</span>
+    <span class="n">mac</span> <span class="o">=</span> <span class="n">StrippedStringField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Neue MAC&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;MAC-Adresse nicht angegeben!&quot;</span><span class="p">)),</span>
+                    <span class="n">MacAddress</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;MAC ist nicht in gültigem Format!&quot;</span><span class="p">)),</span>
+                    <span class="n">require_unicast_mac</span><span class="p">],</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;XX:XX:XX:XX:XX:XX&quot;</span><span class="p">)</span>
+    <span class="n">host_name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Neuer Gerätename (Optional)&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">Regexp</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s2">&quot;^[a-zA-Z0-9 ]+&quot;</span><span class="p">,</span>
+                           <span class="n">message</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Gerätename ist ungültig&quot;</span><span class="p">)),</span>
+                    <span class="n">Optional</span><span class="p">(),</span>
+                    <span class="n">Length</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Gerätename zu lang&quot;</span><span class="p">))],</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;TL-WR841N, MacBook, FritzBox, PC, Laptop, o.Ä.&quot;</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ActivateNetworkAccessForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.ActivateNetworkAccessForm">[docs]</a><span class="k">class</span> <span class="nc">ActivateNetworkAccessForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Passwort&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Passwort nicht angegeben!&quot;</span><span class="p">))])</span>
+    <span class="n">mac</span> <span class="o">=</span> <span class="n">StrippedStringField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;MAC-Adresse&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;MAC-Adresse nicht angegeben!&quot;</span><span class="p">)),</span>
+                    <span class="n">MacAddress</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;MAC ist nicht in gültigem Format!&quot;</span><span class="p">)),</span>
+                    <span class="n">require_unicast_mac</span><span class="p">],</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;XX:XX:XX:XX:XX:XX&quot;</span><span class="p">)</span>
+    <span class="n">birthdate</span> <span class="o">=</span> <span class="n">DateField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Geburtsdatum&quot;</span><span class="p">),</span>
+                          <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Geburtsdatum nicht angegeben!&quot;</span><span class="p">))],</span>
+                          <span class="n">description</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;YYYY-MM-DD (z.B. 1995-10-23)&quot;</span><span class="p">))</span>
+    <span class="n">host_name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Gerätename (Optional)&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">Regexp</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s2">&quot;^[a-zA-Z0-9 ]+&quot;</span><span class="p">,</span>
+                           <span class="n">message</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Gerätename ist ungültig&quot;</span><span class="p">)),</span>
+                    <span class="n">Optional</span><span class="p">(),</span>
+                    <span class="n">Length</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Gerätename zu lang&quot;</span><span class="p">))],</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;TL-WR841N, MacBook, FritzBox, PC, Laptop, o.Ä.&quot;</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ChangeUseCacheForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.ChangeUseCacheForm">[docs]</a><span class="k">class</span> <span class="nc">ChangeUseCacheForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">use_cache</span> <span class="o">=</span> <span class="n">RadioField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Cache-Nutzung&quot;</span><span class="p">),</span>
+        <span class="n">coerce</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">lazy_gettext</span><span class="p">(</span><span class="s1">&#39;Deaktiviert&#39;</span><span class="p">)),</span>
+                 <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">lazy_gettext</span><span class="p">(</span><span class="s1">&#39;Aktiviert&#39;</span><span class="p">)),</span>
+                 <span class="p">]</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LoginForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.LoginForm">[docs]</a><span class="k">class</span> <span class="nc">LoginForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">dormitory</span> <span class="o">=</span> <span class="n">SelectField</span><span class="p">(</span>
+        <span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Wohnheim&quot;</span><span class="p">),</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">LocalProxy</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">backends</span><span class="o">.</span><span class="n">dormitories_short</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">LocalProxy</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">backends</span><span class="o">.</span><span class="n">preferred_dormitory_name</span><span class="p">()),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">LocalProxy</span><span class="p">(</span>
+            <span class="k">lambda</span><span class="p">:</span> <span class="n">AnyOf</span><span class="p">([</span><span class="n">dorm</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">dorm</span> <span class="ow">in</span> <span class="n">backends</span><span class="o">.</span><span class="n">dormitories</span><span class="p">],</span>
+                          <span class="n">message</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Kein gültiges Wohnheim!&quot;</span><span class="p">))</span>
+        <span class="p">)]</span>
+    <span class="p">)</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">StrippedStringField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Nutzername&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Nutzername muss angegeben werden!&quot;</span><span class="p">)),</span>
+            <span class="n">Regexp</span><span class="p">(</span><span class="s2">&quot;^[^,+</span><span class="se">\&quot;\\</span><span class="s2">&lt;&gt;;#]+$&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span>
+                <span class="s2">&quot;Nutzername enthält ungültige Zeichen!&quot;</span><span class="p">)),</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Passwort&quot;</span><span class="p">),</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Kein Passwort eingegeben!&quot;</span><span class="p">))]</span>
+    <span class="p">)</span>
+    <span class="n">remember</span> <span class="o">=</span> <span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Anmeldung merken&quot;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="HostingForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.HostingForm">[docs]</a><span class="k">class</span> <span class="nc">HostingForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Passwort&quot;</span><span class="p">),</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Kein Passwort eingegeben!&quot;</span><span class="p">)),</span>
+        <span class="n">PasswordComplexity</span><span class="p">(),</span>
+    <span class="p">])</span>
+    <span class="n">confirm</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Bestätigung&quot;</span><span class="p">),</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">DataRequired</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Bestätigung des neuen Passworts fehlt!&quot;</span><span class="p">)),</span>
+        <span class="n">EqualTo</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Neue Passwörter stimmen nicht überein!&quot;</span><span class="p">))</span>
+    <span class="p">])</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">HiddenField</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="PaymentForm"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.PaymentForm">[docs]</a><span class="k">class</span> <span class="nc">PaymentForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">months</span> <span class="o">=</span> <span class="n">IntegerField</span><span class="p">(</span><span class="n">lazy_gettext</span><span class="p">(</span><span class="s2">&quot;Monate&quot;</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                          <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">NumberRange</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">lazy_gettext</span><span class="p">(</span>
+                              <span class="s2">&quot;Muss mindestens 1 Monat sein.&quot;</span><span class="p">))])</span></div>
+
+
+<div class="viewcode-block" id="flash_formerrors"><a class="viewcode-back" href="../../ref/sipa.html#sipa.forms.flash_formerrors">[docs]</a><span class="k">def</span> <span class="nf">flash_formerrors</span><span class="p">(</span><span class="n">form</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;If a form is submitted but could not be validated, the routing passes</span>
+<span class="sd">    the form and this method returns all form errors (form.errors)</span>
+<span class="sd">    as flash messages.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">field</span><span class="p">,</span> <span class="n">errors</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">errors</span><span class="p">:</span>
+            <span class="n">flash</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ref/modules.html">Complete Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../sipa.html">sipa</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

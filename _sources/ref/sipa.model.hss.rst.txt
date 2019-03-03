@@ -1,0 +1,38 @@
+sipa.model.hss package
+======================
+
+Submodules
+----------
+
+sipa.model.hss.ldap module
+--------------------------
+
+.. automodule:: sipa.model.hss.ldap
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.model.hss.schema module
+----------------------------
+
+.. automodule:: sipa.model.hss.schema
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.model.hss.user module
+--------------------------
+
+.. automodule:: sipa.model.hss.user
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: sipa.model.hss
+    :members:
+    :undoc-members:
+    :show-inheritance:

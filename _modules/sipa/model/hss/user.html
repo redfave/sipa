@@ -1,0 +1,423 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.model.hss.user &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for sipa.model.hss.user</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="kn">from</span> <span class="nn">flask_babel</span> <span class="k">import</span> <span class="n">gettext</span>
+<span class="kn">from</span> <span class="nn">flask_login</span> <span class="k">import</span> <span class="n">AnonymousUserMixin</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="k">import</span> <span class="n">func</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm.exc</span> <span class="k">import</span> <span class="n">NoResultFound</span>
+
+<span class="kn">from</span> <span class="nn">sipa.model.user</span> <span class="k">import</span> <span class="n">BaseUser</span>
+<span class="kn">from</span> <span class="nn">sipa.model.fancy_property</span> <span class="k">import</span> <span class="n">active_prop</span><span class="p">,</span> <span class="n">unsupported_prop</span>
+<span class="kn">from</span> <span class="nn">sipa.model.finance</span> <span class="k">import</span> <span class="n">BaseFinanceInformation</span>
+<span class="kn">from</span> <span class="nn">sipa.model.misc</span> <span class="k">import</span> <span class="n">PaymentDetails</span>
+<span class="kn">from</span> <span class="nn">sipa.model.sqlalchemy</span> <span class="k">import</span> <span class="n">db</span>
+<span class="kn">from</span> <span class="nn">sipa.model.hss.ldap</span> <span class="k">import</span> <span class="n">HssLdapConnector</span><span class="p">,</span> <span class="n">change_password</span>
+<span class="kn">from</span> <span class="nn">sipa.model.hss.schema</span> <span class="k">import</span> <span class="n">Account</span><span class="p">,</span> <span class="n">IP</span><span class="p">,</span> <span class="n">AccountStatementLog</span><span class="p">,</span> <span class="n">TrafficQuota</span>
+<span class="kn">from</span> <span class="nn">sipa.utils</span> <span class="k">import</span> <span class="n">argstr</span><span class="p">,</span> <span class="n">compare_all_attributes</span>
+<span class="kn">from</span> <span class="nn">sipa.model.exceptions</span> <span class="k">import</span> <span class="n">InvalidCredentials</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="User"><a class="viewcode-back" href="../../../../ref/sipa.model.hss.html#sipa.model.hss.user.User">[docs]</a><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">BaseUser</span><span class="p">):</span>
+    <span class="n">LdapConnector</span> <span class="o">=</span> <span class="n">HssLdapConnector</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the User object.</span>
+
+<span class="sd">        Note that init itself is not called directly, but mainly by the</span>
+<span class="sd">        static methods.</span>
+
+<span class="sd">        This method should be called by any subclass.  Therefore,</span>
+<span class="sd">        prepend `super().__init__(uid)`.  After this, other</span>
+<span class="sd">        variables like `mail`, `group` or `name` can be initialized</span>
+<span class="sd">        similiarly.</span>
+
+<span class="sd">        :param uid: A unique unicode identifier for the User</span>
+<span class="sd">        :param name: The real name gotten from the LDAP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uid</span> <span class="o">=</span> <span class="n">uid</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">compare_all_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;uid&#39;</span><span class="p">,</span> <span class="s1">&#39;datasource&#39;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">argstr</span><span class="p">(</span>
+            <span class="n">uid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">realname</span><span class="p">,</span>
+        <span class="p">))</span>
+
+<div class="viewcode-block" id="User.get"><a class="viewcode-back" href="../../../../ref/sipa.model.hss.html#sipa.model.hss.user.User.get">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Used by user_loader. Return a User Instance.</span>
+
+<span class="sd">        Returns a valid User instance if a psql user with the given</span>
+<span class="sd">        username exists, else AnonymousUserMixin().</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bare_user</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="n">username</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">bare_user</span> <span class="k">if</span> <span class="n">bare_user</span><span class="o">.</span><span class="n">_pg_account</span> <span class="k">else</span> <span class="n">AnonymousUserMixin</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="User.from_ip"><a class="viewcode-back" href="../../../../ref/sipa.model.hss.html#sipa.model.hss.user.User.from_ip">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_ip</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a user based on an ip.</span>
+
+<span class="sd">        If there is no user associated with this ip, return AnonymousUserMixin.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">account_name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">IP</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">ip</span><span class="o">=</span><span class="n">ip</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span><span class="o">.</span><span class="n">account</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">account_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AnonymousUserMixin</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">account_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="User.re_authenticate"><a class="viewcode-back" href="../../../../ref/sipa.model.hss.html#sipa.model.hss.user.User.re_authenticate">[docs]</a>    <span class="k">def</span> <span class="nf">re_authenticate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="User.authenticate"><a class="viewcode-back" href="../../../../ref/sipa.model.hss.html#sipa.model.hss.user.User.authenticate">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a User instance or raise PasswordInvalid&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">HssLdapConnector</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+                <span class="k">pass</span>
+        <span class="k">except</span> <span class="n">InvalidCredentials</span><span class="p">:</span>  <span class="c1"># Covers `UserNotFound`, `PasswordInvalid`</span>
+            <span class="k">raise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_pg_account</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the corresponding ORM Account&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Account</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span>
+                <span class="n">account</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">NoResultFound</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;RuntimeError caught when accessing _pg_account&quot;</span><span class="p">,</span>
+                           <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="p">}})</span>
+            <span class="k">return</span>
+
+    <span class="n">can_change_password</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_pg_trafficquota</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the corresponding ORM TrafficQuota for an Account&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">TrafficQuota</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">traffic_quota_id</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">NoResultFound</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No traffic quota object found for account </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">account</span><span class="p">)</span>
+            <span class="k">raise</span>
+
+<div class="viewcode-block" id="User.change_password"><a class="viewcode-back" href="../../../../ref/sipa.model.hss.html#sipa.model.hss.user.User.change_password">[docs]</a>    <span class="k">def</span> <span class="nf">change_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Change the user&#39;s password from old to new.</span>
+
+<span class="sd">        Although the password has been checked using</span>
+<span class="sd">        re_authenticate(), some data sources like those which have to</span>
+<span class="sd">        perform an LDAP bind need it anyways.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">change_password</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">traffic_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;See `model.User.traffic_history`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">date_delta</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">expected_date</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">date_delta</span><span class="p">))</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+            <span class="n">expected_log</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">traffic_log</span>
+                            <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">date</span> <span class="o">==</span> <span class="n">expected_date</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">log</span> <span class="o">=</span> <span class="n">expected_log</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s1">&#39;day&#39;</span><span class="p">:</span> <span class="n">expected_date</span><span class="o">.</span><span class="n">weekday</span><span class="p">(),</span>
+                    <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;throughput&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="p">})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s1">&#39;day&#39;</span><span class="p">:</span> <span class="n">expected_date</span><span class="o">.</span><span class="n">weekday</span><span class="p">(),</span>
+                    <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="n">log</span><span class="o">.</span><span class="n">bytes_in</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span>
+                    <span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="n">log</span><span class="o">.</span><span class="n">bytes_out</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span>
+                    <span class="s1">&#39;throughput&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">bytes_in</span> <span class="o">+</span> <span class="n">log</span><span class="o">.</span><span class="n">bytes_out</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span>
+                <span class="p">})</span>
+                <span class="c1"># get the history from the expected_date</span>
+
+        <span class="k">return</span> <span class="n">history</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="k">def</span> <span class="nf">ips</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">ip</span> <span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">ips</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="k">def</span> <span class="nf">realname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="nd">@unsupported_prop</span>
+    <span class="k">def</span> <span class="nf">network_access_active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@network_access_active</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">network_access_active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="User.activate_network_access"><a class="viewcode-back" href="../../../../ref/sipa.model.hss.html#sipa.model.hss.user.User.activate_network_access">[docs]</a>    <span class="k">def</span> <span class="nf">activate_network_access</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">mac</span><span class="p">,</span> <span class="n">birthdate</span><span class="p">,</span> <span class="n">host_name</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+    <span class="nd">@active_prop</span>
+    <span class="k">def</span> <span class="nf">mac</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mac</span><span class="o">.</span><span class="n">mac</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">mac</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">macs</span><span class="p">),</span>
+                <span class="s1">&#39;tmp_readonly&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">macs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">}</span>
+
+    <span class="nd">@mac</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">mac</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_mac</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="User.change_mac_address"><a class="viewcode-back" href="../../../../ref/sipa.model.hss.html#sipa.model.hss.user.User.change_mac_address">[docs]</a>    <span class="k">def</span> <span class="nf">change_mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_mac</span><span class="p">,</span> <span class="n">host_name</span><span class="p">):</span>
+        <span class="c1"># if this has been reached despite `tmp_readonly`, this is a bug.</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">macs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_connection</span>
+
+        <span class="n">mac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">macs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">mac</span><span class="o">.</span><span class="n">mac</span> <span class="o">=</span> <span class="n">new_mac</span>
+
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mac</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
+
+    <span class="nd">@active_prop</span>
+    <span class="k">def</span> <span class="nf">mail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">acc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">access</span>
+        <span class="k">if</span> <span class="n">acc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{building}</span><span class="s2"> </span><span class="si">{floor}</span><span class="s2">-</span><span class="si">{flat}{room}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">floor</span><span class="o">=</span><span class="n">acc</span><span class="o">.</span><span class="n">floor</span><span class="p">,</span>
+                <span class="n">flat</span><span class="o">=</span><span class="n">acc</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span>
+                <span class="n">room</span><span class="o">=</span><span class="n">acc</span><span class="o">.</span><span class="n">room</span><span class="p">,</span>
+                <span class="n">building</span><span class="o">=</span><span class="n">acc</span><span class="o">.</span><span class="n">building</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@active_prop</span>
+    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">active</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;Aktiv&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;Passiv&quot;</span><span class="p">)</span>
+
+    <span class="nd">@unsupported_prop</span>
+    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@unsupported_prop</span>
+    <span class="k">def</span> <span class="nf">use_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@unsupported_prop</span>
+    <span class="k">def</span> <span class="nf">hostname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@unsupported_prop</span>
+    <span class="k">def</span> <span class="nf">hostalias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@unsupported_prop</span>
+    <span class="k">def</span> <span class="nf">userdb_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">userdb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">finance_information</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">FinanceInformation</span><span class="o">.</span><span class="n">from_pg_account</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="p">)</span>
+
+<div class="viewcode-block" id="User.payment_details"><a class="viewcode-back" href="../../../../ref/sipa.model.hss.html#sipa.model.hss.user.User.payment_details">[docs]</a>    <span class="k">def</span> <span class="nf">payment_details</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">PaymentDetails</span><span class="p">(</span>
+            <span class="n">recipient</span><span class="o">=</span><span class="s2">&quot;Studentenrat TUD - AG DSN&quot;</span><span class="p">,</span>
+            <span class="n">bank</span><span class="o">=</span><span class="s2">&quot;Ostsächsische Sparkasse Dresden&quot;</span><span class="p">,</span>
+            <span class="n">iban</span><span class="o">=</span><span class="s2">&quot;DE40 8505 0300 3120 2419 37&quot;</span><span class="p">,</span>
+            <span class="n">bic</span><span class="o">=</span><span class="s2">&quot;OSDD DE 81 XXX&quot;</span><span class="p">,</span>
+            <span class="n">purpose</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{uid}</span><span class="s2">, </span><span class="si">{name}</span><span class="s2">, </span><span class="si">{address}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">uid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">realname</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">address</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+    <span class="nd">@active_prop</span>
+    <span class="k">def</span> <span class="nf">use_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span><span class="o">.</span><span class="n">use_cache</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;Aktiviert&quot;</span><span class="p">),</span>
+                    <span class="s1">&#39;raw_value&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="s1">&#39;success&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;empty&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;Nicht aktiviert&quot;</span><span class="p">),</span>
+                <span class="s1">&#39;raw_value&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s1">&#39;empty&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+
+    <span class="nd">@use_cache</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">use_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_use_cache</span><span class="p">):</span>
+        <span class="n">account</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg_account</span>
+        <span class="n">account</span><span class="o">.</span><span class="n">use_cache</span> <span class="o">=</span> <span class="n">new_use_cache</span>
+
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="FinanceInformation"><a class="viewcode-back" href="../../../../ref/sipa.model.hss.html#sipa.model.hss.user.FinanceInformation">[docs]</a><span class="k">class</span> <span class="nc">FinanceInformation</span><span class="p">(</span><span class="n">BaseFinanceInformation</span><span class="p">):</span>
+    <span class="n">has_to_pay</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">balance</span><span class="p">,</span> <span class="n">history</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_raw_balance</span> <span class="o">=</span> <span class="n">balance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_history</span> <span class="o">=</span> <span class="n">history</span>
+
+<div class="viewcode-block" id="FinanceInformation.from_pg_account"><a class="viewcode-back" href="../../../../ref/sipa.model.hss.html#sipa.model.hss.user.FinanceInformation.from_pg_account">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_pg_account</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pg_account</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">balance</span><span class="o">=</span><span class="n">pg_account</span><span class="o">.</span><span class="n">finance_balance</span><span class="p">,</span>
+            <span class="n">history</span><span class="o">=</span><span class="n">pg_account</span><span class="o">.</span><span class="n">combined_transactions</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">raw_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_balance</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">AccountStatementLog</span><span class="o">.</span><span class="n">timestamp</span><span class="p">))</span><span class="o">.</span><span class="n">one</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_history</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/modules.html">Complete Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  <li><a href="../../../sipa.html">sipa</a><ul>
+  <li><a href="../../model.html">sipa.model</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

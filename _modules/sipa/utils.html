@@ -1,0 +1,298 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.utils &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for sipa.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">General utilities</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">http.client</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">chain</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Iterable</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">flash</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">url_for</span>
+<span class="kn">from</span> <span class="nn">flask_login</span> <span class="k">import</span> <span class="n">current_user</span>
+
+
+<div class="viewcode-block" id="timetag_today"><a class="viewcode-back" href="../../ref/sipa.utils.html#sipa.utils.timetag_today">[docs]</a><span class="k">def</span> <span class="nf">timetag_today</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return the timetag for today&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">//</span> <span class="mi">86400</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_bustimes"><a class="viewcode-back" href="../../ref/sipa.utils.html#sipa.utils.get_bustimes">[docs]</a><span class="k">def</span> <span class="nf">get_bustimes</span><span class="p">(</span><span class="n">stopname</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parses the VVO-Online API return string.</span>
+<span class="sd">    API returns in format [[&quot;line&quot;, &quot;to&quot;, &quot;minutes&quot;],[__],[__]], where &quot;__&quot; are</span>
+<span class="sd">    up to nine more Elements.</span>
+
+<span class="sd">    :param stopname: Requested stop.</span>
+<span class="sd">    :param count: Limit the entries for the stop.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">(</span><span class="s1">&#39;widgets.vvo-online.de&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">stopname</span> <span class="o">=</span> <span class="n">stopname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;%20&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+            <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;/abfahrtsmonitor/Abfahrten.do?ort=Dresden&amp;hst=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stopname</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">response_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="p">({</span>
+        <span class="s1">&#39;line&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;dest&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s1">&#39;minutes_left&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">}</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">response_data</span><span class="p">)</span></div>
+<span class="c1"># TODO: check whether this is the correct format</span>
+
+
+<div class="viewcode-block" id="password_changeable"><a class="viewcode-back" href="../../ref/sipa.utils.html#sipa.utils.password_changeable">[docs]</a><span class="k">def</span> <span class="nf">password_changeable</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A decorator used to disable functions (routes) if a certain feature</span>
+<span class="sd">    is not provided by the User class.</span>
+
+<span class="sd">    given_features has to be a callable to ensure runtime distinction</span>
+<span class="sd">    between datasources.</span>
+
+<span class="sd">    :param needed_feature: The feature needed</span>
+<span class="sd">    :param given_features: A callable returning the set of supported features</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">feature_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">decorated_view</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span> <span class="ow">and</span> <span class="n">user</span><span class="o">.</span><span class="n">can_change_password</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">def</span> <span class="nf">not_supported</span><span class="p">():</span>
+                    <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Diese Funktion ist nicht verfügbar.&quot;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">redirect_url</span><span class="p">())</span>
+                <span class="k">return</span> <span class="n">not_supported</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">decorated_view</span>
+    <span class="k">return</span> <span class="n">feature_decorator</span></div>
+
+
+<div class="viewcode-block" id="get_user_name"><a class="viewcode-back" href="../../ref/sipa.utils.html#sipa.utils.get_user_name">[docs]</a><span class="k">def</span> <span class="nf">get_user_name</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">current_user</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">user</span><span class="o">.</span><span class="n">uid</span>
+
+    <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">is_anonymous</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;anonymous&#39;</span>
+
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+
+<div class="viewcode-block" id="url_self"><a class="viewcode-back" href="../../ref/sipa.utils.html#sipa.utils.url_self">[docs]</a><span class="k">def</span> <span class="nf">url_self</span><span class="p">(</span><span class="o">**</span><span class="n">values</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate a URL to the request&#39;s current endpoint with the same view</span>
+<span class="sd">    arguments.</span>
+
+<span class="sd">    Additional arguments can be specified to override or extend the current view</span>
+<span class="sd">    arguments.</span>
+
+<span class="sd">    :param values: Additional variable arguments for the endpoint</span>
+<span class="sd">    :return: A URL to the current endpoint</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">endpoint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;generic.index&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">endpoint</span>
+    <span class="c1"># if no endpoint matches the given URL, `request.view_args` is</span>
+    <span class="c1"># ``None``, not ``{}``</span>
+    <span class="n">kw</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">view_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+    <span class="n">kw</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">url_for</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="redirect_url"><a class="viewcode-back" href="../../ref/sipa.utils.html#sipa.utils.redirect_url">[docs]</a><span class="k">def</span> <span class="nf">redirect_url</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;generic.index&#39;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;next&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">request</span><span class="o">.</span><span class="n">referrer</span> <span class="ow">or</span> <span class="n">url_for</span><span class="p">(</span><span class="n">default</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="argstr"><a class="viewcode-back" href="../../ref/sipa.utils.html#sipa.utils.argstr">[docs]</a><span class="k">def</span> <span class="nf">argstr</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span>
+        <span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">=</span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span>
+    <span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="replace_empty_handler_callables"><a class="viewcode-back" href="../../ref/sipa.utils.html#sipa.utils.replace_empty_handler_callables">[docs]</a><span class="k">def</span> <span class="nf">replace_empty_handler_callables</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Register func as specific handler&#39;s callable in a dict logging config.</span>
+
+<span class="sd">    This method looks at the elements of the &#39;handlers&#39; section of the</span>
+<span class="sd">    `config`.</span>
+
+<span class="sd">    If an element has an unassigned handler callable, which is a dict line</span>
+<span class="sd">    `&#39;()&#39;: None`, `None` is replaced by func.</span>
+
+<span class="sd">    This function is kind of a hack, but necessary, because else the</span>
+<span class="sd">    choice of the handler callable is limited to some static,</span>
+<span class="sd">    predefined method.</span>
+
+<span class="sd">    The specific example that lead to this: Because the callable to</span>
+<span class="sd">    create a SentryHandler can only be defined *after* the import of</span>
+<span class="sd">    the default config dict, but *before* the knowledge whether a</span>
+<span class="sd">    `SENTRY_DSN` is given, it has to be dynamically created.</span>
+
+<span class="sd">    :param config: A dict as used for logging.dictConfig()</span>
+<span class="sd">    :return: The new, modified dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="s1">&#39;handlers&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">config</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;handlers&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">h_name</span><span class="p">:</span> <span class="p">{</span><span class="n">param</span><span class="p">:</span> <span class="p">(</span><span class="n">func</span>
+                         <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">param</span> <span class="o">==</span> <span class="s1">&#39;()&#39;</span>
+                         <span class="k">else</span> <span class="n">val</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">h_conf</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">for</span> <span class="n">h_name</span><span class="p">,</span> <span class="n">h_conf</span> <span class="ow">in</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;handlers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="dict_diff"><a class="viewcode-back" href="../../ref/sipa.utils.html#sipa.utils.dict_diff">[docs]</a><span class="k">def</span> <span class="nf">dict_diff</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return a list of keys that have changed.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">d1</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">d2</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d1</span> <span class="ow">or</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d2</span> <span class="ow">or</span> <span class="n">d1</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">!=</span> <span class="n">d2</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+            <span class="k">yield</span> <span class="n">key</span></div>
+
+
+<div class="viewcode-block" id="compare_all_attributes"><a class="viewcode-back" href="../../ref/sipa.utils.html#sipa.utils.compare_all_attributes">[docs]</a><span class="k">def</span> <span class="nf">compare_all_attributes</span><span class="p">(</span><span class="n">one</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">attr_list</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Safely compare whether two ojbect&#39;s attributes are equal.</span>
+
+<span class="sd">    :param one: The first object</span>
+<span class="sd">    :param other: The second object</span>
+<span class="sd">    :param attr_list: A list of attribute names.</span>
+
+<span class="sd">    :returns: Whether the attributes are equal or false on</span>
+<span class="sd">              `AttributeError`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span> <span class="o">==</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+                   <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attr_list</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="xor_hashes"><a class="viewcode-back" href="../../ref/sipa.utils.html#sipa.utils.xor_hashes">[docs]</a><span class="k">def</span> <span class="nf">xor_hashes</span><span class="p">(</span><span class="o">*</span><span class="n">elements</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Combine all element&#39;s hashes with xor</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_hash</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+        <span class="n">_hash</span> <span class="o">^=</span> <span class="nb">hash</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_hash</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ref/modules.html">Complete Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../sipa.html">sipa</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,54 @@
+sipa.backends package
+=====================
+
+Submodules
+----------
+
+sipa.backends.datasource module
+-------------------------------
+
+.. automodule:: sipa.backends.datasource
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.backends.exceptions module
+-------------------------------
+
+.. automodule:: sipa.backends.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.backends.extension module
+------------------------------
+
+.. automodule:: sipa.backends.extension
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.backends.logging module
+----------------------------
+
+.. automodule:: sipa.backends.logging
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.backends.types module
+--------------------------
+
+.. automodule:: sipa.backends.types
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: sipa.backends
+    :members:
+    :undoc-members:
+    :show-inheritance:

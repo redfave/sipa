@@ -1,0 +1,7 @@
+sipa
+====
+
+.. toctree::
+   :maxdepth: 4
+
+   sipa

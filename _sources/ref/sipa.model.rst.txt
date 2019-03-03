@@ -1,0 +1,71 @@
+sipa.model package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    sipa.model.hss
+    sipa.model.pycroft
+    sipa.model.sample
+
+Submodules
+----------
+
+sipa.model.exceptions module
+----------------------------
+
+.. automodule:: sipa.model.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.model.fancy\_property module
+---------------------------------
+
+.. automodule:: sipa.model.fancy_property
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.model.finance module
+-------------------------
+
+.. automodule:: sipa.model.finance
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.model.misc module
+----------------------
+
+.. automodule:: sipa.model.misc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.model.sqlalchemy module
+----------------------------
+
+.. automodule:: sipa.model.sqlalchemy
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sipa.model.user module
+----------------------
+
+.. automodule:: sipa.model.user
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: sipa.model
+    :members:
+    :undoc-members:
+    :show-inheritance:

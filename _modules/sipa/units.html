@@ -1,0 +1,228 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.units &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for sipa.units</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8; -*-</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">floor</span>
+
+
+<span class="c1">#: 0 divisions mean the unit stays being `KiB`.</span>
+<span class="c1">#: **Usage**: unit = UNIT_LIST[divisions]</span>
+<span class="n">UNIT_LIST</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;KiB&quot;</span><span class="p">,</span> <span class="s2">&quot;MiB&quot;</span><span class="p">,</span> <span class="s2">&quot;GiB&quot;</span><span class="p">]</span>
+<span class="c1">#: The format string for traffic values.  Rounds to two digits and</span>
+<span class="c1">#: appends the unit.</span>
+<span class="n">TRAFFIC_FORMAT_STRING</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span>
+<span class="c1">#: The format string for monetary values.  Round to two digits with a</span>
+<span class="c1">#: sign and append €.  Mind the no-break space!</span>
+<span class="n">MONEY_FORMAT_STRING</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:+.2f}</span><span class="s2"> €&quot;</span>
+
+
+<div class="viewcode-block" id="max_divisions"><a class="viewcode-back" href="../../ref/sipa.html#sipa.units.max_divisions">[docs]</a><span class="k">def</span> <span class="nf">max_divisions</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Find the maximum number of divisions to get 0 ≤ ``number`` ≤</span>
+<span class="sd">    ``base``</span>
+
+<span class="sd">    Return the maximum number of divisions we can make in the context</span>
+<span class="sd">    of ``unit_list``.  If you give three units, no more than three</span>
+<span class="sd">    divisions will be determined.</span>
+
+<span class="sd">    :param number: The number to test</span>
+<span class="sd">    :param base: The base to consider</span>
+<span class="sd">    :param unit_list: The list of units available</span>
+
+<span class="sd">    :returns: The determined number of divisions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">unit_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">unit_list</span> <span class="o">=</span> <span class="n">UNIT_LIST</span>
+
+    <span class="c1"># Determine largest whole logarithm of absolute value</span>
+    <span class="k">if</span> <span class="n">number</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">floor</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="n">base</span><span class="p">)),</span> <span class="nb">len</span><span class="p">(</span><span class="n">unit_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="reduce_by_base"><a class="viewcode-back" href="../../ref/sipa.html#sipa.units.reduce_by_base">[docs]</a><span class="k">def</span> <span class="nf">reduce_by_base</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">divisions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Divide ``number`` by ``divisions`` potences of ``base``&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">number</span> <span class="o">/</span> <span class="n">base</span><span class="o">**</span><span class="n">divisions</span></div>
+
+
+<div class="viewcode-block" id="format_as_traffic"><a class="viewcode-back" href="../../ref/sipa.html#sipa.units.format_as_traffic">[docs]</a><span class="k">def</span> <span class="nf">format_as_traffic</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">divisions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">divide</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Format ``number`` as traffic value</span>
+
+<span class="sd">    If ``divide`` is True, reduce ``value`` ``divisions`` times.</span>
+<span class="sd">    ``divide=False`` effectively just appends the according unit.</span>
+
+<span class="sd">    :param number: The number to format and perhaps divide</span>
+<span class="sd">    :param divisions: Which unit to choose from :py:obj:`UNIT_LIST`</span>
+<span class="sd">    :param divide: Whether ``number`` has to be divided.  If</span>
+<span class="sd">        ``False``, leave as is.</span>
+
+<span class="sd">    :returns: The formatted value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">divide</span><span class="p">:</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="n">reduce_by_base</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">divisions</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">TRAFFIC_FORMAT_STRING</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">UNIT_LIST</span><span class="p">[</span><span class="n">divisions</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="dynamic_unit"><a class="viewcode-back" href="../../ref/sipa.html#sipa.units.dynamic_unit">[docs]</a><span class="k">def</span> <span class="nf">dynamic_unit</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Format a traffic value with a unit according to its size.</span>
+
+<span class="sd">    :param number: The traffic in units of the first element of</span>
+<span class="sd">        :py:obj:`UNIT_LIST`</span>
+
+<span class="sd">    :returns: The formatted value in a nice unit.  See</span>
+<span class="sd">              :py:obj:`TRAFFIC_FORMAT_STRING`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">divisions</span> <span class="o">=</span> <span class="n">max_divisions</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">format_as_traffic</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">divisions</span><span class="o">=</span><span class="n">divisions</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="money"><a class="viewcode-back" href="../../ref/sipa.html#sipa.units.money">[docs]</a><span class="k">def</span> <span class="nf">money</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A decorator turning a float number into a stylized money string</span>
+
+<span class="sd">    The given float is returned as e.g. ``±98792.09€``, the style is a</span>
+<span class="sd">    bootstrap-style context class without the prefix (e.g.</span>
+<span class="sd">    ``success``).</span>
+
+<span class="sd">    :param function func: The function to be decorated</span>
+
+<span class="sd">    :returns: Value as string and style</span>
+
+<span class="sd">    :rtype: A dict in the form of ``{&#39;value&#39;: &lt;string&gt;, &#39;style&#39;:</span>
+<span class="sd">            &lt;string&gt;}``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_wrapped_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">amount</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">format_money</span><span class="p">(</span><span class="n">amount</span><span class="p">),</span>
+                <span class="s1">&#39;raw_value&#39;</span><span class="p">:</span> <span class="n">amount</span><span class="p">,</span>
+                <span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="n">money_style</span><span class="p">(</span><span class="n">amount</span><span class="p">)}</span>
+
+    <span class="k">return</span> <span class="n">_wrapped_func</span></div>
+
+
+<div class="viewcode-block" id="money_style"><a class="viewcode-back" href="../../ref/sipa.html#sipa.units.money_style">[docs]</a><span class="k">def</span> <span class="nf">money_style</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Return a corresponding bootstrap style to an amount of money</span>
+
+<span class="sd">    :param amount: The amount of money</span>
+
+<span class="sd">    :returns: The bootstrap style</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s1">&#39;success&#39;</span> <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;danger&#39;</span></div>
+
+
+<div class="viewcode-block" id="format_money"><a class="viewcode-back" href="../../ref/sipa.html#sipa.units.format_money">[docs]</a><span class="k">def</span> <span class="nf">format_money</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Nicely format a monetary value</span>
+
+<span class="sd">    :param amount: The amount of euros</span>
+
+<span class="sd">    :returns: The formatted value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MONEY_FORMAT_STRING</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ref/modules.html">Complete Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../sipa.html">sipa</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

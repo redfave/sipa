@@ -1,0 +1,269 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.model.pycroft.unserialize &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for sipa.model.pycroft.unserialize</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+
+
+<div class="viewcode-block" id="UnserializationError"><a class="viewcode-back" href="../../../../ref/sipa.model.pycroft.html#sipa.model.pycroft.unserialize.UnserializationError">[docs]</a><span class="k">class</span> <span class="nc">UnserializationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="MissingKeysError"><a class="viewcode-back" href="../../../../ref/sipa.model.pycroft.html#sipa.model.pycroft.unserialize.MissingKeysError">[docs]</a><span class="k">class</span> <span class="nc">MissingKeysError</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="n">UnserializationError</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ConversionError"><a class="viewcode-back" href="../../../../ref/sipa.model.pycroft.html#sipa.model.pycroft.unserialize.ConversionError">[docs]</a><span class="k">class</span> <span class="nc">ConversionError</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">UnserializationError</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="canonicalize_key"><a class="viewcode-back" href="../../../../ref/sipa.model.pycroft.html#sipa.model.pycroft.unserialize.canonicalize_key">[docs]</a><span class="k">def</span> <span class="nf">canonicalize_key</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">key</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">key</span></div>
+
+
+<span class="k">def</span> <span class="nf">_maybe_setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">attrname</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">attrname</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">attrname</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+
+
+<span class="n">NoneType</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_is_optional</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s1">&#39;__origin__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Union</span> <span class="ow">and</span> \
+           <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">__args__</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">t</span><span class="o">.</span><span class="n">__args__</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="n">NoneType</span>
+
+
+<span class="n">MAXDEPTH</span> <span class="o">=</span> <span class="mi">100</span>
+
+
+<div class="viewcode-block" id="constructor_from_generic"><a class="viewcode-back" href="../../../../ref/sipa.model.pycroft.html#sipa.model.pycroft.unserialize.constructor_from_generic">[docs]</a><span class="k">def</span> <span class="nf">constructor_from_generic</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :param name:  Something like &#39;List&#39; (like from `List[int]._name`)</span>
+<span class="sd">    :param args: Something like `(int,)` from (`List[int].__args__`)</span>
+<span class="sd">    :return: A constructor callable or None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="n">Any</span><span class="o">.</span><span class="n">_name</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">constructor</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">val</span>
+
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="n">List</span><span class="o">.</span><span class="n">_name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">item_constructor</span> <span class="o">=</span> <span class="n">constructor_from_annotation</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">constructor</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">item_constructor</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">val</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnserializationError</span><span class="p">(</span><span class="s2">&quot;Cannot find constructor for List[A, ...]&quot;</span>
+                                       <span class="s2">&quot; with more than one argument.&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="n">Optional</span><span class="o">.</span><span class="n">_name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">item_constructor</span> <span class="o">=</span> <span class="n">constructor_from_annotation</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">constructor</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">item_constructor</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnserializationError</span><span class="p">(</span><span class="s2">&quot;Cannot find constructor for Optional[...]&quot;</span>
+                                       <span class="s2">&quot; with less than one argument.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UnserializationError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Generic type &#39;</span><span class="si">{name}</span><span class="s2">&#39; not supported&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">constructor</span></div>
+
+
+<div class="viewcode-block" id="constructor_from_annotation"><a class="viewcode-back" href="../../../../ref/sipa.model.pycroft.html#sipa.model.pycroft.unserialize.constructor_from_annotation">[docs]</a><span class="k">def</span> <span class="nf">constructor_from_annotation</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="n">MAXDEPTH</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Use the value of an annotation to return an appropriate constructor&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">maxdepth</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UnserializationError</span><span class="p">(</span>
+            <span class="s2">&quot;Maxdepth exceeded when trying to lookup constructors.&quot;</span>
+            <span class="n">f</span><span class="s2">&quot; the default is </span><span class="si">{MAXDEPTH}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># un-stringification by eval&#39;ing in module scope</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnserializationError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Unable to look up type </span><span class="si">{type_!r}</span><span class="s2">&quot;</span>
+                                       <span class="n">f</span><span class="s2">&quot; in module </span><span class="si">{module.__name__!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">constructor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Case 1: known generic</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="s1">&#39;_name&#39;</span><span class="p">):</span>
+        <span class="n">type_name</span> <span class="o">=</span> <span class="n">type_</span><span class="o">.</span><span class="n">_name</span>
+        <span class="k">if</span> <span class="n">_is_optional</span><span class="p">(</span><span class="n">type_</span><span class="p">):</span>
+            <span class="n">type_name</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="n">_name</span>
+        <span class="n">constructor</span> <span class="o">=</span> <span class="n">constructor_from_generic</span><span class="p">(</span><span class="n">type_name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">type_</span><span class="p">,</span> <span class="s1">&#39;__args__&#39;</span><span class="p">,</span> <span class="p">()),</span>
+                                               <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="n">maxdepth</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># cases 2, 3: Is an unserializer or something builtin</span>
+    <span class="k">elif</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">type_</span><span class="p">):</span>
+        <span class="n">constructor</span> <span class="o">=</span> <span class="n">type_</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">constructor</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UnserializationError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Could not find constructor for type </span><span class="si">{type_!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">constructor</span></div>
+
+
+<div class="viewcode-block" id="unserializer"><a class="viewcode-back" href="../../../../ref/sipa.model.pycroft.html#sipa.model.pycroft.unserialize.unserializer">[docs]</a><span class="k">def</span> <span class="nf">unserializer</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class decorator providing a magic __init__ method&quot;&quot;&quot;</span>
+    <span class="n">annotations</span> <span class="o">=</span> <span class="p">{</span><span class="n">canonicalize_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="n">val</span>
+                   <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;__annotations__&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;__annotations__&#39;</span><span class="p">,</span> <span class="n">annotations</span><span class="p">)</span>
+
+    <span class="c1"># noinspection Mypy</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_json_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__annotations__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>  <span class="c1"># TODO we might exclude some things</span>
+
+    <span class="n">_maybe_setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;_json_keys&#39;</span><span class="p">,</span> <span class="n">_json_keys</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict_like</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dict_like</span><span class="p">:</span>
+            <span class="n">dict_like</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># TODO read `Optional` attributes</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__module__</span><span class="p">]</span>
+        <span class="n">constructor_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">constructor_from_annotation</span><span class="p">(</span><span class="n">type_</span><span class="o">=</span><span class="n">val</span><span class="p">,</span>
+                                                            <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">)</span>
+                           <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__annotations__</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+        <span class="n">missing_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">constructor_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">dict_like</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">missing_keys</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MissingKeysError</span><span class="p">(</span>
+                <span class="n">f</span><span class="s2">&quot;Missing {len(missing_keys)} keys&quot;</span>
+                <span class="n">f</span><span class="s2">&quot; to construct {type(self).__name__}:&quot;</span>
+                <span class="n">f</span><span class="s2">&quot; {&#39;, &#39;.join(missing_keys)}&quot;</span>
+            <span class="p">)</span>
+        <span class="c1"># TODO perhaps warn on superfluous keys</span>
+
+        <span class="k">for</span> <span class="n">attrname</span><span class="p">,</span> <span class="n">constructor</span> <span class="ow">in</span> <span class="n">constructor_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">dict_like</span><span class="p">[</span><span class="n">attrname</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">constructor</span><span class="p">:</span>
+                <span class="n">converted</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">converted</span> <span class="o">=</span> <span class="n">constructor</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">typename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__annotations__</span><span class="p">[</span><span class="n">attrname</span><span class="p">]</span>
+                    <span class="k">raise</span> <span class="n">ConversionError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Failed to convert </span><span class="si">{val!r}</span><span class="s2">&quot;</span>
+                                          <span class="n">f</span><span class="s2">&quot; to type </span><span class="si">{typename!r}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">attrname</span><span class="p">]</span> <span class="o">=</span> <span class="n">converted</span>
+
+    <span class="n">_maybe_setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;__init__&#39;</span><span class="p">,</span> <span class="fm">__init__</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">cls</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ref/modules.html">Complete Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  <li><a href="../../../sipa.html">sipa</a><ul>
+  <li><a href="../../model.html">sipa.model</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

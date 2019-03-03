@@ -1,0 +1,535 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sipa.model.pycroft package &#8212; Sipa 1.1.0-19-g21649bf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sipa.model.sample package" href="sipa.model.sample.html" />
+    <link rel="prev" title="sipa.model.hss package" href="sipa.model.hss.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="sipa-model-pycroft-package">
+<h1>sipa.model.pycroft package<a class="headerlink" href="#sipa-model-pycroft-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sipa.model.pycroft.api">
+<span id="sipa-model-pycroft-api-module"></span><h2>sipa.model.pycroft.api module<a class="headerlink" href="#module-sipa.model.pycroft.api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.model.pycroft.api.PycroftApi">
+<em class="property">class </em><code class="descclassname">sipa.model.pycroft.api.</code><code class="descname">PycroftApi</code><span class="sig-paren">(</span><em>endpoint: str</em>, <em>api_key: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/api.html#PycroftApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.api.PycroftApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="sipa.model.pycroft.api.PycroftApi.activate_network_access">
+<code class="descname">activate_network_access</code><span class="sig-paren">(</span><em>user_id</em>, <em>password</em>, <em>mac</em>, <em>birthdate</em>, <em>host_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/api.html#PycroftApi.activate_network_access"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.api.PycroftApi.activate_network_access" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.api.PycroftApi.authenticate">
+<code class="descname">authenticate</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/api.html#PycroftApi.authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.api.PycroftApi.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.api.PycroftApi.change_cache_usage">
+<code class="descname">change_cache_usage</code><span class="sig-paren">(</span><em>user_id</em>, <em>use_cache</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/api.html#PycroftApi.change_cache_usage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.api.PycroftApi.change_cache_usage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.api.PycroftApi.change_mac">
+<code class="descname">change_mac</code><span class="sig-paren">(</span><em>user_id</em>, <em>password</em>, <em>interface_id</em>, <em>new_mac</em>, <em>host_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/api.html#PycroftApi.change_mac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.api.PycroftApi.change_mac" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.api.PycroftApi.change_mail">
+<code class="descname">change_mail</code><span class="sig-paren">(</span><em>user_id</em>, <em>password</em>, <em>new_mail</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/api.html#PycroftApi.change_mail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.api.PycroftApi.change_mail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.api.PycroftApi.change_password">
+<code class="descname">change_password</code><span class="sig-paren">(</span><em>user_id</em>, <em>old_password</em>, <em>new_password</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/api.html#PycroftApi.change_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.api.PycroftApi.change_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.api.PycroftApi.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>url</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/api.html#PycroftApi.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.api.PycroftApi.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.api.PycroftApi.get_user">
+<code class="descname">get_user</code><span class="sig-paren">(</span><em>username: str</em><span class="sig-paren">)</span> &#x2192; Tuple[int, dict]<a class="reference internal" href="../_modules/sipa/model/pycroft/api.html#PycroftApi.get_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.api.PycroftApi.get_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.api.PycroftApi.get_user_from_ip">
+<code class="descname">get_user_from_ip</code><span class="sig-paren">(</span><em>ip</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/api.html#PycroftApi.get_user_from_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.api.PycroftApi.get_user_from_ip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.api.PycroftApi.post">
+<code class="descname">post</code><span class="sig-paren">(</span><em>url</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/api.html#PycroftApi.post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.api.PycroftApi.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.model.pycroft.exc">
+<span id="sipa-model-pycroft-exc-module"></span><h2>sipa.model.pycroft.exc module<a class="headerlink" href="#module-sipa.model.pycroft.exc" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="sipa.model.pycroft.exc.PycroftBackendError">
+<em class="property">exception </em><code class="descclassname">sipa.model.pycroft.exc.</code><code class="descname">PycroftBackendError</code><span class="sig-paren">(</span><em>*a</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/exc.html#PycroftBackendError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.exc.PycroftBackendError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sipa.backends.html#sipa.backends.exceptions.BackendError" title="sipa.backends.exceptions.BackendError"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.backends.exceptions.BackendError</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.model.pycroft.schema">
+<span id="sipa-model-pycroft-schema-module"></span><h2>sipa.model.pycroft.schema module<a class="headerlink" href="#module-sipa.model.pycroft.schema" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.model.pycroft.schema.FinanceHistoryEntry">
+<em class="property">class </em><code class="descclassname">sipa.model.pycroft.schema.</code><code class="descname">FinanceHistoryEntry</code><span class="sig-paren">(</span><em>dict_like: dict = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/schema.html#FinanceHistoryEntry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.schema.FinanceHistoryEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.pycroft.schema.Interface">
+<em class="property">class </em><code class="descclassname">sipa.model.pycroft.schema.</code><code class="descname">Interface</code><span class="sig-paren">(</span><em>dict_like: dict = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/schema.html#Interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.schema.Interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.pycroft.schema.TrafficHistoryEntry">
+<em class="property">class </em><code class="descclassname">sipa.model.pycroft.schema.</code><code class="descname">TrafficHistoryEntry</code><span class="sig-paren">(</span><em>dict_like: dict = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/schema.html#TrafficHistoryEntry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.schema.TrafficHistoryEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.pycroft.schema.UserData">
+<em class="property">class </em><code class="descclassname">sipa.model.pycroft.schema.</code><code class="descname">UserData</code><span class="sig-paren">(</span><em>dict_like: dict = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/schema.html#UserData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.schema.UserData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.pycroft.schema.UserStatus">
+<em class="property">class </em><code class="descclassname">sipa.model.pycroft.schema.</code><code class="descname">UserStatus</code><span class="sig-paren">(</span><em>dict_like: dict = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/schema.html#UserStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.schema.UserStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.model.pycroft.unserialize">
+<span id="sipa-model-pycroft-unserialize-module"></span><h2>sipa.model.pycroft.unserialize module<a class="headerlink" href="#module-sipa.model.pycroft.unserialize" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="sipa.model.pycroft.unserialize.ConversionError">
+<em class="property">exception </em><code class="descclassname">sipa.model.pycroft.unserialize.</code><code class="descname">ConversionError</code><a class="reference internal" href="../_modules/sipa/model/pycroft/unserialize.html#ConversionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.unserialize.ConversionError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeError</span></code></a>, <a class="reference internal" href="#sipa.model.pycroft.unserialize.UnserializationError" title="sipa.model.pycroft.unserialize.UnserializationError"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.model.pycroft.unserialize.UnserializationError</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="sipa.model.pycroft.unserialize.MissingKeysError">
+<em class="property">exception </em><code class="descclassname">sipa.model.pycroft.unserialize.</code><code class="descname">MissingKeysError</code><a class="reference internal" href="../_modules/sipa/model/pycroft/unserialize.html#MissingKeysError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.unserialize.MissingKeysError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#KeyError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyError</span></code></a>, <a class="reference internal" href="#sipa.model.pycroft.unserialize.UnserializationError" title="sipa.model.pycroft.unserialize.UnserializationError"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.model.pycroft.unserialize.UnserializationError</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="sipa.model.pycroft.unserialize.UnserializationError">
+<em class="property">exception </em><code class="descclassname">sipa.model.pycroft.unserialize.</code><code class="descname">UnserializationError</code><a class="reference internal" href="../_modules/sipa/model/pycroft/unserialize.html#UnserializationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.unserialize.UnserializationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.pycroft.unserialize.canonicalize_key">
+<code class="descclassname">sipa.model.pycroft.unserialize.</code><code class="descname">canonicalize_key</code><span class="sig-paren">(</span><em>key: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/sipa/model/pycroft/unserialize.html#canonicalize_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.unserialize.canonicalize_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.pycroft.unserialize.constructor_from_annotation">
+<code class="descclassname">sipa.model.pycroft.unserialize.</code><code class="descname">constructor_from_annotation</code><span class="sig-paren">(</span><em>type_</em>, <em>module</em>, <em>maxdepth=100</em><span class="sig-paren">)</span> &#x2192; Callable<a class="reference internal" href="../_modules/sipa/model/pycroft/unserialize.html#constructor_from_annotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.unserialize.constructor_from_annotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the value of an annotation to return an appropriate constructor</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.pycroft.unserialize.constructor_from_generic">
+<code class="descclassname">sipa.model.pycroft.unserialize.</code><code class="descname">constructor_from_generic</code><span class="sig-paren">(</span><em>name: str</em>, <em>args: tuple</em>, <em>*a</em>, <em>**kw</em><span class="sig-paren">)</span> &#x2192; Optional[Callable]<a class="reference internal" href="../_modules/sipa/model/pycroft/unserialize.html#constructor_from_generic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.unserialize.constructor_from_generic" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> – Something like ‘List’ (like from <cite>List[int]._name</cite>)</li>
+<li><strong>args</strong> – Something like <cite>(int,)</cite> from (<cite>List[int].__args__</cite>)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A constructor callable or None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.pycroft.unserialize.unserializer">
+<code class="descclassname">sipa.model.pycroft.unserialize.</code><code class="descname">unserializer</code><span class="sig-paren">(</span><em>cls: type</em><span class="sig-paren">)</span> &#x2192; type<a class="reference internal" href="../_modules/sipa/model/pycroft/unserialize.html#unserializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.unserialize.unserializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class decorator providing a magic __init__ method</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sipa.model.pycroft.user">
+<span id="sipa-model-pycroft-user-module"></span><h2>sipa.model.pycroft.user module<a class="headerlink" href="#module-sipa.model.pycroft.user" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sipa.model.pycroft.user.FinanceInformation">
+<em class="property">class </em><code class="descclassname">sipa.model.pycroft.user.</code><code class="descname">FinanceInformation</code><span class="sig-paren">(</span><em>balance</em>, <em>transactions</em>, <em>last_update</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#FinanceInformation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.FinanceInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sipa.model.html#sipa.model.finance.BaseFinanceInformation" title="sipa.model.finance.BaseFinanceInformation"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.model.finance.BaseFinanceInformation</span></code></a></p>
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.FinanceInformation.has_to_pay">
+<code class="descname">has_to_pay</code><em class="property"> = True</em><a class="headerlink" href="#sipa.model.pycroft.user.FinanceInformation.has_to_pay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.FinanceInformation.history">
+<code class="descname">history</code><a class="headerlink" href="#sipa.model.pycroft.user.FinanceInformation.history" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> History of payments</p>
+<p>This method should return an iterable of a (datetime, int)
+tuple.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.FinanceInformation.last_update">
+<code class="descname">last_update</code><a class="headerlink" href="#sipa.model.pycroft.user.FinanceInformation.last_update" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The time of the last update.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.FinanceInformation.raw_balance">
+<code class="descname">raw_balance</code><a class="headerlink" href="#sipa.model.pycroft.user.FinanceInformation.raw_balance" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The current balance</p>
+<p>If <a class="reference internal" href="#sipa.model.pycroft.user.FinanceInformation.has_to_pay" title="sipa.model.pycroft.user.FinanceInformation.has_to_pay"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_to_pay()</span></code></a> is False, this method will not be
+used implicitly.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sipa.model.pycroft.user.User">
+<em class="property">class </em><code class="descclassname">sipa.model.pycroft.user.</code><code class="descname">User</code><span class="sig-paren">(</span><em>user_data: dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sipa.model.html#sipa.model.user.BaseUser" title="sipa.model.user.BaseUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">sipa.model.user.BaseUser</span></code></a></p>
+<dl class="method">
+<dt id="sipa.model.pycroft.user.User.activate_network_access">
+<code class="descname">activate_network_access</code><span class="sig-paren">(</span><em>password</em>, <em>mac</em>, <em>birthdate</em>, <em>host_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#User.activate_network_access"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.User.activate_network_access" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.address">
+<code class="descname">address</code><a class="headerlink" href="#sipa.model.pycroft.user.User.address" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Where the user lives</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.pycroft.user.User.authenticate">
+<em class="property">classmethod </em><code class="descname">authenticate</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#User.authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.User.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a User instance or raise PasswordInvalid</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.can_change_password">
+<code class="descname">can_change_password</code><em class="property"> = True</em><a class="headerlink" href="#sipa.model.pycroft.user.User.can_change_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.user.User.change_mac_address">
+<code class="descname">change_mac_address</code><span class="sig-paren">(</span><em>new_mac</em>, <em>host_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#User.change_mac_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.User.change_mac_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.user.User.change_password">
+<code class="descname">change_password</code><span class="sig-paren">(</span><em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#User.change_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.User.change_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the user’s password from old to new.</p>
+<p>Although the password has been checked using
+<a class="reference internal" href="#sipa.model.pycroft.user.User.re_authenticate" title="sipa.model.pycroft.user.User.re_authenticate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">re_authenticate()</span></code></a>, some data sources like those which have to
+perform an LDAP bind need it anyways.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.finance_information">
+<code class="descname">finance_information</code><a class="headerlink" href="#sipa.model.pycroft.user.User.finance_information" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Finance information about the User.</p>
+<p>If not supported, set to None.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.pycroft.user.User.from_ip">
+<em class="property">classmethod </em><code class="descname">from_ip</code><span class="sig-paren">(</span><em>ip</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#User.from_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.User.from_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a user based on an ip.</p>
+<p>If there is no user associated with this ip, return
+<a class="reference external" href="https://flask-login.readthedocs.io/en/latest/index.html#flask_login.AnonymousUserMixin" title="(in Flask-Login v0.4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnonymousUserMixin</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ip</strong> – the ip</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the user object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sipa.model.pycroft.user.User.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#User.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.User.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch a user given his username.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>username</strong> – the username</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the user object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.has_connection">
+<code class="descname">has_connection</code><a class="headerlink" href="#sipa.model.pycroft.user.User.has_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Whether the user has a connection</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.hostalias">
+<code class="descname">hostalias</code><a class="headerlink" href="#sipa.model.pycroft.user.User.hostalias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.hostname">
+<code class="descname">hostname</code><a class="headerlink" href="#sipa.model.pycroft.user.User.hostname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.id">
+<code class="descname">id</code><a class="headerlink" href="#sipa.model.pycroft.user.User.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The “user-id”.</p>
+<p>Some Backends provide a secondary id besides the login.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.ips">
+<code class="descname">ips</code><a class="headerlink" href="#sipa.model.pycroft.user.User.ips" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.login">
+<code class="descname">login</code><a class="headerlink" href="#sipa.model.pycroft.user.User.login" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The login</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.mac">
+<code class="descname">mac</code><a class="headerlink" href="#sipa.model.pycroft.user.User.mac" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.mail">
+<code class="descname">mail</code><a class="headerlink" href="#sipa.model.pycroft.user.User.mail" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The mail address.</p>
+<p>This can either be the forward or the internal adress
+(<code class="docutils literal notranslate"><span class="pre">&quot;{login}&#64;{server}&quot;</span></code>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.network_access_active">
+<code class="descname">network_access_active</code><a class="headerlink" href="#sipa.model.pycroft.user.User.network_access_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.user.User.payment_details">
+<code class="descname">payment_details</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; sipa.model.misc.PaymentDetails<a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#User.payment_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.User.payment_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Payment details for the User.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sipa.model.pycroft.user.User.re_authenticate">
+<code class="descname">re_authenticate</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#User.re_authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.User.re_authenticate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.realname">
+<code class="descname">realname</code><a class="headerlink" href="#sipa.model.pycroft.user.User.realname" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The real-life name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.status">
+<code class="descname">status</code><a class="headerlink" href="#sipa.model.pycroft.user.User.status" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> The current membership status in the sense of
+the AG DSN constitution.</p>
+<p>This mostly means active, ex-active or passive.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.traffic_history">
+<code class="descname">traffic_history</code><a class="headerlink" href="#sipa.model.pycroft.user.User.traffic_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current traffic history as a dict.</p>
+<p>The history should cover one week. The assumed unit is KiB.</p>
+<p>The list syntax is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[{
+    &#39;day&#39;: day.weekday(),
+    &#39;input&#39;: in,
+    &#39;output&#39;: out,
+    &#39;throughput&#39;: in + out,
+}, …]
+</pre></div>
+</div>
+<p>The traffic values shall be in KiB, as usual.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The history of the used traffic</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.use_cache">
+<code class="descname">use_cache</code><a class="headerlink" href="#sipa.model.pycroft.user.User.use_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>[Abstract]</strong> Flag indicating cache usage.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.userdb">
+<code class="descname">userdb</code><a class="headerlink" href="#sipa.model.pycroft.user.User.userdb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sipa.model.pycroft.user.User.userdb_status">
+<code class="descname">userdb_status</code><a class="headerlink" href="#sipa.model.pycroft.user.User.userdb_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.pycroft.user.evaluate_status">
+<code class="descclassname">sipa.model.pycroft.user.</code><code class="descname">evaluate_status</code><span class="sig-paren">(</span><em>status: sipa.model.pycroft.schema.UserStatus</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#evaluate_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.evaluate_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sipa.model.pycroft.user.to_kib">
+<code class="descclassname">sipa.model.pycroft.user.</code><code class="descname">to_kib</code><span class="sig-paren">(</span><em>v: int</em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="../_modules/sipa/model/pycroft/user.html#to_kib"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sipa.model.pycroft.user.to_kib" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sipa.model.pycroft">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sipa.model.pycroft" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Sipa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sipa.html"><cite>sipa</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backends.html">Backends (Flask extension)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model.html">Model</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Complete Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sipa.html">sipa package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">sipa</a><ul>
+  <li><a href="sipa.html">sipa package</a><ul>
+  <li><a href="sipa.model.html">sipa.model package</a><ul>
+      <li>Previous: <a href="sipa.model.hss.html" title="previous chapter">sipa.model.hss package</a></li>
+      <li>Next: <a href="sipa.model.sample.html" title="next chapter">sipa.model.sample package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/ref/sipa.model.pycroft.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

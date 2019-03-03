@@ -1,0 +1,22 @@
+sipa.model.sample package
+=========================
+
+Submodules
+----------
+
+sipa.model.sample.user module
+-----------------------------
+
+.. automodule:: sipa.model.sample.user
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: sipa.model.sample
+    :members:
+    :undoc-members:
+    :show-inheritance:
