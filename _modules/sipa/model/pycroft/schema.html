@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>sipa.model.pycroft.schema &#8212; Sipa 1.1.0-20-gf1995ee documentation</title>
+    <title>sipa.model.pycroft.schema &#8212; Sipa 1.1.0-29-gf173681 documentation</title>
     <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
@@ -35,6 +35,8 @@
   <h1>Source code for sipa.model.pycroft.schema</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="k">import</span> <span class="n">Decimal</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">sipa.model.pycroft.unserialize</span> <span class="k">import</span> <span class="n">unserializer</span>
@@ -52,7 +54,7 @@
     <span class="n">cache</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="n">traffic_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TrafficHistoryEntry</span><span class="p">]</span>
     <span class="n">interfaces</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Interface</span><span class="p">]</span>
-    <span class="n">finance_balance</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">finance_balance</span><span class="p">:</span> <span class="n">Decimal</span>
     <span class="n">finance_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">FinanceHistoryEntry</span><span class="p">]</span>
     <span class="c1"># TODO implement `cls.Meta.custom_constructors`, use `parse_date` for this</span>
     <span class="n">last_finance_update</span><span class="p">:</span> <span class="nb">str</span></div>
@@ -154,7 +156,7 @@
       &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

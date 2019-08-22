@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>sipa.blueprints.usersuite &#8212; Sipa 1.1.0-20-gf1995ee documentation</title>
+    <title>sipa.blueprints.usersuite &#8212; Sipa 1.1.0-29-gf173681 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -190,7 +190,7 @@
         <span class="s2">&quot;BCD</span><span class="se">\n</span><span class="s2">001</span><span class="se">\n</span><span class="s2">1</span><span class="se">\n</span><span class="s2">SCT</span><span class="se">\n</span><span class="si">{bic}</span><span class="se">\n</span><span class="si">{recipient}</span><span class="se">\n</span><span class="si">{iban}</span><span class="se">\n</span><span class="s2">EUR</span><span class="si">{amount}</span><span class="se">\n\n\n</span><span class="si">{purpose}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
 
     <span class="k">return</span> <span class="n">EPC_FORMAT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-        <span class="n">bic</span><span class="o">=</span><span class="n">details</span><span class="o">.</span><span class="n">bic</span><span class="p">,</span>
+        <span class="n">bic</span><span class="o">=</span><span class="n">details</span><span class="o">.</span><span class="n">bic</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
         <span class="n">recipient</span><span class="o">=</span><span class="n">details</span><span class="o">.</span><span class="n">recipient</span><span class="p">,</span>
         <span class="n">iban</span><span class="o">=</span><span class="n">details</span><span class="o">.</span><span class="n">iban</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
         <span class="n">amount</span><span class="o">=</span><span class="n">months</span> <span class="o">*</span> <span class="n">MEMBERSHIP_CONTRIBUTION</span> <span class="o">/</span> <span class="mi">100</span><span class="p">,</span>
@@ -504,7 +504,7 @@
       &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

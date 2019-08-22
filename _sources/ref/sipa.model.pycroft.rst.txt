@@ -44,6 +44,14 @@ sipa.model.pycroft.user module
     :undoc-members:
     :show-inheritance:
 
+sipa.model.pycroft.userdb module
+--------------------------------
+
+.. automodule:: sipa.model.pycroft.userdb
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

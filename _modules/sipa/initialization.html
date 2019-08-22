@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>sipa.initialization &#8212; Sipa 1.1.0-20-gf1995ee documentation</title>
+    <title>sipa.initialization &#8212; Sipa 1.1.0-29-gf173681 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -38,6 +38,7 @@
 <span class="kn">import</span> <span class="nn">logging.config</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 
 <span class="kn">from</span> <span class="nn">flask_babel</span> <span class="k">import</span> <span class="n">Babel</span><span class="p">,</span> <span class="n">get_locale</span>
 <span class="kn">from</span> <span class="nn">raven</span> <span class="k">import</span> <span class="n">setup_logging</span>
@@ -118,6 +119,7 @@
         <span class="n">form_input_width_class</span><span class="o">=</span><span class="s2">&quot;col-sm-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">form_input_width</span><span class="p">),</span>
         <span class="n">form_input_offset_class</span><span class="o">=</span><span class="s2">&quot;col-sm-offset-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">form_label_width</span><span class="p">),</span>
         <span class="n">url_self</span><span class="o">=</span><span class="n">url_self</span><span class="p">,</span>
+        <span class="n">now</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
     <span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Jinja globals have been set&quot;</span><span class="p">,</span>
                  <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;jinja_globals&#39;</span><span class="p">:</span> <span class="n">app</span><span class="o">.</span><span class="n">jinja_env</span><span class="o">.</span><span class="n">globals</span><span class="p">}})</span>
@@ -307,7 +309,7 @@
       &copy;2015, Arbeitsgemeinschaft Dresdner Studentennetz (AG DSN), Lukas Juhrich.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
